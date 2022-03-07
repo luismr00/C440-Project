@@ -40,7 +40,7 @@ app.post('/signed', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     console.log('received: ' + username + ', ' + password);
-    res.status(201).json();
+    res.status(201).json({ success: true, data: { username: username, password: password } });
 });
 
 app.listen(PORT, () => {

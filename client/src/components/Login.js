@@ -7,7 +7,7 @@ function Login() {
   const signIn = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:4000/signed", {
+    const res = await fetch("http://localhost:4000/signed", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
@@ -18,9 +18,8 @@ function Login() {
         password: 123
       }),
     })
-    .then((res) => {
-      console.log(res);
-    })
+    const data = await res.json();
+    console.log(data);
   }
 
 
