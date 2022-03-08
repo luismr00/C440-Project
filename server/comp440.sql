@@ -1,7 +1,6 @@
 use `COMP440`;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS user (
     `username` varchar(255) NOT NULL,
     `password` varchar(255) NOT NULL,
     `first_name` varchar(255) NOT NULL,

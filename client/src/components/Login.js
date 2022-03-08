@@ -7,15 +7,15 @@ function Login() {
   const signIn = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:4000/signed", {
+    const res = await fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: 'test',
-        password: 123
+        email: 'test@gmail.com',
+        password: 'password'
       }),
     })
     const data = await res.json();
@@ -38,6 +38,6 @@ function Login() {
           </form>
       </div>
     );
-  }
+}
   
 export default Login;

@@ -15,7 +15,14 @@ db.connect(function(err) {
     console.log("Connected!");
     db.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`, function (err, result) {
       if (err) throw err;
-      console.log("Database created");
+      else console.log("Database created");
+    });
+
+    const create = fs.readFileSync(path.join(__dirname, './comp440.sql')).toString();
+
+    db.query(create,  (err, result) => {
+        if (err) throw err;
+        else console.log("user table successfully created");
     });
 });
 
@@ -24,23 +31,52 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    const create = fs.readFileSync(path.join(__dirname, './comp440.sql')).toString();
+    res.send('Hello World!');
+});
 
-    db.query(create,  (err, result) => {
-        if (err){
-             throw err;
-        } else {
-            console.log("Query run successfully");
-            res.send('Query run successfully');
+app.post('/api/login', (req, res) => {
+    // const username = req.body.username;
+    const password = req.body.password;
+    const email = req.body.email;
+    console.log('received: ' + email + ', ' + password);
+
+    db.query("SELECT * FROM user WHERE email = ? AND password = ?",[
+        email,
+        password
+    ], (err, result) => {
+        if (err) console.log(err) && res.status(400).json({ success: false });
+        else {
+            console.log("result: ", result);
+            if (result.length > 0) {
+                res.status(201).json({ success: true });
+            } else {
+                res.status(400).json({ success: false });
+            }
         }
     });
 });
 
-app.post('/signed', (req, res) => {
+app.post('/api/register', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    console.log('received: ' + username + ', ' + password);
-    res.status(201).json({ success: true, data: { username: username, password: password } });
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    console.log('received: ' + username + ', ' + password + ', ' + firstName + ', ' + lastName + ', ' + email);
+    
+    db.query("INSERT INTO user VALUES (?, ?, ?, ?, ?)", [
+        username,
+        password,
+        firstName,
+        lastName,
+        email
+    ], (err, result) => {
+        if (err) console.log(err) && res.status(400).json({ success: false });
+        else {
+            console.log("user successfully created");
+            res.status(201).json({ success: true });
+        }
+    });
 });
 
 app.listen(PORT, () => {
