@@ -7,6 +7,7 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("hidden");
 
   const history = useHistory();
 
@@ -30,8 +31,11 @@ function Login() {
     const data = await res.json();
     if(data.success) {
       console.log("login successful");
+      setErrMsg("hidden");
       // localStorage.setItem("username", username);
       history.push("/userpage");
+    } else {
+      setErrMsg("visible");
     }
   }
 
@@ -41,18 +45,22 @@ function Login() {
     // });
 
     return (
-      <div className="SignOrReg">
-        <div className="form-title">
-            <h2>Log In</h2>
+      <div>
+        <div className="SignOrReg">
+          <div className="form-title">
+              <h2>Log In</h2>
+          </div>
+          <form onSubmit={signIn}>
+              <label>Email</label>
+              <input type="text" id="username" onChange={(e) => {setEmail(e.target.value)}}></input>
+              <label>Password</label>
+              <input type="password" id="password" onChange={(e) => {setPassword(e.target.value)}}></input>
+              <button type="submit">Submit</button>
+          </form>
+          <a href="/register"><p>Not registered? Sign up.</p></a>
         </div>
-        <form onSubmit={signIn}>
-            <label>Email</label>
-            <input type="text" id="username" onChange={(e) => {setEmail(e.target.value)}}></input>
-            <label>Password</label>
-            <input type="password" id="password" onChange={(e) => {setPassword(e.target.value)}}></input>
-            <button type="submit">Submit</button>
-        </form>
-        <a href="/register"><p>Not registered? Sign up.</p></a>
+        <p style={{color: 'red', visibility: errMsg}}>Username or password is invalid. Try again!</p>
+        <button>Connect Database</button>
       </div>
     );
 }
