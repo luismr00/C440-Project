@@ -44,7 +44,7 @@ function Register() {
       if(data.success) {
         console.log("registered successful");
         setErrMsg("hidden");
-        // localStorage.setItem("username", username);
+        // window.localStorage.setItem("token", data.token);
         history.push("/userpage");
       } else {
         setErrMsg("visible");
@@ -82,7 +82,6 @@ function Register() {
         </div>
         <p style={{color: 'red', visibility: errMsg}}>Some fields are missing. Try again!</p>
         <p style={{color: 'red', visibility: pwErr}}>The passwords do not match. Try again!</p>
-        <button>Connect Database</button>
       </div>
     );
 }

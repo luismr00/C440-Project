@@ -32,7 +32,7 @@ function Login() {
     if(data.success) {
       console.log("login successful");
       setErrMsg("hidden");
-      // localStorage.setItem("username", username);
+      // window.localStorage.setItem("token", data.token);
       history.push("/userpage");
     } else {
       setErrMsg("visible");
