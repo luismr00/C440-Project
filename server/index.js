@@ -49,6 +49,7 @@ app.post('/api/login', (req, res) => {
             console.log("result: ", result);
             if (result.length > 0) {
                 res.status(201).json({ success: true });
+                // res.redirect('/userpage');
             } else {
                 res.status(400).json({ success: false });
             }

@@ -4,8 +4,17 @@ import { useEffect, useState } from "react";
 
 function Login() {
 
+  // const [username, setUsername] = useState("");
+  // const [password,setPassword] = useState("");
+
   const signIn = async (e) => {
     e.preventDefault();
+
+    const u = document.getElementById("username").value;
+    const p = document.getElementById("password").value;
+
+    console.log("checking username and password entered");
+    console.log(u, p);
 
     const res = await fetch("http://localhost:4000/api/login", {
       method: "POST",
@@ -14,8 +23,8 @@ function Login() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: 'test@gmail.com',
-        password: 'password'
+        email: u,
+        password: p
       }),
     })
     const data = await res.json();
@@ -28,14 +37,18 @@ function Login() {
     // });
 
     return (
-      <div className="LogIn">
-          <form onSubmit={signIn}>
-              <fieldset>Username</fieldset>
-              <input type="text"></input>
-              <fieldset>Password</fieldset>
-              <input type="password"></input>
-              <button type="submit">Submit</button>
-          </form>
+      <div className="SignOrReg">
+        <div className="form-title">
+            <h2>Log In</h2>
+        </div>
+        <form onSubmit={signIn}>
+            <label>Username</label>
+            <input type="text" id="username"></input>
+            <label>Password</label>
+            <input type="password" id="password"></input>
+            <button type="submit">Submit</button>
+        </form>
+        <a href="/register"><p>Not registered? Sign up.</p></a>
       </div>
     );
 }
