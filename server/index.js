@@ -35,7 +35,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/login', (req, res) => {
-    // const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
     console.log('received: ' + email + ', ' + password);
@@ -49,7 +48,6 @@ app.post('/api/login', (req, res) => {
             console.log("result: ", result);
             if (result.length > 0) {
                 res.status(201).json({ success: true });
-                // res.redirect('/userpage');
             } else {
                 res.status(400).json({ success: false });
             }

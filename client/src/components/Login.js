@@ -1,34 +1,38 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 
 function Login() {
 
-  // const [username, setUsername] = useState("");
-  // const [password,setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password,setPassword] = useState("");
+
+  const history = useHistory();
 
   const signIn = async (e) => {
     e.preventDefault();
 
-    const u = document.getElementById("username").value;
-    const p = document.getElementById("password").value;
-
-    console.log("checking username and password entered");
-    console.log(u, p);
+    console.log("checking email and password entered");
+    console.log(email, password);
 
     const res = await fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: u,
-        password: p
+        email: email,
+        password: password
       }),
     })
     const data = await res.json();
-    console.log(data);
+    if(data.success) {
+      console.log("login successful");
+      // localStorage.setItem("username", username);
+      history.push("/userpage");
+    }
   }
 
 
@@ -42,10 +46,10 @@ function Login() {
             <h2>Log In</h2>
         </div>
         <form onSubmit={signIn}>
-            <label>Username</label>
-            <input type="text" id="username"></input>
+            <label>Email</label>
+            <input type="text" id="username" onChange={(e) => {setEmail(e.target.value)}}></input>
             <label>Password</label>
-            <input type="password" id="password"></input>
+            <input type="password" id="password" onChange={(e) => {setPassword(e.target.value)}}></input>
             <button type="submit">Submit</button>
         </form>
         <a href="/register"><p>Not registered? Sign up.</p></a>

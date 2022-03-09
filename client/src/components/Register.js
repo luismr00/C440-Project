@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 function Register() {
 
-  const signIn = async (e) => {
+  const signup = async (e) => {
     e.preventDefault();
 
     const res = await fetch("http://localhost:4000/api/login", {
@@ -32,7 +32,7 @@ function Register() {
         <div className="form-title">
             <h2>Register</h2>
         </div>
-        <form>
+        <form onSubmit={signup}>
             <label>Username</label>
             <input type="text"></input>
             <label>Password</label>
