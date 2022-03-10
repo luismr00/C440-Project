@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 
@@ -22,7 +21,7 @@ function Register() {
     if ((!username || !password || !firstName || !lastName || !email)) {
       setErrMsg("visible");
       setPwError("hidden");
-    } else if (password != password2) {
+    } else if (password !== password2) {
       setPwError("visible");
       setErrMsg("hidden"); 
     } else {
@@ -44,18 +43,13 @@ function Register() {
       if(data.success) {
         console.log("registered successful");
         setErrMsg("hidden");
-        // window.localStorage.setItem("token", data.token);
-        history.push("/userpage");
+        history.push("/userpage", { state: {firstName: firstName} });
       } else {
         setErrMsg("visible");
+        console.log("registered failed: ", data.err);
       }
     }
   }
-
-
-    // useEffect(() => {
-        
-    // });
 
     return (
       <div>

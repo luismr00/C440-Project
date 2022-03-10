@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
 require('dotenv').config();
 
 const db = require('./config');
@@ -30,12 +32,32 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24;
+
+//session middleware
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false,
+}));
+
+// cookie parser middleware
+app.use(cookieParser());
+let session;
+
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    console.log(session);
+    if(session != undefined) {
+        if(session.user != undefined && session.user != null)
+            res.json({ user: session.user });
+    } else {
+        res.json({ user: null });
+    }
 });
 
 app.post('/api/login', (req, res) => {
-    // const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
     console.log('received: ' + email + ', ' + password);
@@ -48,9 +70,11 @@ app.post('/api/login', (req, res) => {
         else {
             console.log("result: ", result);
             if (result.length > 0) {
-                res.status(201).json({ success: true });
+                session = req.session;
+                session.user = { username: result[0].username, firstName: result[0].first_name, lastName: result[0].last_name };
+                res.status(201).json({ success: true, firstName: result[0].first_name });
             } else {
-                res.status(400).json({ success: false });
+                res.status(400).json({ success: false, err: "Invalid username or password" });
             }
         }
     });
@@ -71,16 +95,36 @@ app.post('/api/register', (req, res) => {
         lastName,
         email
     ], (err, result) => {
-        if (err) console.log(err) && res.status(400).json({ success: false });
+        if (err) {
+            console.log(err)
+            if(err.code === 'ER_DUP_ENTRY') {
+                res.status(400).json({ success: false, err: "Username already exists" });
+            } else res.status(400).json({ success: false, err: err });
+        }
         else {
             console.log("user successfully created");
+            session = req.session;
+            session.user = { username: username, firstName: firstName, lastName: lastName };
             res.status(201).json({ success: true });
         }
     });
 });
 
 app.post('/api/initialize', (req, res) => {
-    res.json({ success: true });
+    const initializeFile = fs.readFileSync(path.join(__dirname, './university.sql')).toString();
+    db.query(initializeFile, (err, result) => {
+        if (err) throw err;
+        else {
+            console.log("DB initialized");
+            res.status(201).json({ success: true });
+        }
+    })
+});
+
+app.get('/logout',(req,res) => {
+    req.session.destroy();
+    session.user = null;
+    res.status(200).json({ success: true });
 });
 
 app.listen(PORT, () => {

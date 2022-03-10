@@ -1,6 +1,6 @@
 -- Before execute the file, ADD your database name here:
 -- The database name should be the same as your database of your user table from step 1
-use `test2`; 
+use `COMP440`; 
 
 SET FOREIGN_KEY_CHECKS = 0;
 --

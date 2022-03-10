@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 
@@ -32,17 +32,12 @@ function Login() {
     if(data.success) {
       console.log("login successful");
       setErrMsg("hidden");
-      // window.localStorage.setItem("token", data.token);
-      history.push("/userpage");
+      history.push("/userpage", { state: {firstName: data.firstName} });
     } else {
       setErrMsg("visible");
+      console.log("login failed: ", data.err);
     }
   }
-
-
-    // useEffect(() => {
-        
-    // });
 
     return (
       <div>
@@ -60,7 +55,6 @@ function Login() {
           <a href="/register"><p>Not registered? Sign up.</p></a>
         </div>
         <p style={{color: 'red', visibility: errMsg}}>Username or password is invalid. Try again!</p>
-        <button>Connect Database</button>
       </div>
     );
 }
