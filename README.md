@@ -27,3 +27,8 @@ database of step 1 (user registration and login).
 
 2) This is a team project. You are allowed to find and reused codes; however, make sure to 
 refer to the original source. 
+
+### Contributions
+Anthony Magana did majority work on the database side for phase 1. Implemented functions for initilizing,posting, and retrieval of data from the database.
+Luis Rangel worked on UI such as form entry and password validation.
+Tristin Greenstein worked on React.js front end and bug fixes on both UI and database.
