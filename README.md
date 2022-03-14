@@ -34,3 +34,5 @@ Anthony Magana did majority work on the database side for phase 1. Implemented f
 Luis Rangel worked on UI such as form entry and password validation.
 
 Tristin Greenstein worked on React.js front end and bug fixes on both UI and database.
+
+### https://youtu.be/MTyv9AaGbac
