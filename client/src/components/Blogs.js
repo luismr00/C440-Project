@@ -59,7 +59,7 @@ const Blogs = () => {
                         <div key={i}>
                             <p>--------------------</p>
                             <h1>Subject: {blog.subject}</h1>
-                            <p>- {blog.user_id}</p>
+                            <p>Author: {blog.user_id}</p>
                             <p>Description: {blog.description}</p>
                             <p>Tags: {blog.tags}</p>
                         </div>
