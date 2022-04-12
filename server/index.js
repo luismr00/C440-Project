@@ -165,6 +165,19 @@ app.post('/api/create', (req, res) => {
     }
 })
 
+app.get('/api/blogs', (req, res) => {
+    db.query("SELECT * FROM blog", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
