@@ -21,9 +21,19 @@ CREATE TABLE `blog` (
     `description` text NOT NULL,
     `tags` varchar(20) NOT NULL,
     `date` datetime NOT NULL,
-    `rating` int(1),
     `user_id` varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES user(`username`)
+);
+
+DROP TABLE IF EXISTS `rating`;
+CREATE TABLE `rating` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `rating` int(1) NOT NULL,
+    `blog_id` int(11) NOT NULL,
+    `user_id` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`blog_id`) REFERENCES blog(`id`)
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 

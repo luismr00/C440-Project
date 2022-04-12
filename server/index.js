@@ -178,6 +178,33 @@ app.get('/api/blogs', (req, res) => {
     });
 });
 
+app.post('/api/:id/comment', () => {
+    if(session.user != undefined && session.user != null) {
+        const comment = req.body.comment;
+        const blog_id = req.params.id;
+        const user_id = session.user.username;
+        const date = new Date();
+        db.query("INSERT INTO comment (comment, blog_id, user_id, date) VALUES(?, ?, ?, ?)",[
+            comment,
+            blog_id,
+            user_id,
+            date
+        ], (err, result) => {
+                if (err) {
+                    console.log(err)
+                    res.status(400).json({ success: false, err: err });
+                }
+                else {
+                    console.log("successfully created");
+                    res.status(201).json({ success: true });
+                }
+            }
+        );
+    } else {
+        res.status(400).json({ success: false, err: "You must be logged in to comment" });
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
