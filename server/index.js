@@ -111,11 +111,20 @@ app.post('/api/register', (req, res) => {
 });
 
 app.post('/api/initialize', (req, res) => {
-    const initializeFile = fs.readFileSync(path.join(__dirname, './university.sql')).toString();
-    db.query(initializeFile, (err, result) => {
+    // const initializeFile = fs.readFileSync(path.join(__dirname, './university.sql')).toString();
+    // db.query(initializeFile, (err, result) => {
+    //     if (err) throw err;
+    //     else {
+    //         console.log("DB initialized");
+    //         res.status(201).json({ success: true });
+    //     }
+    // })
+
+    const initializeFile2 = fs.readFileSync(path.join(__dirname, './data.sql')).toString();
+    db.query(initializeFile2, (err, result) => {
         if (err) throw err;
         else {
-            console.log("DB initialized");
+            console.log("initialized data");
             res.status(201).json({ success: true });
         }
     })
@@ -126,6 +135,35 @@ app.get('/logout',(req,res) => {
     session.user = null;
     res.status(200).json({ success: true });
 });
+
+app.get('/api/create', (req, res) => {
+    if(session.user != undefined && session.user != null) {
+        const subject = req.body.subject;
+        const description = req.body.description;
+        const tags = req.body.tags;
+        const date = new Date();
+        const user_id = session.user.username;
+        db.query("INSERT INTO blog (subject, description, tags, date, user_id) VALUES(?, ?, ?, ?, ?)",[
+            subject,
+            description,
+            tags,
+            date,
+            user_id
+        ], (err, result) => {
+                if (err) {
+                    console.log(err)
+                    res.status(400).json({ success: false, err: err });
+                }
+                else {
+                    console.log("successfully created");
+                    res.status(201).json({ success: true });
+                }
+            }
+        );
+    } else {
+        res.status(400).json({ success: false, err: "You must be logged in to create a post" });
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-
 
 function Register() {
 
@@ -12,6 +11,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("hidden");
   const [pwErr, setPwError] = useState("hidden");
+  const [authenticated, setAuthenticated] = useState(false);
 
   const history = useHistory();
 
@@ -43,13 +43,47 @@ function Register() {
       if(data.success) {
         console.log("registered successful");
         setErrMsg("hidden");
-        history.push("/userpage", { state: {firstName: firstName} });
+        history.push("/userpage");
       } else {
         setErrMsg("visible");
         console.log("registered failed: ", data.err);
       }
     }
   }
+
+  const fetchcookie = async () => {
+    try{
+      const res = await fetch("http://localhost:4000/", {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+
+      })
+      const data = await res.json();
+      if(data.user != null){
+        setAuthenticated(true);
+      } else {
+        console.log("user is not logged in");
+        setAuthenticated(false);
+      }
+    } catch(err){
+      console.log("error: ", err);
+    }
+  }
+
+  useEffect(() => {
+    if(authenticated){
+      history.push("/userpage");
+      return () => {
+        console.log("unmounting");
+        setAuthenticated(false);
+      }
+    } else {
+      fetchcookie();
+    }
+  }, [authenticated]);
 
     return (
       <div>

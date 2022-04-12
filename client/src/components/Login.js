@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 
@@ -8,6 +7,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("hidden");
+  const [authenticated, setAuthenticated] = useState(false);
 
   const history = useHistory();
 
@@ -22,6 +22,7 @@ function Login() {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'credentials': 'include'
       },
       body: JSON.stringify({
         email: email,
@@ -32,12 +33,46 @@ function Login() {
     if(data.success) {
       console.log("login successful");
       setErrMsg("hidden");
-      history.push("/userpage", { state: {firstName: data.firstName} });
+      history.push("/userpage");
     } else {
       setErrMsg("visible");
       console.log("login failed: ", data.err);
     }
   }
+
+  const fetchcookie = async () => {
+    try{
+      const res = await fetch("http://localhost:4000/", {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+
+      })
+      const data = await res.json();
+      if(data.user != null){
+        setAuthenticated(true);
+      } else {
+        console.log("user is not logged in");
+        setAuthenticated(false);
+      }
+    } catch(err){
+      console.log("error: ", err);
+    }
+  }
+
+  useEffect(() => {
+    if(authenticated){
+      history.push("/userpage");
+      return () => {
+        console.log("unmounting");
+        setAuthenticated(false);
+      }
+    } else {
+      fetchcookie();
+    }
+  }, [authenticated]);
 
     return (
       <div>

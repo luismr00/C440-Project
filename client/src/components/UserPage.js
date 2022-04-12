@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 
 function UserPage() {
-  const [firstName, setFirstName] = useState("");
   const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
-  const location = useLocation();
+  const history = useHistory();
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -36,50 +35,50 @@ function UserPage() {
     if(data.success) {
       console.log("logout successful");
       setAuthenticated(false);
-      setFirstName("");
       setUser(null);
     } else {
       console.log("logout failed");
     }
   }
 
-  const fetchcookie = async () => {
-    const res = await fetch("http://localhost:4000/", {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-
-    })
-    const data = await res.json();
-    if(data.user != null){
-      setUser(data.user);
-      setFirstName(data.user.firstName);
-      setAuthenticated(true);
-    } else {
-      console.log("fetch cookie failed");
-    }
-  }
-
   useEffect(() => {
-    if(location.state) {
-      console.log("state: ", location.state.state);
-      setFirstName(location.state.state.firstName);
-      setAuthenticated(true);
+    const fetchcookie = async () => {
+      try{
+        const res = await fetch("http://localhost:4000/", {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+  
+        })
+        const data = await res.json();
+        if(data.user != null){
+          setAuthenticated(true);
+          setUser(data.user);
+          console.log(data.user)
+        } else {
+          console.log("user is not logged in");
+          setAuthenticated(false);
+          history.push("/");
+        }
+      } catch(err){
+        console.log("error: ", err);
+      }
     }
-    else  {
+    if(!authenticated){
       fetchcookie();
     }
-  }, [location.state]);
+  }, [authenticated]);
 
     return (
       <div className="App">
         { authenticated ?
           <div>
-            <h1>Welcome, {firstName}</h1>
+            <h1>Welcome, {user?.firstName} </h1>
             <button onClick={logout}>Logout</button>
             <button onClick={Initialize}>Initialize Database</button>
+            <button><Link to='/blog'>Blog Page</Link></button>
           </div>
           : 
           <div>
