@@ -57,7 +57,7 @@ const Blogs = () => {
                 <h1>Blogs</h1>
                 {BlogList.map((blog,i) => {
                     return (
-                        <div className="card" style={{width: "18rem", margin: '0 auto'}} key={i}>
+                        <div className="card" style={{width: "18rem", margin: '0 auto', marginBottom: '30px'}} key={i}>
                         <div className="card-body">
                           <h5 className="card-title">Subject: {blog.subject}</h5>
                           <h6 className="card-subtitle mb-2 text-muted">Author: {blog.user_id}</h6>

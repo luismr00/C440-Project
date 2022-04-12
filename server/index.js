@@ -178,16 +178,16 @@ app.get('/api/blogs', (req, res) => {
     });
 });
 
-app.post('/api/:id/comment', () => {
+app.post('/api/:id/comment', (req, res) => {
     if(session.user != undefined && session.user != null) {
         const comment = req.body.comment;
-        const blog_id = req.params.id;
-        const user_id = session.user.username;
+        const blog_id = req.params.id.split(':')[1];
+        const username = session.user.username;
         const date = new Date();
-        db.query("INSERT INTO comment (comment, blog_id, user_id, date) VALUES(?, ?, ?, ?)",[
+        db.query("INSERT INTO comment (comment, blog_id, username, date) VALUES(?, ?, ?, ?)",[
             comment,
             blog_id,
-            user_id,
+            username,
             date
         ], (err, result) => {
                 if (err) {
