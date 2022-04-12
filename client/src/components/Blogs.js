@@ -5,9 +5,26 @@ import { useHistory } from "react-router-dom";
 const Blogs = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
-    const [description, setDescription] = useState(false);
-    const [subject, setSubject] = useState(false);
-    const [tags, setTags] = useState(false);
+    const [BlogList,setBlogList] = useState([]);
+
+    useEffect(() => {
+        const fetchpost = async () => {
+            const res = await fetch("http://localhost:4000/api/blogs", {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            const data = await res.json();
+            if(data.blogs != null){
+                console.log(data.blogs);
+                setBlogList(data.blogs);
+            }
+        }
+        fetchpost();
+
+    }, []);
     
     useEffect(() => {
         const fetchcookie = async () => {

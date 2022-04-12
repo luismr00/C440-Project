@@ -10,7 +10,7 @@ const CreateBlog = () => {
     const [tags, setTags] = useState(false);
     const post = async (e) => {
         e.preventDefault();
-        const res = await fetch("http://localhost:4000/api/create", {
+        await fetch("http://localhost:4000/api/create", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -22,7 +22,7 @@ const CreateBlog = () => {
                     subject: subject,
                     tags: tags,
             }),
-            })
+            }) 
     }
     useEffect(() => {
         const fetchcookie = async () => {
