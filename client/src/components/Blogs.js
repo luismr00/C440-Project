@@ -52,19 +52,20 @@ const Blogs = () => {
     return (
         <>
         {authenticated ?
+        <div className="default">
             <div>
                 <h1>Blogs</h1>
                 {BlogList.map((blog,i) => {
                     return (
-                        <div key={i}>
-                            <p>--------------------</p>
+                        <button key={i}>
                             <h1>Subject: {blog.subject}</h1>
                             <p>Author: {blog.user_id}</p>
                             <p>Description: {blog.description}</p>
                             <p>Tags: {blog.tags}</p>
-                        </div>
+                        </button>
                     )
                 })}
+            </div>
             </div>
             :
             <div>You are not logged in</div>

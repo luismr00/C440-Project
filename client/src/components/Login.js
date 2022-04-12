@@ -75,7 +75,7 @@ function Login() {
   }, [authenticated]);
 
     return (
-      <div>
+      <div className="default">
         <div className="SignOrReg">
           <div className="form-title">
               <h2>Log In</h2>

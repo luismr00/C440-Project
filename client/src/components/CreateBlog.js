@@ -50,7 +50,8 @@ const CreateBlog = () => {
     return (
         <>
         {authenticated ?
-            <div>
+        <div className="default">
+            <div className="SignOrReg">
                 <h1>Create New Blog</h1>
                 <form onSubmit={post}>
                     <input type="text" placeholder="Subject"  id="subject" onChange={(e) => {setSubject(e.target.value)}}/>
@@ -60,6 +61,7 @@ const CreateBlog = () => {
                 </form>
                 <button><Link to='/blogs'>Blogs</Link></button>
                 <button><Link to='/userpage'>Main Menu</Link></button>
+            </div>
             </div>
             :
             <div>You are not logged in</div>

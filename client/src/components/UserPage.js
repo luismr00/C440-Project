@@ -72,7 +72,7 @@ function UserPage() {
   }, [authenticated]);
 
     return (
-      <div className="App">
+      <div className="App default">
         { authenticated ?
           <div>
             <h1>Welcome, {user?.firstName} </h1>
