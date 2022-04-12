@@ -33,7 +33,7 @@ CREATE TABLE `rating` (
     `blog_id` int(11) NOT NULL,
     `user_id` varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`blog_id`) REFERENCES blog(`id`)
+    FOREIGN KEY (`blog_id`) REFERENCES blog(`id`),
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 

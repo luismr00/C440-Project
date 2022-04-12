@@ -3,14 +3,14 @@ import { Link,useHistory } from "react-router-dom";
 
 
 const CreateBlog = () => {
-    const [authenticated, setAuthenticated] = useState(false);
+    const [authenticated, setAuthenticated] = useState("");
     const history = useHistory();
-    const [description, setDescription] = useState(false);
-    const [subject, setSubject] = useState(false);
-    const [tags, setTags] = useState(false);
+    const [description, setDescription] = useState("");
+    const [subject, setSubject] = useState("");
+    const [tags, setTags] = useState("");
     const post = async (e) => {
         e.preventDefault();
-        await fetch("http://localhost:4000/api/create", {
+        const res = await fetch("http://localhost:4000/api/create", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -23,6 +23,17 @@ const CreateBlog = () => {
                     tags: tags,
             }),
             }) 
+            const data = await res.json();
+            if(data.success) {
+                console.log("create successful");
+                // history.push("/blogs");
+                alert("Blog created successfully");
+                setDescription("");
+                setSubject("");
+                setTags("");
+            } else {
+                console.log("create failed");
+            }
     }
     useEffect(() => {
         const fetchcookie = async () => {
@@ -54,9 +65,9 @@ const CreateBlog = () => {
             <div className="SignOrReg">
                 <h1>Create New Blog</h1>
                 <form onSubmit={post}>
-                    <input type="text" placeholder="Subject"  id="subject" onChange={(e) => {setSubject(e.target.value)}}/>
-                    <input type="text" placeholder="Description"  id="description" onChange={(e) => {setDescription(e.target.value)}}/>
-                    <input type="text" placeholder="Tags"  id="tags" onChange={(e) => {setTags(e.target.value)}}/>
+                    <input type="text" placeholder="Subject"  value={subject} id="subject" onChange={(e) => {setSubject(e.target.value)}}/>
+                    <input type="text" placeholder="Description" value={description}  id="description" onChange={(e) => {setDescription(e.target.value)}}/>
+                    <input type="text" placeholder="Tags"  id="tags" value={tags} onChange={(e) => {setTags(e.target.value)}}/>
                     <button type="submit">Submit</button>
                 </form>
                 <button><Link to='/blogs'>Blogs</Link></button>

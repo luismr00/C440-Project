@@ -57,12 +57,15 @@ const Blogs = () => {
                 <h1>Blogs</h1>
                 {BlogList.map((blog,i) => {
                     return (
-                        <button key={i}>
-                            <h1>Subject: {blog.subject}</h1>
-                            <p>Author: {blog.user_id}</p>
-                            <p>Description: {blog.description}</p>
-                            <p>Tags: {blog.tags}</p>
-                        </button>
+                        <div className="card" style={{width: "18rem", margin: '0 auto'}} key={i}>
+                        <div className="card-body">
+                          <h5 className="card-title">Subject: {blog.subject}</h5>
+                          <h6 className="card-subtitle mb-2 text-muted">Author: {blog.user_id}</h6>
+                          <p className="card-text">Description: {blog.description}</p>
+                          <p className="card-text">Tags: {blog.tags}</p>
+                          <a href="#" className="card-link">Another link</a>
+                        </div>
+                      </div>
                     )
                 })}
             </div>

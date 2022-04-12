@@ -137,7 +137,7 @@ app.get('/logout',(req,res) => {
 });
 
 app.post('/api/create', (req, res) => {
-    if(session.user != undefined && session.user != null) {
+    if(typeof session.user !== undefined && session.user !== null) {
         const subject = req.body.subject;
         const description = req.body.description;
         const tags = req.body.tags;
