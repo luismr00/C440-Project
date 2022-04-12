@@ -205,8 +205,12 @@ app.post('/api/:id/comment', (req, res) => {
     }
 })
 
-app.get('/api/comments', (req, res) => {
-    db.query("SELECT * FROM comment", (err, result) => {
+app.get('/api/:id/comments', (req, res) => {
+    const blog_id = req.params.id.split(':')[1];
+
+    db.query("SELECT * FROM comment WHERE blog_id = ?",[
+        blog_id
+    ], (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
