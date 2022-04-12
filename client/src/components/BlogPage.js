@@ -5,7 +5,25 @@ import { useHistory } from "react-router-dom";
 const BlogPage = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
-
+    const [description, setDescription] = useState(false);
+    const [subject, setSubject] = useState(false);
+    const [tags, setTags] = useState(false);
+    const post = async (e) => {
+        e.preventDefault();
+        const res = await fetch("http://localhost:4000/api/create", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'credentials': 'include'
+            },
+            body: JSON.stringify({
+                    description: description,
+                    subject: subject,
+                    tags: tags,
+            }),
+            })
+    }
     useEffect(() => {
         const fetchcookie = async () => {
             const res = await fetch("http://localhost:4000/", {
@@ -34,10 +52,10 @@ const BlogPage = () => {
         {authenticated ?
             <div>
                 <h1>Blog Page</h1>
-                <form>
-                    <input type="text" placeholder="Subject" />
-                    <input type="text" placeholder="Description" />
-                    <input type="text" placeholder="Tags" />
+                <form onSubmit={post}>
+                    <input type="text" placeholder="Subject"  id="subject" onChange={(e) => {setSubject(e.target.value)}}/>
+                    <input type="text" placeholder="Description"  id="description" onChange={(e) => {setDescription(e.target.value)}}/>
+                    <input type="text" placeholder="Tags"  id="tags" onChange={(e) => {setTags(e.target.value)}}/>
                     <button type="submit">Submit</button>
                 </form>
             </div>
