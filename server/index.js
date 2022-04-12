@@ -196,7 +196,7 @@ app.post('/api/:id/comment', (req, res) => {
                 }
                 else {
                     console.log("successfully created");
-                    res.status(201).json({ success: true });
+                    res.status(201).json({ success: true, username: username });
                 }
             }
         );
