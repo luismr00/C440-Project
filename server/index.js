@@ -136,7 +136,7 @@ app.get('/logout',(req,res) => {
     res.status(200).json({ success: true });
 });
 
-app.get('/api/create', (req, res) => {
+app.post('/api/create', (req, res) => {
     if(session.user != undefined && session.user != null) {
         const subject = req.body.subject;
         const description = req.body.description;
