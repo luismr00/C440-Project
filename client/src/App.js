@@ -17,7 +17,7 @@ function App() {
           <Route exact path={"/userpage"} component={UserPage} />
           <Route exact path={"/new-blog"} component={CreateBlog} />
           <Route exact path={"/blogs"} component={Blogs} />
-          <Route exact path={"/blog-comments"} component={Blog} />
+          <Route exact path={"/blog/:id"} component={Blog} />
         </Switch>
       </div>
     </Router>

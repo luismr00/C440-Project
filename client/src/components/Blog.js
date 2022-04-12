@@ -1,68 +1,22 @@
-import React, {useState, useEffect} from 'react'
-import { useHistory } from "react-router-dom";
-
+import React  from 'react'
+import { useLocation } from 'react-router-dom'
 
 const Blog = () => {
-    const [authenticated, setAuthenticated] = useState(false);
-    const history = useHistory();
-    const [BlogList,setBlogList] = useState([]);
-
-    useEffect(() => {
-        const fetchpost = async () => {
-            const res = await fetch("http://localhost:4000/api/:id/comment'", {
-                method: "GET",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            })
-            const data = await res.json();
-            if(data.blogs != null){
-                console.log(data.blogs);
-                setBlogList(data.blogs);
-            }
-        }
-        fetchpost();
-
-    }, []);
-    
-    useEffect(() => {
-        const fetchcookie = async () => {
-            const res = await fetch("http://localhost:4000/", {
-                method: "GET",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            })
-            const data = await res.json();
-            if(data.user != null){
-                setAuthenticated(true);
-            } else {
-                console.log("user is not logged in");
-                setAuthenticated(false);
-                history.push("/");
-            }
-        }
-        if(!authenticated){
-            fetchcookie();
-        }
-    }, [authenticated]);
-
-    return (
-        <>
-        {authenticated ?
-        <div className="default">
-            <div>
-                <h1>Singular Blog Comments</h1>
-                
+    const location = useLocation();
+    const { pathname } = location;
+  return (
+    <div>
+        <div className="card" style={{width: "50%", margin: '0 auto'}}>
+            <div className="card-body">
+                <h5 className="card-title">Subject: {location.state.state.subject}</h5>
+                <h6 className="card-subtitle mb-2 text-muted">Author: {location.state.state.user_id}</h6>
+                <p className="card-text">Description: {location.state.state.description}</p>
+                <p className="card-text">Tags: {location.state.state.tags}</p>
             </div>
-            </div>
-            :
-            <div>You are not logged in</div>
-        }
-        </>
-    )
+        </div>
+    </div>
+
+  )
 }
 
 export default Blog

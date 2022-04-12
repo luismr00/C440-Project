@@ -63,7 +63,7 @@ const Blogs = () => {
                           <h6 className="card-subtitle mb-2 text-muted">Author: {blog.user_id}</h6>
                           <p className="card-text">Description: {blog.description}</p>
                           <p className="card-text">Tags: {blog.tags}</p>
-                          <a href="#" className="card-link">Another link</a>
+                          <button onClick={() => {history.push(`/blog/:${blog.id}`, {state: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>Comments</button>
                         </div>
                       </div>
                     )
