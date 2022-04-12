@@ -54,7 +54,17 @@ const Blogs = () => {
         {authenticated ?
             <div>
                 <h1>Blogs</h1>
-                
+                {BlogList.map((blog,i) => {
+                    return (
+                        <div key={i}>
+                            <p>--------------------</p>
+                            <h1>Subject: {blog.subject}</h1>
+                            <p>- {blog.user_id}</p>
+                            <p>Description: {blog.description}</p>
+                            <p>Tags: {blog.tags}</p>
+                        </div>
+                    )
+                })}
             </div>
             :
             <div>You are not logged in</div>
