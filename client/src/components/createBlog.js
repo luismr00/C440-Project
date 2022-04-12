@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useHistory } from "react-router-dom";
 
 
-const BlogPage = () => {
+const createBlog = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
     const [description, setDescription] = useState(false);
@@ -51,13 +51,15 @@ const BlogPage = () => {
         <>
         {authenticated ?
             <div>
-                <h1>Blog Page</h1>
+                <h1>Create New Blog</h1>
                 <form onSubmit={post}>
                     <input type="text" placeholder="Subject"  id="subject" onChange={(e) => {setSubject(e.target.value)}}/>
                     <input type="text" placeholder="Description"  id="description" onChange={(e) => {setDescription(e.target.value)}}/>
                     <input type="text" placeholder="Tags"  id="tags" onChange={(e) => {setTags(e.target.value)}}/>
                     <button type="submit">Submit</button>
                 </form>
+                <button><Link to='/blogs'>All Blogs</Link></button>
+                <button><Link to='/userpage'>Main Menu</Link></button>
             </div>
             :
             <div>You are not logged in</div>
@@ -66,4 +68,4 @@ const BlogPage = () => {
     )
 }
 
-export default BlogPage
+export default createBlog

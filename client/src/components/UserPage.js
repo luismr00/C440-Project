@@ -78,7 +78,8 @@ function UserPage() {
             <h1>Welcome, {user?.firstName} </h1>
             <button onClick={logout}>Logout</button>
             <button onClick={Initialize}>Initialize Database</button>
-            <button><Link to='/blog'>Blog Page</Link></button>
+            <button><Link to='/new-blog'>Create Blog Post</Link></button>
+            <button><Link to='/blogs'>All Blogs</Link></button>
           </div>
           : 
           <div>
