@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useHistory } from "react-router-dom";
 
 
-const all_blogs = () => {
+const Blogs = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
     const [description, setDescription] = useState(false);
@@ -66,4 +66,4 @@ const all_blogs = () => {
     )
 }
 
-export default all_blogs
+export default Blogs

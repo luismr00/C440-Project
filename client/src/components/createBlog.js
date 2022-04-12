@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import { useHistory } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 
 
-const createBlog = () => {
+const CreateBlog = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
     const [description, setDescription] = useState(false);
@@ -58,7 +58,7 @@ const createBlog = () => {
                     <input type="text" placeholder="Tags"  id="tags" onChange={(e) => {setTags(e.target.value)}}/>
                     <button type="submit">Submit</button>
                 </form>
-                <button><Link to='/blogs'>All Blogs</Link></button>
+                <button><Link to='/blogs'>Blogs</Link></button>
                 <button><Link to='/userpage'>Main Menu</Link></button>
             </div>
             :
@@ -68,4 +68,4 @@ const createBlog = () => {
     )
 }
 
-export default createBlog
+export default CreateBlog
