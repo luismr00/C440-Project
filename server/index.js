@@ -205,6 +205,19 @@ app.post('/api/:id/comment', (req, res) => {
     }
 })
 
+app.get('/api/comments', (req, res) => {
+    db.query("SELECT * FROM comment", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, comments: result });
+        }
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
