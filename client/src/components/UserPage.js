@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 
 function UserPage() {
   const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
   const history = useHistory();
-  const location = useLocation();
   const [noBlogList, setNoBlogList] = useState([]);
   const [noCommentsList, setNoCommentsList] = useState([]);
   const [postNegativeList, setPostNegativeList] = useState([]);
@@ -72,58 +71,8 @@ function UserPage() {
     }
   }, [authenticated]);
 
-    const fetchNoBlogList = async () => {
-        const res = await fetch("http://localhost:4000/api/noBlogList", {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-        const data = await res.json();
-        if(data.blogs != null){
-            console.log(data.blogs);
-            setNoBlogList(data.blogs);
-        }
-    }
-    fetchNoBlogList();
-
-
-    const fetchNoCommentsList = async () => {
-        const res = await fetch("http://localhost:4000/api/noCommentsList", {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-        const data = await res.json();
-        if(data.blogs != null){
-            console.log(data.blogs);
-            setNoCommentsList(data.blogs);
-        }
-    }
-    fetchNoCommentsList();
-
-
-    const fetchPostNegativeList = async () => {
-        const res = await fetch("http://localhost:4000/api/postNegativeList", {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-        const data = await res.json();
-        if(data.blogs != null){
-            console.log(data.blogs);
-            setPostNegativeList(data.blogs);
-        }
-    }
-    fetchPostNegativeList();
-
-
-    const fetchNoNegativeCommentsOnPostList = async () => {
+    useEffect(() => {
+      const fetchNoNegativeCommentsOnPostList = async () => {
         const res = await fetch("http://localhost:4000/api/noNegativeCommentsOnPostList", {
             method: "GET",
             headers: {
@@ -133,11 +82,57 @@ function UserPage() {
         })
         const data = await res.json();
         if(data.blogs != null){
-            console.log(data.blogs);
+            console.log("No negative comments", data.blogs);
             setNoNegativeCommentsOnPostList(data.blogs);
         }
-    }
-    fetchNoNegativeCommentsOnPostList();
+      }
+      const fetchPostNegativeList = async () => {
+        const res = await fetch("http://localhost:4000/api/postNegativeList", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await res.json();
+        if(data.blogs != null){
+            console.log("negative comments on posts", data.blogs);
+            setPostNegativeList(data.blogs);
+        }
+      }
+      const fetchNoCommentsList = async () => {
+        const res = await fetch("http://localhost:4000/api/noCommentsList", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await res.json();
+        if(data.blogs != null){
+            console.log("No comments list", data.blogs);
+            setNoCommentsList(data.blogs);
+        }
+      }
+      const fetchNoBlogList = async () => {
+        const res = await fetch("http://localhost:4000/api/noBlogList", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await res.json();
+        if(data.blogs != null){
+            console.log("No blog List", data.blogs);
+            setNoBlogList(data.blogs);
+        }
+      }
+      fetchNoBlogList();
+      fetchNoCommentsList();
+      fetchPostNegativeList();
+      fetchNoNegativeCommentsOnPostList();
+    }, [])
 
 
     return (
@@ -158,82 +153,53 @@ function UserPage() {
                 </div>
                 <button>Add Hobby</button>
             </form>
-            <br/>
-            <br/>
-            <h3>Users</h3>
-            <table style={{ margin: 'auto'}}>
-              <thead>
-                <tr>
-                  <th style={{backgroundColor: 'gray'}}>Users With No Blogs:</th>
-                  </tr>
-              </thead>
-              <tbody>
-                {noBlogList.map((blog) => {
-                  <tr>
-                  <td style={{backgroundColor: 'white'}}>{blog.blogs}</td>
-                  </tr>
-                })}
-              </tbody>
-              <br/>
-              <table style={{ margin: 'auto'}}>
-              <thead>
-                <tr>
-                  <th style={{backgroundColor: 'gray'}}>Users With No Comments:</th>
-                  </tr>
-              </thead>
-              <tbody>
-                {noCommentsList.map((blog) => {
-                <tr>
-                  <td style={{backgroundColor: 'white'}}>{blog.blogs}</td>
-                  </tr>
-                })}
-              </tbody>
-              </table>
-              <br/>
-              <table style={{ margin: 'auto'}}>
-              <thead>
-                <tr>
-                  <th style={{backgroundColor: 'gray'}}>Users Who Post Negative Comments:</th>
-                  </tr>
-              </thead>
-              <tbody>
-                {postNegativeList.map((blog) => {
-                <tr>
-                  <td style={{backgroundColor: 'white'}}>{blog.blogs}</td>
-                  </tr>
-                  })}
-              </tbody>
-              </table>
-              <br/>
+            
+            <h3 style={{marginTop: '20px'}}>Users</h3>
+            <div style={{ margin: '0 auto', width: '52%'}}>
+              <h5 style={{background: 'gray'}}>Users With No Blogs:</h5>
+              {noBlogList.map((blog, i) => (
+                  <div key={i}>
+                    {blog.username ?
+                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                    : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
+                    }
+                  </div>
+              ))}
 
-              <table style={{ margin: 'auto'}}></table>
-              <thead>
-                <tr>
-                  <th style={{backgroundColor: 'gray'}}>Users With Post No Negative Comments:</th>
-                </tr>
-              </thead>
-              <tbody>
-              {noNegativeCommentsOnPostList.map((blog) => {
-                <tr>
-                  <td style={{backgroundColor: 'white'}}>{blog.blogs}</td>
-                  </tr>
-              })}
-              </tbody>
-            </table>
-          <br />
-          <br />
-          <table style={{margin: 'auto'}}>
-            <thead>
-              <tr>
-                <th style={{backgroundColor: 'gray'}}>User With Most Number of Blogs on 5/1/2022</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{backgroundColor: 'white'}}>todo</td>
-              </tr>
-            </tbody>
-          </table>
+              <h5 style={{background: 'gray'}}>Users With No Comments:</h5>
+              {noCommentsList.map((blog, i) => (
+                  <div key={i}>
+                    {blog.username ?
+                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                    : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
+                    }
+                  </div>
+              ))}
+
+              <h5 style={{background: 'gray'}}>Users Who Post Negative Comments:</h5>
+              {postNegativeList.map((blog, i) => (
+                  <div key={i}>
+                    {blog.username ?
+                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                    : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
+                    }
+                  </div>
+              ))}
+
+              <h5 style={{background: 'gray'}}>Users With No Negative Comment Posts:</h5>
+              {noNegativeCommentsOnPostList.map((blog, i) => (
+                  <div key={i}>
+                    {blog.username ?
+                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                    : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
+                    }
+                  </div>
+              ))}
+
+              <h5 style={{background: 'gray'}}>Users With Most Number of Blogs on 5/1/2022</h5>
+              <div style={{background: 'white'}}>TODO</div>
+
+            </div>        
           </div>
           : 
           <div>
