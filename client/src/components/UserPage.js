@@ -77,6 +77,49 @@ function UserPage() {
             <button onClick={Initialize}>Initialize Database</button>
             <button><Link to='/new-blog'>Create Blog Post</Link></button>
             <button><Link to='/blogs'>All Blogs</Link></button>
+            <br/>
+            <br/>
+            <h3>Hobbies</h3>
+            <form style={{margin: '0'}}>
+                <div style={{width: '42%', margin:'0 auto', display: 'flex',}} >
+                    <input style={{padding: '10px 0'}} type="text" placeholder="Hobby" />
+                </div>
+                <button>Add Hobby</button>
+            </form>
+            <br/>
+            <br/>
+            <h3>Users</h3>
+            <table style={{margin: 'auto'}}>
+              <thead>
+                <tr>
+                  <th>No Blogs:</th>
+                  <th>No Comments:</th>
+                  <th>Negative Comments:</th>
+                  <th>No Negative Comments:</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                </tr>
+              </tbody>
+          </table>
+          <table style={{margin: 'auto'}}>
+            <thead>
+              <tr>
+                <th>Most Number of Blogs on 5/1/2022</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+              </tr>
+            </tbody>
+          </table>
           </div>
           : 
           <div>

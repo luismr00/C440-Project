@@ -37,4 +37,13 @@ CREATE TABLE `rating` (
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 
+DROP TABLE IF EXISTS `hobby`;
+CREATE TABLE `hobby` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `hobby` varchar(255) NOT NULL,
+    `user_id` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES user(`username`)
+);
+
 SET FOREIGN_KEY_CHECKS = 1;
