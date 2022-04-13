@@ -184,52 +184,59 @@ app.post('/api/:id/comment', (req, res) => {
         const blog_id = req.params.id.split(':')[1];
         const username = session.user.username;
         const date = new Date();
-        db.query("SELECT user_ID FROM blog WHERE id = ?", [blog_id], (err, result) => {
-            console.log("Query",result,username, blog_id);
-            if(result[0].user_ID != username){
-                db.query("SELECT count(id) FROM comment WHERE username = ? AND blog_id = ?", [
-                    username,
-                    blog_id,
-                    ], (err, result) => {
-                        if(result[0]['count(id)'] == 0)
-                         {
-                            db.query("INSERT INTO comment (comment, blog_id, username, date) VALUES(?, ?, ?, ?)",[
-                                comment,
-                                blog_id,
-                                username,
-                                date
+        db.query("SELECT COUNT(date) from comment WHERE date > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND username = ?",[username], (err, result) => {
+            if(result[0]['COUNT(date)'] < 3) {
+                db.query("SELECT user_ID FROM blog WHERE id = ?", [blog_id], (err, result) => {
+                    console.log("Query",result,username, blog_id);
+                    if(result[0].user_ID != username){
+                        db.query("SELECT count(id) FROM comment WHERE username = ? AND blog_id = ?", [
+                            username,
+                            blog_id,
                             ], (err, result) => {
-                                    if (err) {
-                                        console.log(err)
-                                        res.status(400).json({ success: false, err: err });
-                                    }
-                                    else {
-                                        console.log("successfully created");
-                                        res.status(201).json({ success: true, username: username });
-                                    }
+                                if(result[0]['count(id)'] == 0)
+                                {
+                                    db.query("INSERT INTO comment (comment, blog_id, username, date) VALUES(?, ?, ?, ?)",[
+                                        comment,
+                                        blog_id,
+                                        username,
+                                        date
+                                    ], (err, result) => {
+                                            if (err) {
+                                                console.log(err)
+                                                res.status(400).json({ success: false, err: err });
+                                            }
+                                            else {
+                                                console.log("successfully created");
+                                                res.status(201).json({ success: true, username: username });
+                                            }
+                                        }
+                                    );
                                 }
-                            );
-                         }
-                        if(err){
-                            console.log(err)
-                            res.status(400).json({ success: false, err: err });
-                        }
-                        else{
-                             console.log("You have already commented on this post");
-                             res.status(400).json({ success: false, err: "You have already commented on this post" });
-                        }
-                    });
-            }
-            if(err){
-                console.log(err)
-                res.status(400).json({ success: false, err: err });
+                                if(err){
+                                    console.log(err)
+                                    res.status(400).json({ success: false, err: err });
+                                }
+                                else{
+                                    console.log("You have already commented on this post");
+                                    res.status(400).json({ success: false, err: "You have already commented on this post" });
+                                }
+                            });
+                    }
+                    if(err){
+                        console.log(err)
+                        res.status(400).json({ success: false, err: err });
+                    }
+                    else{
+                        console.log("You cannot comment on your own post");
+                        res.status(400).json({ success: false, err: "You cannot comment on your own post" });
+                    }
+                });
             }
             else{
-                console.log("You cannot comment on your own post");
-                res.status(400).json({ success: false, err: "You cannot comment on your own post" });
+                console.log("You have already commented 3 times in 24 hours");
+                res.status(400).json({ success: false, err: "You have already commented 3 times in 24 hours" });
             }
         });
-        
     } else {
         res.status(400).json({ success: false, err: "You must be logged in to comment" });
     }
