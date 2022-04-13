@@ -5,6 +5,7 @@ const Blog = () => {
     const location = useLocation();
     const { pathname } = location;
     const [comment, setComment] = useState("");
+    const [rating, setRating] = useState(1);
     const [commentList, setCommentList] = useState([]);
 
     const postComment = async (e) => {
@@ -18,6 +19,7 @@ const Blog = () => {
             },
             body: JSON.stringify({
                 comment: comment,
+                rating: rating
             }),
         })
         const data = await res.json();
@@ -80,7 +82,15 @@ const Blog = () => {
             })}
         </div>
         <form onSubmit={postComment} style={{margin: '0'}}>
-            <input style={{width: '50%', margin:'0 auto'}} value={comment} onChange={(e)=> {setComment(e.target.value)}} type="text" placeholder="Comment" />
+            <div style={{width: '52%', margin:'0 auto', display: 'flex',}} >
+                <div>
+                    <select onChange={(e) => {setRating(e.target.value)}}>
+                        <option value="1">Positive</option>
+                        <option value="0">Negative</option>
+                    </select>
+                </div>
+                <input style={{padding: '10px 0'}} value={comment} onChange={(e)=> {setComment(e.target.value)}} type="text" placeholder="Comment" />
+            </div>
             <button>Post Comment</button>
         </form>
     </div>
