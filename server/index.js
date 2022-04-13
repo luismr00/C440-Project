@@ -210,16 +210,25 @@ app.post('/api/:id/comment', (req, res) => {
                                 }
                             );
                          }
-                         else{
+                        if(err){
+                            console.log(err)
+                            res.status(400).json({ success: false, err: err });
+                        }
+                        else{
                              console.log("You have already commented on this post");
-                         }
+                             res.status(400).json({ success: false, err: "You have already commented on this post" });
+                        }
                     });
+            }
+            if(err){
+                console.log(err)
+                res.status(400).json({ success: false, err: err });
             }
             else{
                 console.log("You cannot comment on your own post");
+                res.status(400).json({ success: false, err: "You cannot comment on your own post" });
             }
-        }  );
-        
+        });
         
     } else {
         res.status(400).json({ success: false, err: "You must be logged in to comment" });
