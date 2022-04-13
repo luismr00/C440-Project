@@ -218,7 +218,7 @@ app.get('/api/postNegativeList', (req, res) => {
 });
 
 app.get('/api/noNegativeCommentsOnPostList', (req, res) => {
-    db.query("SELECT username FROM user WHERE username NOT IN (SELECT username FROM comment where username IN (SELECT user_id FROM blog WHERE id IN (SELECT blog_id FROM rating WHERE rating = 1)));", (err, result) => {
+    db.query("SELECT username from user WHERE username IN (SELECT user_id FROM blog WHERE user_id NOT IN (SELECT username FROM comment where username IN (SELECT user_id FROM blog WHERE id IN (SELECT blog_id FROM rating WHERE rating = 0))));", (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
