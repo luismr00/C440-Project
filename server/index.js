@@ -230,6 +230,19 @@ app.get('/api/noNegativeCommentsOnPostList', (req, res) => {
     });
 });
 
+app.get('/api/maxPostOnDateList', (req, res) => {
+    db.query("SELECT username, MAX(Total) as Highest from (SELECT user_id as username, COUNT(blog_id) as Total from (SELECT user_id, id as blog_id from blog WHERE date between '2022/04/12 00:00:00' AND '2022/04/12 23:59:59') as B GROUP BY username) as A;", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
 app.post('/api/:id/comment', (req, res) => {
     if(session.user != undefined && session.user != null) {
         const comment = req.body.comment;

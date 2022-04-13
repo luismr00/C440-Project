@@ -10,6 +10,7 @@ function UserPage() {
   const [noCommentsList, setNoCommentsList] = useState([]);
   const [postNegativeList, setPostNegativeList] = useState([]);
   const [noNegativeCommentsOnPostList, setNoNegativeCommentsOnPostList] = useState([]);
+  const [maxPostOnDateList, setMaxPostOnDateList] = useState([]);
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -128,10 +129,25 @@ function UserPage() {
             setNoBlogList(data.blogs);
         }
       }
+      const fetchMaxPostOnDateList = async () => {
+        const res = await fetch("http://localhost:4000/api/maxPostOnDateList", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await res.json();
+        if(data.blogs != null){
+            console.log("Max post on date list", data.blogs);
+            setMaxPostOnDateList(data.blogs);
+        }
+      }
       fetchNoBlogList();
       fetchNoCommentsList();
       fetchPostNegativeList();
       fetchNoNegativeCommentsOnPostList();
+      fetchMaxPostOnDateList();
     }, [])
 
 
@@ -186,7 +202,7 @@ function UserPage() {
                   </div>
               ))}
 
-              <h5 style={{background: 'gray'}}>Users With No Negative Comment Posts:</h5>
+              <h5 style={{background: 'gray'}}>Users With No Negative Comments on there Posts:</h5>
               {noNegativeCommentsOnPostList.map((blog, i) => (
                   <div key={i}>
                     {blog.username ?
@@ -196,8 +212,15 @@ function UserPage() {
                   </div>
               ))}
 
-              <h5 style={{background: 'gray'}}>Users With Most Number of Blogs on 5/1/2022</h5>
-              <div style={{background: 'white'}}>TODO</div>
+              <h5 style={{background: 'gray'}}>Users With Most Number of Blogs on 04/12/2022</h5>
+              {maxPostOnDateList.map((blog, i) => (
+                  <div key={i}>
+                      {blog.username ?
+                          <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                          : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
+                      }
+                </div>
+              ))}
 
             </div>        
           </div>
