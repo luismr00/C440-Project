@@ -72,7 +72,6 @@ function UserPage() {
     }
   }, [authenticated]);
 
-  useEffect(() => {
     const fetchNoBlogList = async () => {
         const res = await fetch("http://localhost:4000/api/noBlogList", {
             method: "GET",
@@ -89,9 +88,7 @@ function UserPage() {
     }
     fetchNoBlogList();
 
-}, []);
 
-  useEffect(() => {
     const fetchNoCommentsList = async () => {
         const res = await fetch("http://localhost:4000/api/noCommentsList", {
             method: "GET",
@@ -108,9 +105,7 @@ function UserPage() {
     }
     fetchNoCommentsList();
 
-}, []);
 
-useEffect(() => {
     const fetchPostNegativeList = async () => {
         const res = await fetch("http://localhost:4000/api/postNegativeList", {
             method: "GET",
@@ -127,9 +122,7 @@ useEffect(() => {
     }
     fetchPostNegativeList();
 
-});
 
-useEffect(() => {
     const fetchNoNegativeCommentsOnPostList = async () => {
         const res = await fetch("http://localhost:4000/api/noNegativeCommentsOnPostList", {
             method: "GET",
@@ -146,7 +139,6 @@ useEffect(() => {
     }
     fetchNoNegativeCommentsOnPostList();
 
-});
 
     return (
       <div className="App default">

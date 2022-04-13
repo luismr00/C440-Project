@@ -179,7 +179,7 @@ app.get('/api/blogs', (req, res) => {
 });
 
 app.get('/api/noBlogList', (req, res) => {
-    db.query("SELECT username FROM users WHERE username NOT IN (SELECT user_id FROM blog)", (err, result) => {
+    db.query("SELECT username FROM user WHERE username NOT IN (SELECT user_id FROM blog)", (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
@@ -192,7 +192,7 @@ app.get('/api/noBlogList', (req, res) => {
 });
 
 app.get('/api/noCommentsList', (req, res) => {
-    db.query("SELECT username FROM users WHERE username NOT IN (SELECT username FROM comment)", (err, result) => {
+    db.query("SELECT username FROM user WHERE username NOT IN (SELECT username FROM comment)", (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
