@@ -178,6 +178,58 @@ app.get('/api/blogs', (req, res) => {
     });
 });
 
+app.get('/api/noBlogList', (req, res) => {
+    db.query("SELECT username FROM users WHERE username NOT IN (SELECT user_id FROM blog)", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/noCommentsList', (req, res) => {
+    db.query("SELECT username FROM users WHERE username NOT IN (SELECT username FROM comment)", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/postNegativeList', (req, res) => {
+    db.query("SELECT user_id FROM rating WHERE user_id in ( SELECT user_id FROM comment WHERE rating = 0);", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/noNegativeCommentsOnPostList', (req, res) => {
+    db.query("SELECT username FROM user WHERE username NOT IN (SELECT username FROM comment where username IN (SELECT user_id FROM blog WHERE id IN (SELECT blog_id FROM rating WHERE rating = 1)));", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
 app.post('/api/:id/comment', (req, res) => {
     if(session.user != undefined && session.user != null) {
         const comment = req.body.comment;
