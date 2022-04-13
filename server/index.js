@@ -184,6 +184,8 @@ app.post('/api/:id/comment', (req, res) => {
         const blog_id = req.params.id.split(':')[1];
         const username = session.user.username;
         const date = new Date();
+        const rating = req.body.rating;
+        console.log("rating: " + rating)
         db.query("SELECT COUNT(date) from comment WHERE date > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND username = ?",[username], (err, result) => {
             if(err){
                 console.log(err)
@@ -203,11 +205,14 @@ app.post('/api/:id/comment', (req, res) => {
                                 }
                                 if(result[0]['count(id)'] == 0)
                                 {
-                                    db.query("INSERT INTO comment (comment, blog_id, username, date) VALUES(?, ?, ?, ?)",[
+                                    db.query("INSERT INTO comment (comment, blog_id, username, date) VALUES(?, ?, ?, ?); INSERT INTO rating (rating, blog_id, user_id) VALUES(?, ?, ?);",[
                                         comment,
                                         blog_id,
                                         username,
-                                        date
+                                        date,
+                                        rating,
+                                        blog_id,
+                                        username
                                     ], (err, result) => {
                                             if (err) {
                                                 console.log(err)
