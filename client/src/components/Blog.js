@@ -32,7 +32,7 @@ const Blog = () => {
             setComment("");
             setCommentList(newCommentList);
         } else {
-            console.log("comment failed");
+            console.log(data.err);
         }
     }
 

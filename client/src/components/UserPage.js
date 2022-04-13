@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 
 function UserPage() {
   const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
   const history = useHistory();
+  const location = useLocation();
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -43,27 +44,23 @@ function UserPage() {
 
   useEffect(() => {
     const fetchcookie = async () => {
-      try{
-        const res = await fetch("http://localhost:4000/", {
-          method: "GET",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-  
-        })
-        const data = await res.json();
-        if(data.user != null){
-          setAuthenticated(true);
-          setUser(data.user);
-          console.log(data.user)
-        } else {
-          console.log("user is not logged in");
-          setAuthenticated(false);
-          history.push("/");
-        }
-      } catch(err){
-        console.log("error: ", err);
+      const res = await fetch("http://localhost:4000/", {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+
+      })
+      const data = await res.json();
+      if(data.user != null){
+        setAuthenticated(true);
+        setUser(data.user);
+        console.log(data.user)
+      } else {
+        console.log("user is not logged in");
+        setAuthenticated(false);
+        history.push("/");
       }
     }
     if(!authenticated){

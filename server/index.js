@@ -111,14 +111,6 @@ app.post('/api/register', (req, res) => {
 });
 
 app.post('/api/initialize', (req, res) => {
-    // const initializeFile = fs.readFileSync(path.join(__dirname, './university.sql')).toString();
-    // db.query(initializeFile, (err, result) => {
-    //     if (err) throw err;
-    //     else {
-    //         console.log("DB initialized");
-    //         res.status(201).json({ success: true });
-    //     }
-    // })
 
     const initializeFile2 = fs.readFileSync(path.join(__dirname, './data.sql')).toString();
     db.query(initializeFile2, (err, result) => {
@@ -137,7 +129,7 @@ app.get('/logout',(req,res) => {
 });
 
 app.post('/api/create', (req, res) => {
-    if(typeof session.user !== undefined && session.user !== null) {
+    if(session.user !== undefined && session.user !== null) {
         const subject = req.body.subject;
         const description = req.body.description;
         const tags = req.body.tags;
@@ -193,6 +185,10 @@ app.post('/api/:id/comment', (req, res) => {
         const username = session.user.username;
         const date = new Date();
         db.query("SELECT COUNT(date) from comment WHERE date > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND username = ?",[username], (err, result) => {
+            if(err){
+                console.log(err)
+                res.status(400).json({ success: false, err: err });
+            }
             if(result[0]['COUNT(date)'] < 3) {
                 db.query("SELECT user_ID FROM blog WHERE id = ?", [blog_id], (err, result) => {
                     console.log("Query",result,username, blog_id);
@@ -201,6 +197,10 @@ app.post('/api/:id/comment', (req, res) => {
                             username,
                             blog_id,
                             ], (err, result) => {
+                                if(err){
+                                    console.log(err)
+                                    res.status(400).json({ success: false, err: err });
+                                }
                                 if(result[0]['count(id)'] == 0)
                                 {
                                     db.query("INSERT INTO comment (comment, blog_id, username, date) VALUES(?, ?, ?, ?)",[
@@ -220,19 +220,11 @@ app.post('/api/:id/comment', (req, res) => {
                                         }
                                     );
                                 }
-                                if(err){
-                                    console.log(err)
-                                    res.status(400).json({ success: false, err: err });
-                                }
                                 else{
                                     console.log("You have already commented on this post");
                                     res.status(400).json({ success: false, err: "You have already commented on this post" });
                                 }
                             });
-                    }
-                    if(err){
-                        console.log(err)
-                        res.status(400).json({ success: false, err: err });
                     }
                     else{
                         console.log("You cannot comment on your own post");
@@ -245,6 +237,7 @@ app.post('/api/:id/comment', (req, res) => {
                 res.status(400).json({ success: false, err: "You have already commented 3 times in 24 hours" });
             }
         });
+        
     } else {
         res.status(400).json({ success: false, err: "You must be logged in to comment" });
     }

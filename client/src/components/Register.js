@@ -86,7 +86,7 @@ function Register() {
   }, [authenticated]);
 
     return (
-      <div classname="default">
+      <div className="default">
         <div className="SignOrReg">
           <div className="form-title">
               <h2>Register</h2>
