@@ -251,7 +251,8 @@ app.post('/api/:id/comment', (req, res) => {
 app.get('/api/:id/comments', (req, res) => {
     const blog_id = req.params.id.split(':')[1];
 
-    db.query("SELECT * FROM comment WHERE blog_id = ?",[
+    db.query("SELECT * FROM comment ,rating WHERE comment.blog_id = ? AND rating.blog_id = ? AND rating.user_id = comment.username",[
+        blog_id,
         blog_id
     ], (err, result) => {
         if (err) {

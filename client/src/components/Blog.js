@@ -74,6 +74,7 @@ const Blog = () => {
                     <div className="card" style={{width: "50%", margin: '0 auto', marginBottom: '10px'}} key={i}>
                         <h6 className="card-title">username: {comments.username}</h6>
                         <p className="card-text">{comments.comment}</p>
+                        <p className="card-text">Rating: {comments.rating ==1?"Positive":"Negative" }</p>
                     </div>
                 )
             })}
