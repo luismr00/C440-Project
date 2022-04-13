@@ -143,23 +143,31 @@ app.post('/api/create', (req, res) => {
         const tags = req.body.tags;
         const date = new Date();
         const user_id = session.user.username;
-        db.query("INSERT INTO blog (subject, description, tags, date, user_id) VALUES(?, ?, ?, ?, ?)",[
-            subject,
-            description,
-            tags,
-            date,
-            user_id
-        ], (err, result) => {
-                if (err) {
-                    console.log(err)
-                    res.status(400).json({ success: false, err: err });
-                }
-                else {
-                    console.log("successfully created");
-                    res.status(201).json({ success: true });
-                }
+        db.query("SELECT COUNT(date) from blog WHERE date > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND user_id = ?",[user_id], (err, result) => {
+            if(result[0]['COUNT(date)'] < 2) {
+                db.query("INSERT INTO blog (subject, description, tags, date, user_id) VALUES(?, ?, ?, ?, ?)",[
+                    subject,
+                    description,
+                    tags,
+                    date,
+                    user_id
+                ], (err, result) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(400).json({ success: false, err: err });
+                        }
+                        else {
+                            console.log("successfully created");
+                            res.status(201).json({ success: true });
+                        }
+                    }
+                );
             }
-        );
+            else {
+                console.log("You have reached the limit of 2 post per 24 hours");
+                res.status(400).json({ success: false, err: "You have reached the limit of 2 post per 24 hours" });
+            }
+        });
     } else {
         res.status(400).json({ success: false, err: "You must be logged in to create a post" });
     }
