@@ -12,6 +12,7 @@ function UserPage() {
   const [noNegativeCommentsOnPostList, setNoNegativeCommentsOnPostList] = useState([]);
   const [maxPostOnDateList, setMaxPostOnDateList] = useState([]);
   const [HobbyList, setHobbyList] = useState("");
+  const [OneXOneYList, setOneXOneYList] = useState([]);
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -144,6 +145,22 @@ function UserPage() {
             setMaxPostOnDateList(data.blogs);
         }
       }
+
+      const fetchOneXOneYList = async () => {
+        const res = await fetch("http://localhost:4000/api/oneXOneYList", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await res.json();
+        if(data.blogs != null){
+            console.log("One X One Y List", data.blogs);
+            setOneXOneYList(data.blogs);
+        }
+      }
+      fetchOneXOneYList();
       fetchNoBlogList();
       fetchNoCommentsList();
       fetchPostNegativeList();
@@ -245,6 +262,22 @@ function UserPage() {
                       }
                 </div>
               ))}
+
+              <h5 style={{background: 'gray'}}>Users With Two Blogs and At Least One X and Y tag</h5>
+              {OneXOneYList.map((blog, i) => (
+                  <div key={i}>
+                      {blog.username ?
+                          <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                          : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
+                      }
+                </div>
+              ))}
+
+              <h5 style={{background: 'gray'}}>User Pairs With At Least One Shared Hobbies</h5>
+                  <div>
+                      <h6 style={{background: 'white', margin: '10px auto'}}>TODO</h6>
+                  </div>
+              
 
             </div>        
           </div>

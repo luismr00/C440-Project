@@ -201,6 +201,19 @@ app.get('/api/blogs', (req, res) => {
     });
 });
 
+app.get('/api/oneXOneYList', (req, res) => {
+    db.query("SELECT username from user where username in (SELECT user_id FROM blog where tags = 'Y') AND username in(SELECT user_id FROM blog where tags = 'X') ", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
 app.get('/api/noBlogList', (req, res) => {
     db.query("SELECT username FROM user WHERE username NOT IN (SELECT user_id FROM blog)", (err, result) => {
         if (err) {
