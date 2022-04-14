@@ -195,8 +195,8 @@ function UserPage() {
               <h5 style={{background: 'gray'}}>Users Who Post Negative Comments:</h5>
               {postNegativeList.map((blog, i) => (
                   <div key={i}>
-                    {blog.username ?
-                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                  {blog.user_id ?
+                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.user_id}</h6>
                     : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
                     }
                   </div>
