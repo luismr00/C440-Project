@@ -165,6 +165,29 @@ app.post('/api/create', (req, res) => {
     }
 })
 
+app.post('/api/hobby', (req, res) => {
+    if(session.user !== undefined && session.user !== null) {
+        const hobby = req.body.hobby;
+        const user_id = session.user.username;
+                db.query("INSERT INTO hobby (hobby, user_id) VALUES(?, ?)",[
+                    hobby,
+                    user_id
+                ], (err, result) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(400).json({ success: false, err: err });
+                        }
+                        else {
+                            console.log("successfully created");
+                            res.status(201).json({ success: true });
+                        }
+                    }
+                );
+    } else {
+        res.status(400).json({ success: false, err: "You must be logged in to create a post" });
+    }
+})
+
 app.get('/api/blogs', (req, res) => {
     db.query("SELECT * FROM blog", (err, result) => {
         if (err) {

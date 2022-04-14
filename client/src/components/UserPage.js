@@ -11,6 +11,7 @@ function UserPage() {
   const [postNegativeList, setPostNegativeList] = useState([]);
   const [noNegativeCommentsOnPostList, setNoNegativeCommentsOnPostList] = useState([]);
   const [maxPostOnDateList, setMaxPostOnDateList] = useState([]);
+  const [HobbyList, setHobbyList] = useState("");
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -151,6 +152,29 @@ function UserPage() {
     }, [])
 
 
+    const postHobby = async (e) => {
+      e.preventDefault();
+      const res = await fetch("http://localhost:4000/api/hobby", {
+          method: "POST",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'credentials': 'include'
+          },
+          body: JSON.stringify({
+                  hobby: HobbyList,
+          }),
+          }) 
+          const data = await res.json();
+          if(data.success) {
+              console.log("create successful");
+              alert("Hobby added successfully");
+              setHobbyList("");
+          } else {
+              console.log("create failed");
+          }
+  }
+
     return (
       <div className="App default">
         { authenticated ?
@@ -163,9 +187,9 @@ function UserPage() {
             <br/>
             <br/>
             <h3>Hobbies</h3>
-            <form style={{margin: '0'}}>
+            <form style={{margin: '0'}} onSubmit={postHobby}>
                 <div style={{width: '42%', margin:'0 auto', display: 'flex',}} >
-                    <input style={{padding: '10px 0'}} type="text" placeholder="Hobby" />
+                <input type="text" placeholder="Hobby"  value={HobbyList} id="hobby" onChange={(e) => {setHobbyList(e.target.value)}}/>
                 </div>
                 <button>Add Hobby</button>
             </form>
