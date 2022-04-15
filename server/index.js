@@ -279,6 +279,19 @@ app.get('/api/maxPostOnDateList', (req, res) => {
     });
 });
 
+app.get('/api/userPairsWithSharedHobbies', (req, res) => {
+    db.query("SELECT user_id,hobby FROM hobby WHERE hobby IN (SELECT hobby FROM hobby GROUP BY hobby HAVING COUNT(hobby) > 1);", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
 app.post('/api/:id/comment', (req, res) => {
     if(session.user != undefined && session.user != null) {
         const comment = req.body.comment;

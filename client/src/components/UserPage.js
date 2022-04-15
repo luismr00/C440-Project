@@ -13,6 +13,7 @@ function UserPage() {
   const [maxPostOnDateList, setMaxPostOnDateList] = useState([]);
   const [HobbyList, setHobbyList] = useState("");
   const [OneXOneYList, setOneXOneYList] = useState([]);
+  const [userPairsWithSharedHobbiesList, setUserPairsWithSharedHobbiesList] = useState([]);
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -160,6 +161,23 @@ function UserPage() {
             setOneXOneYList(data.blogs);
         }
       }
+
+      const fetchUserPairsWithSharedHobbiesList = async () => {
+        const res = await fetch("http://localhost:4000/api/userPairsWithSharedHobbies", {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        })
+        const data = await res.json();
+        if(data.blogs != null){
+            console.log("User Pairs With Shared Hobbies List", data.blogs);
+            setUserPairsWithSharedHobbiesList(data.blogs);
+        }
+      }
+
+      fetchUserPairsWithSharedHobbiesList();
       fetchOneXOneYList();
       fetchNoBlogList();
       fetchNoCommentsList();
@@ -274,9 +292,15 @@ function UserPage() {
               ))}
 
               <h5 style={{background: 'gray'}}>User Pairs With At Least One Shared Hobbies</h5>
-                  <div>
-                      <h6 style={{background: 'white', margin: '10px auto'}}>TODO</h6>
-                  </div>
+              {userPairsWithSharedHobbiesList.map((blog, i) => (
+                  <div key={i}>
+                      {blog.user_id ?
+                          <h6 style={{background: 'white', margin: '10px auto'}}>{blog.user_id} {blog.hobby}</h6>
+                          : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
+                      }
+                </div>
+              ))}
+
               
 
             </div>        
