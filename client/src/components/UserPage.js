@@ -173,7 +173,22 @@ function UserPage() {
         const data = await res.json();
         if(data.blogs != null){
             console.log("User Pairs With Shared Hobbies List", data.blogs);
-            setUserPairsWithSharedHobbiesList(data.blogs);
+            let userPairsWithSharedHobbies = [];
+            data.blogs.forEach(element => {
+              let hobby = element.hobby;
+              let tmpuser = element.user_id;
+              let newHobby = { 
+                hobby: {
+                  users: [tmpuser],
+                }
+              };
+              if(userPairsWithSharedHobbies[hobby] == null){
+                userPairsWithSharedHobbies.push(newHobby);
+                console.log("new hobby appeneded", userPairsWithSharedHobbies);
+              }
+            });
+            console.log("hobbiiessss", userPairsWithSharedHobbiesList);
+            setUserPairsWithSharedHobbiesList(userPairsWithSharedHobbiesList);
         }
       }
 
@@ -254,8 +269,8 @@ function UserPage() {
               <h5 style={{background: 'gray'}}>Users Who Post Negative Comments:</h5>
               {postNegativeList.map((blog, i) => (
                   <div key={i}>
-                  {blog.user_id ?
-                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.user_id}</h6>
+                  {blog.username ?
+                    <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
                     : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
                     }
                   </div>
