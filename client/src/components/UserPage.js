@@ -14,6 +14,7 @@ function UserPage() {
   const [HobbyList, setHobbyList] = useState("");
   const [OneXOneYList, setOneXOneYList] = useState([]);
   const [userPairsWithSharedHobbiesList, setUserPairsWithSharedHobbiesList] = useState([]);
+  // const [seenHobby, setSeenHobby] = useState([]);
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -172,23 +173,30 @@ function UserPage() {
         })
         const data = await res.json();
         if(data.blogs != null){
-            console.log("User Pairs With Shared Hobbies List", data.blogs);
-            let userPairsWithSharedHobbies = [];
-            data.blogs.forEach(element => {
-              let hobby = element.hobby;
-              let tmpuser = element.user_id;
-              let newHobby = { 
-                hobby: {
-                  users: [tmpuser],
+            let seenHobby = [];
+            let tmpList = {}
+            // iterates through data.blogs and creates pairs of users with shared hobby
+            for(const element of data.blogs){
+                if(seenHobby.includes(element.hobby)){
+                    // if hobby is already in seenHobby, then add the user to the tmp object
+                    tmpList[element.hobby].push(element.user_id);
+                } else {
+                    // if hobby is not in seenHobby, then create a new object with the hobby as the key and the user as the value
+                    tmpList[element.hobby] = [element.user_id];
+                    seenHobby.push(element.hobby);
                 }
+            }
+            let tmpUserPairsWithSharedHobbiesList = [];
+            // iterate through tmpList and push each object to the userPairsWithSharedHobbiesList
+            for(const element in tmpList){
+              let tmp = {
+                hobby: element,
+                users: tmpList[element]
               };
-              if(userPairsWithSharedHobbies[hobby] == null){
-                userPairsWithSharedHobbies.push(newHobby);
-                console.log("new hobby appeneded", userPairsWithSharedHobbies);
-              }
-            });
-            console.log("hobbiiessss", userPairsWithSharedHobbiesList);
-            setUserPairsWithSharedHobbiesList(userPairsWithSharedHobbiesList);
+              tmpUserPairsWithSharedHobbiesList.push(tmp);
+            }
+            console.log("USER Pairs With Shared Hobbies List", tmpUserPairsWithSharedHobbiesList);
+            setUserPairsWithSharedHobbiesList(tmpUserPairsWithSharedHobbiesList);
         }
       }
 
@@ -307,13 +315,15 @@ function UserPage() {
               ))}
 
               <h5 style={{background: 'gray'}}>User Pairs With At Least One Shared Hobbies</h5>
-              {userPairsWithSharedHobbiesList.map((blog, i) => (
+              {userPairsWithSharedHobbiesList.map((hobby, i) => (
                   <div key={i}>
-                      {blog.user_id ?
-                          <h6 style={{background: 'white', margin: '10px auto'}}>{blog.user_id} {blog.hobby}</h6>
-                          : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
-                      }
-                </div>
+                      <h6 style={{background: 'black', margin: '10px auto', color: 'white'}}>HOBBY: {hobby.hobby}</h6>
+                      <div style={{display: 'flex'}} key={i}>
+                        {hobby.users.map((user, i) => (
+                          <h6 style={{background: 'white', margin: '10px auto', padding: '5px 10px'}} key={i}>{user}</h6>
+                        ))}
+                      </div>
+                  </div>
               ))}
 
               
