@@ -18,7 +18,7 @@ function UserPage() {
   const [HobbyList, setHobbyList] = useState("");
   const [OneXOneYList, setOneXOneYList] = useState([]);
   const [userPairsWithSharedHobbiesList, setUserPairsWithSharedHobbiesList] = useState([]);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date('2022-04-13'));
   // const [seenHobby, setSeenHobby] = useState([]);
 
   const Initialize = async () => {
@@ -241,8 +241,9 @@ function UserPage() {
           }
   }
   function dateFunction(date) {
+    let tmpDate = date.toLocaleDateString('en-ZA').toString()
     setDate(date);
-    fetchMaxPostOnDateList(date);
+    fetchMaxPostOnDateList(tmpDate);
   }
     return (
       <div className="App default">
