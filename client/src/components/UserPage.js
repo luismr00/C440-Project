@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PositiveBlogs from "./UserBlogs";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 
 function UserPage() {
@@ -15,6 +18,7 @@ function UserPage() {
   const [HobbyList, setHobbyList] = useState("");
   const [OneXOneYList, setOneXOneYList] = useState([]);
   const [userPairsWithSharedHobbiesList, setUserPairsWithSharedHobbiesList] = useState([]);
+  const [date, setDate] = useState(new Date());
   // const [seenHobby, setSeenHobby] = useState([]);
 
   const Initialize = async () => {
@@ -233,7 +237,7 @@ function UserPage() {
               console.log("create failed");
           }
   }
-
+    console.log(date.toLocaleDateString);
     return (
       <div className="App default">
         { authenticated ?
@@ -297,7 +301,8 @@ function UserPage() {
                   </div>
               ))}
 
-              <h5 style={{background: 'gray'}}>Users With Most Number of Blogs on 04/12/2022</h5>
+              <h5 style={{background: 'gray'}}>Users With Most Number of Blogs on {date.toLocaleDateString().toString()}</h5>
+              <DatePicker selected={date} onChange={date => setDate(date)} />
               {maxPostOnDateList.map((blog, i) => (
                   <div key={i}>
                       {blog.username ?
