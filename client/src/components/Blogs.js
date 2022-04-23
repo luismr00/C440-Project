@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { useHistory } from "react-router-dom";
+// import PostiveBlogs from './UserBlogs';
 
 
 const Blogs = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
     const [BlogList,setBlogList] = useState([]);
+    //const [followedUser, setFollowedUser] = useState(null);
+    const [follower, setFollower] = useState(null);
 
     useEffect(() => {
         const fetchpost = async () => {
@@ -37,6 +40,7 @@ const Blogs = () => {
             })
             const data = await res.json();
             if(data.user != null){
+                setFollower(data.user.username);
                 setAuthenticated(true);
             } else {
                 console.log("user is not logged in");
@@ -49,8 +53,37 @@ const Blogs = () => {
         }
     }, [authenticated]);
 
+    const followUser = async (followedUser) => {
+        //setFollower(user);
+        console.log(follower + ' will now follow ' + followedUser);
+
+        //follower MUST NOT follow itself
+        if (follower != followedUser) {
+            const res = await fetch("http://localhost:4000/api/follow", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    followedUser: followedUser,
+                    follower: follower
+                }),
+            })
+            const data = await res.json();
+            if(data.success === true){
+                console.log('successfully followed the user');
+            }
+
+        } else {
+            console.log('following oneself is not permitted');
+        }
+
+    }
+
     return (
         <>
+        {/* {console.log(follower)} */}
         {authenticated ?
         <div className="default">
             <div>
@@ -58,6 +91,7 @@ const Blogs = () => {
                 {BlogList.map((blog,i) => {
                     return (
                         <div className="card" style={{width: "18rem", margin: '0 auto', marginBottom: '30px'}} key={i}>
+                        <button onClick={() => followUser(blog.user_id)}>Follow</button>
                         <div className="card-body">
                           <h5 className="card-title">Subject: {blog.subject}</h5>
                           <h6 className="card-subtitle mb-2 text-muted">Author: {blog.user_id}</h6>

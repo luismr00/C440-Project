@@ -128,6 +128,19 @@ app.get('/logout',(req,res) => {
     res.status(200).json({ success: true });
 });
 
+app.get('/api/users', (req, res) => {
+    db.query("SELECT * FROM user", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved all users");
+            res.status(201).json({ success: true, users: result });
+        }
+    });
+});
+
 app.post('/api/create', (req, res) => {
     if(session.user !== undefined && session.user !== null) {
         const subject = req.body.subject;
@@ -195,8 +208,26 @@ app.get('/api/blogs', (req, res) => {
             res.status(400).json({ success: false, err: err });
         }
         else {
-            console.log("successfully retrieved");
+            console.log("successfully retrieved searched user blogs");
             res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.post('/api/userBlogs', (req, res) => {
+
+    const userName = req.body.userName;
+
+    db.query("SELECT * FROM blog WHERE user_id = ?", [
+        userName
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result  });
         }
     });
 });
@@ -383,3 +414,49 @@ app.get('/api/:id/comments', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+app.post('/api/mutualFollowers', (req, res) => {
+
+    const user1 = req.body.user1;
+    const user2 = req.body.user2;
+
+    db.query("SELECT follower_id FROM followers WHERE user_id = ? AND follower_id IN (SELECT follower_id FROM followers WHERE user_id = ?)", [
+        user1,
+        user2
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, followers: result  });
+        }
+    });
+});
+
+app.post('/api/follow', (req, res) => {
+    const followedUser = req.body.followedUser;
+    const follower = req.body.follower;
+
+    console.log('received: ' + followedUser + ', ' + follower);
+    
+    db.query("INSERT INTO followers (user_id, follower_id) VALUES (?, ?)", [
+        followedUser,
+        follower,
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            if(err.code === 'ER_DUP_ENTRY') {
+                res.status(400).json({ success: false, err: "follower already exists" });
+            } else res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully added a follower");
+            //session = req.session;
+            //session.user = { username: username, firstName: firstName, lastName: lastName };
+            res.status(201).json({ success: true });
+        }
+    });
+});
+

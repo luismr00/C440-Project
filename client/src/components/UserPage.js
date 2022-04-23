@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import PositiveBlogs from "./UserBlogs";
 
 
 function UserPage() {
@@ -242,6 +243,8 @@ function UserPage() {
             <button onClick={Initialize}>Initialize Database</button>
             <button><Link to='/new-blog'>Create Blog Post</Link></button>
             <button><Link to='/blogs'>All Blogs</Link></button>
+            <button><Link to='/user-blogs'>Search Blogs</Link></button>
+            <button><Link to='/mutual-followers'>Search Mutual Followers</Link></button>
             <br/>
             <br/>
             <h3>Hobbies</h3>
@@ -325,6 +328,8 @@ function UserPage() {
                       </div>
                   </div>
               ))}
+
+              {/* <PositiveBlogs /> */}
 
               
 

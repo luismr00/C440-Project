@@ -46,4 +46,14 @@ CREATE TABLE `hobby` (
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 
+DROP TABLE IF EXISTS `followers`;
+CREATE TABLE `followers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(50) NOT NULL,
+  `follower_id` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES user(`username`),
+  FOREIGN KEY (`follower_id`) REFERENCES user(`username`)
+);
+
 SET FOREIGN_KEY_CHECKS = 1;
