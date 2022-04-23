@@ -138,20 +138,6 @@ function UserPage() {
             setNoBlogList(data.blogs);
         }
       }
-      const fetchMaxPostOnDateList = async () => {
-        const res = await fetch("http://localhost:4000/api/maxPostOnDateList", {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-        const data = await res.json();
-        if(data.blogs != null){
-            console.log("Max post on date list", data.blogs);
-            setMaxPostOnDateList(data.blogs);
-        }
-      }
 
       const fetchOneXOneYList = async () => {
         const res = await fetch("http://localhost:4000/api/oneXOneYList", {
@@ -211,9 +197,26 @@ function UserPage() {
       fetchNoCommentsList();
       fetchPostNegativeList();
       fetchNoNegativeCommentsOnPostList();
-      fetchMaxPostOnDateList();
+      fetchMaxPostOnDateList(null);
     }, [])
 
+    const fetchMaxPostOnDateList = async (date) => {
+      const res = await fetch("http://localhost:4000/api/maxPostOnDateList", {
+          method: "POST",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            date: date
+          })
+      })
+      const data = await res.json();
+      if(data.blogs != null){
+          console.log("Max post on date list", data.blogs);
+          setMaxPostOnDateList(data.blogs);
+      }
+    }
 
     const postHobby = async (e) => {
       e.preventDefault();
@@ -237,7 +240,10 @@ function UserPage() {
               console.log("create failed");
           }
   }
-    console.log(date.toLocaleDateString);
+  function dateFunction(date) {
+    setDate(date);
+    fetchMaxPostOnDateList(date);
+  }
     return (
       <div className="App default">
         { authenticated ?
@@ -301,8 +307,8 @@ function UserPage() {
                   </div>
               ))}
 
-              <h5 style={{background: 'gray'}}>Users With Most Number of Blogs on {date.toLocaleDateString().toString()}</h5>
-              <DatePicker selected={date} onChange={date => setDate(date)} />
+              <h5 style={{background: 'gray'}}>Users With Most Number of Blogs on {date.toLocaleDateString('en-ZA').toString()}</h5>
+              <DatePicker selected={date} onChange={date => dateFunction(date)} />
               {maxPostOnDateList.map((blog, i) => (
                   <div key={i}>
                       {blog.username ?

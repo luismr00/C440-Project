@@ -297,17 +297,34 @@ app.get('/api/noNegativeCommentsOnPostList', (req, res) => {
     });
 });
 
-app.get('/api/maxPostOnDateList', (req, res) => {
-    db.query("SELECT username, MAX(Total) as Highest from (SELECT user_id as username, COUNT(blog_id) as Total from (SELECT user_id, id as blog_id from blog WHERE date between '2022/04/12 00:00:00' AND '2022/04/12 23:59:59') as B GROUP BY username) as A;", (err, result) => {
-        if (err) {
-            console.log(err)
-            res.status(400).json({ success: false, err: err });
-        }
-        else {
-            console.log("successfully retrieved");
-            res.status(201).json({ success: true, blogs: result });
-        }
-    });
+app.post('/api/maxPostOnDateList', (req, res) => {
+    const date = req.body.date;
+    if (date === undefined || date === null) {
+        db.query("SELECT username, MAX(Total) as Highest from (SELECT user_id as username, COUNT(blog_id) as Total from (SELECT user_id, id as blog_id from blog WHERE date between '2022/04/12 00:00:00' AND '2022/04/12 23:59:59') as B GROUP BY username) as A;", (err, result) => {
+            if (err) {
+                console.log(err)
+                res.status(400).json({ success: false, err: err });
+            }
+            else {
+                console.log("successfully retrieved");
+                res.status(201).json({ success: true, blogs: result });
+            }
+        });
+    } else {
+        db.query("SELECT username, MAX(Total) as Highest from (SELECT user_id as username, COUNT(blog_id) as Total from (SELECT user_id, id as blog_id from blog WHERE date between ? AND ?) as B GROUP BY username) as A;",[
+            date + " 00:00:00",
+            date + " 23:59:59"
+        ], (err, result) => {
+            if (err) {
+                console.log(err)
+                res.status(400).json({ success: false, err: err });
+            }
+            else {
+                console.log("successfully retrieved");
+                res.status(201).json({ success: true, blogs: result });
+            }
+        });
+    }
 });
 
 app.get('/api/userPairsWithSharedHobbies', (req, res) => {
