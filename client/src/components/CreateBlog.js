@@ -32,6 +32,7 @@ const CreateBlog = () => {
                 setSubject("");
                 setTags("");
             } else {
+                alert(data?.err);
                 console.log("create failed");
             }
     }

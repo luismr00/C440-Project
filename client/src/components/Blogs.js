@@ -72,10 +72,15 @@ const Blogs = () => {
             })
             const data = await res.json();
             if(data.success === true){
+                alert("Followed successfully");
                 console.log('successfully followed the user');
+            }
+            else{
+                alert(data?.err);
             }
 
         } else {
+            alert("You cannot follow yourself");
             console.log('following oneself is not permitted');
         }
 

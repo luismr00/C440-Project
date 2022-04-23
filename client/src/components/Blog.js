@@ -24,6 +24,7 @@ const Blog = () => {
         })
         const data = await res.json();
         if(data.success) {
+            alert('Comment posted successfully');
             console.log("comment successful");
             let newCommentList = [...commentList];
             const newComment = {
@@ -34,6 +35,7 @@ const Blog = () => {
             setComment("");
             setCommentList(newCommentList);
         } else {
+            alert(data?.err);
             console.log(data.err);
         }
     }

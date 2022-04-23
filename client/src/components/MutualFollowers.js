@@ -60,6 +60,7 @@ const MutualFollowers = () => {
                 setFollowers(data.followers);
             }
         } else {
+            alert("Please select two users");
             console.log("must select two users");
         }
     }
