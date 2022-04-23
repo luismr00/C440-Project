@@ -440,23 +440,36 @@ app.post('/api/follow', (req, res) => {
     const follower = req.body.follower;
 
     console.log('received: ' + followedUser + ', ' + follower);
-    
-    db.query("INSERT INTO followers (user_id, follower_id) VALUES (?, ?)", [
+
+    db.query("SELECT COUNT(*) FROM followers WHERE user_id = ? AND follower_id = ?", [
         followedUser,
-        follower,
+        follower
     ], (err, result) => {
         if (err) {
             console.log(err)
-            if(err.code === 'ER_DUP_ENTRY') {
-                res.status(400).json({ success: false, err: "follower already exists" });
-            } else res.status(400).json({ success: false, err: err });
+            res.status(400).json({ success: false, err: err });
         }
         else {
-            console.log("successfully added a follower");
-            //session = req.session;
-            //session.user = { username: username, firstName: firstName, lastName: lastName };
-            res.status(201).json({ success: true });
+            console.log("successfully retrieved");
+            if(result[0]['COUNT(*)'] == 0) {
+                db.query("INSERT INTO followers (user_id, follower_id) VALUES(?, ?)", [
+                    followedUser,
+                    follower
+                ], (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(400).json({ success: false, err: err });
+                    }
+                    else {
+                        console.log("successfully created");
+                        res.status(201).json({ success: true, username: follower });
+                    }
+                });
+            }
+            else{
+                console.log("You are already following this user");
+                res.status(400).json({ success: false, err: "You are already following this user" });
+            }
         }
     });
 });
-
