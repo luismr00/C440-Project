@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 const MutualFollowers = () => {
     //const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
-    //const [BlogList,setBlogList] = useState([]);
     const [users, setUsers] = useState([]);
     const [user1, setuser1] = useState(null);
     const [user2, setuser2] = useState(null);
@@ -69,17 +68,17 @@ const MutualFollowers = () => {
         <>
             <div className="default">
                 <form className='positive-blogs' onSubmit={handleSubmit}>
-                    <label for="user-post-blogs">Find mutual followers between two users:</label>
+                    <label htmlFor="user-post-blogs">Find mutual followers between two users:</label>
                     <select name="user1" id="user1" onChange={event => setuser1(event.target.value)}>
                         <option value="null">Select user</option>
                         {users.map((user, key) => ( 
-                            <option value={user.username} id={key} >{user.username}</option>
+                            <option value={user.username} id={key} key={key}>{user.username}</option>
                         ))}
                     </select>
                     <select name="user2" id="user2" onChange={event => setuser2(event.target.value)}>
                         <option value="null">Select user</option>
                         {users.map((user, key) => ( 
-                            <option value={user.username} id={key} >{user.username}</option>
+                            <option value={user.username} id={key} key={key}>{user.username}</option>
                         ))}
                     </select>
                     <button type="submit" value="Submit">Submit</button>
@@ -90,7 +89,7 @@ const MutualFollowers = () => {
                 {followers.length != 0 ? 
                     followers.map((follower,i) => {
                         return (
-                            <p>{follower.follower_id}</p>
+                            <p key={i}>{follower.follower_id}</p>
                         )
                     })
                     
