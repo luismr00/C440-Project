@@ -7,7 +7,6 @@ const Blogs = () => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
     const [BlogList,setBlogList] = useState([]);
-    //const [followedUser, setFollowedUser] = useState(null);
     const [follower, setFollower] = useState(null);
 
     useEffect(() => {
@@ -54,7 +53,6 @@ const Blogs = () => {
     }, [authenticated]);
 
     const followUser = async (followedUser) => {
-        //setFollower(user);
         console.log(follower + ' will now follow ' + followedUser);
 
         //follower MUST NOT follow itself
@@ -88,7 +86,6 @@ const Blogs = () => {
 
     return (
         <>
-        {/* {console.log(follower)} */}
         {authenticated ?
         <div className="default">
             <div>

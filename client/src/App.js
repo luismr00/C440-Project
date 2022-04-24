@@ -7,7 +7,6 @@ import CreateBlog from './components/CreateBlog';
 import Blogs from './components/Blogs';
 import Blog from './components/Blog';
 import UserBlogs from './components/UserBlogs';
-import SearchedBlog from './components/SearchedBlog';
 import MutualFollowers from './components/MutualFollowers';
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
           <Route exact path={"/blogs"} component={Blogs} />
           <Route exact path={"/blog/:id"} component={Blog} />
           <Route exact path={"/user-blogs"} component={UserBlogs} />
-          <Route exact path={"/user-blog/:id"} component={SearchedBlog} />
           <Route exact path={"/mutual-followers"} component={MutualFollowers} />
         </Switch>
       </div>

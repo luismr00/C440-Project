@@ -232,6 +232,21 @@ app.post('/api/userBlogs', (req, res) => {
     });
 });
 
+app.post('/api/user-blogs-positive', (req, res) => {
+    const userName = req.body.userName;
+    db.query("select * from blog where id not in (select blog_id from rating where rating = 0) and user_id = ?;", [
+        userName
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            console.log("successfully retrieved");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    })
+});
+
 app.post('/api/oneXOneYList', (req, res) => {
     const tagx = req.body.tagx;
     const tagy = req.body.tagy;
