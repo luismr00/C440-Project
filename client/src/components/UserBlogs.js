@@ -63,7 +63,7 @@ const UserBlogs = () => {
         <>
             <div className="default">
                 <form className='positive-blogs' onSubmit={handleSubmit}>
-                    <label for="user-post-blogs">Find positive blogs from a user:</label>
+                    <label htmlFor="user-post-blogs">Find positive blogs from a user:</label>
                     <select name="username" id="username" onChange={event => setUsername(event.target.value)}>
                         {/* <option value="volvo">Volvo</option>
                         <option value="saab">Saab</option>
@@ -71,13 +71,13 @@ const UserBlogs = () => {
                         <option value="audi">Audi</option> */}
                         <option value="null">Select user</option>
                         {users.map((user, key) => ( 
-                            <option value={user.username} id={key} >{user.username}</option>
+                            <option value={user.username} id={key} key={key}>{user.username}</option>
                         ))}
                     </select>
                     <button type="submit" value="Submit">Submit</button>
                 </form>
 
-                {userBlogs.length != 0 ? 
+                {userBlogs.length !== 0 ? 
                     // <div>render blogs</div> 
                     userBlogs.map((blog,i) => {
                         return (

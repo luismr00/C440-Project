@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import PositiveBlogs from "./UserBlogs";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -19,7 +18,8 @@ function UserPage() {
   const [OneXOneYList, setOneXOneYList] = useState([]);
   const [userPairsWithSharedHobbiesList, setUserPairsWithSharedHobbiesList] = useState([]);
   const [date, setDate] = useState(new Date('2022-04-13'));
-  // const [seenHobby, setSeenHobby] = useState([]);
+  const [tagx, setTagx] = useState("X");
+  const [tagy, setTagy] = useState("Y");
 
   const Initialize = async () => {
     const res = await fetch("http://localhost:4000/api/initialize", {
@@ -139,21 +139,6 @@ function UserPage() {
         }
       }
 
-      const fetchOneXOneYList = async () => {
-        const res = await fetch("http://localhost:4000/api/oneXOneYList", {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-        const data = await res.json();
-        if(data.blogs != null){
-            console.log("One X One Y List", data.blogs);
-            setOneXOneYList(data.blogs);
-        }
-      }
-
       const fetchUserPairsWithSharedHobbiesList = async () => {
         const res = await fetch("http://localhost:4000/api/userPairsWithSharedHobbies", {
             method: "GET",
@@ -199,6 +184,25 @@ function UserPage() {
       fetchNoNegativeCommentsOnPostList();
       fetchMaxPostOnDateList(null);
     }, [])
+
+    const fetchOneXOneYList = async () => {
+      const res = await fetch("http://localhost:4000/api/oneXOneYList", {
+          method: "POST",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            tagx: tagx,
+            tagy: tagy,
+          })
+      })
+      const data = await res.json();
+      if(data.blogs != null){
+        console.log("One X One Y List", data.blogs);
+        setOneXOneYList(data.blogs);
+      }
+    }
 
     const fetchMaxPostOnDateList = async (date) => {
       const res = await fetch("http://localhost:4000/api/maxPostOnDateList", {
@@ -319,15 +323,18 @@ function UserPage() {
                 </div>
               ))}
 
-              <h5 style={{background: 'gray'}}>Users With Two Blogs and At Least One X and Y tag</h5>
-              {OneXOneYList.map((blog, i) => (
+              <h5 style={{background: 'gray'}}>Search users With Two Blogs, Atleast One X & Y tag</h5>
+              <form onSubmit={(e) => {e.preventDefault(); fetchOneXOneYList()}}>
+                <input type="text" placeholder="Enter tag 1"  value={tagx} id="tagx" onChange={(e) => {setTagx(e.target.value)}}/>
+                <input type="text" placeholder="Enter tag 2"  value={tagy} id="tagy" onChange={(e) => {setTagy(e.target.value)}}/>
+                <button>Search</button>
+              </form>
+              {OneXOneYList.length > 0 && OneXOneYList.map((blog, i) => (
                   <div key={i}>
-                      {blog.username ?
-                          <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
-                          : <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>
-                      }
-                </div>
+                      <h6 style={{background: 'white', margin: '10px auto'}}>{blog.username}</h6>
+                  </div>
               ))}
+              {OneXOneYList.length === 0 && <h6 style={{background: 'white', margin: '10px auto'}}>NONE</h6>}
 
               <h5 style={{background: 'gray'}}>User Pairs With At Least One Shared Hobbies</h5>
               {userPairsWithSharedHobbiesList.map((hobby, i) => (
@@ -340,11 +347,6 @@ function UserPage() {
                       </div>
                   </div>
               ))}
-
-              {/* <PositiveBlogs /> */}
-
-              
-
             </div>        
           </div>
           : 
