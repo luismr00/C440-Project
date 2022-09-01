@@ -35,10 +35,10 @@ Luis Rangel worked on UI such as form entry and password validation.
 
 Tristin Greenstein worked on React.js front end and bug fixes on both UI and database.
 
-## Part 1
+### Part 1
 
-# https://youtu.be/MTyv9AaGbac
+### https://youtu.be/MTyv9AaGbac
 
-## Part 2
+### Part 2
 
-# https://www.youtube.com/watch?v=qy6Y1D7DoHM
+### https://www.youtube.com/watch?v=qy6Y1D7DoHM
