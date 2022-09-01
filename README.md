@@ -42,3 +42,7 @@ Tristin Greenstein worked on React.js front end and bug fixes on both UI and dat
 ### Part 2
 
 ### https://www.youtube.com/watch?v=qy6Y1D7DoHM
+
+### Part 3
+
+### https://www.youtube.com/watch?v=487r3n4J9a8
