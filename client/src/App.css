@@ -1,9 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Marhey&display=swap');
+
+h1, h2, h3, h4, h5, h6, p, label {
+  margin: 0;
+}
+
+.sidebar h1 {
+  font-family: 'Marhey', cursive;
+  font-size: 42px;
+  color: red;
+}
+
+/* html, body {margin: 0; height: 100%; overflow: hidden} */
+
+
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
-  height: 40vmin;
+  /* height: 40vmin; */
   pointer-events: none;
 }
 
@@ -15,7 +30,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,11 +52,19 @@
   }
 }
 .default{
-  background-image: url("https://img.freepik.com/free-photo/green-grass-with-sun-beam-sunset-soft-focus_117265-929.jpg");
+  /* background-image: url("https://img.freepik.com/free-photo/green-grass-with-sun-beam-sunset-soft-focus_117265-929.jpg"); */
+  background-color: white;
   background-size: cover;
-  height: 1080px;
-  background-repeat: no-repeat;
+  /* height: 1080px; */
+  /* background-repeat: no-repeat; */
 }
+
+.darken {
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  /* background: rgb(0, 0, 0, .5); */
+  /* opacity: 0.2; */
+}
+
 .SignOrReg {
   background-image: url("https://media.istockphoto.com/photos/light-blue-watercolor-background-picture-id1301156172?b=1&k=20&m=1301156172&s=170667a&w=0&h=Ag7FeKGlohIwsKuJqTU180CL01lSGQieqEWv6mKK4n4=");
   margin: 0 auto;
@@ -57,8 +80,8 @@ form {
 }
 
 label {
-  display: block;
-  padding: 5px 0;
+  /* display: block; */
+  /* padding: 5px 0; */
 }
 
 input {
@@ -74,10 +97,325 @@ button {
 
 h2 {
   margin: 0;
-  color: white;
+  /* color: white; */
 }
 
 .form-title {
   background-color: black;
   padding: 10px;
 }
+
+.three-way-grid {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  /* opacity: 0.5; */
+  /* flex-wrap: nowrap; */
+  /* align-items: stretch; */
+  /* height: 100%; */
+}
+
+.right-grids {
+  display: flex;
+  justify-content: space-around;
+}
+
+.sidebar {
+  /* flex-grow: 1; */
+  /* position: fixed; */
+  width: 350px;
+  padding: 30px 0 10px 50px;
+}
+
+.sidebar {
+  /* padding: 10px 0 10px 50px; */
+}
+
+.navigations {
+  margin: 30px 0;
+}
+
+.navigations h2 {
+  display: inline-block;
+  margin: 0;
+}
+
+.icon {
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+  margin: 0 10px 15px 0;
+  /* background-color: red; */
+}
+
+.post-button {
+  padding: 8px 3px;
+  background-color: red;
+  text-align: center;
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  width: 200px;
+  font-size: 21px;
+  border: none;
+}
+
+.main-menu {
+  position: fixed;
+}
+
+.main-options {
+  /* padding: 35px; */
+}
+
+.main-options h2 {
+  /* padding: 15px 3px; */
+}
+
+.user-options {
+  /* position: fixed; */
+  /* bottom: 0;
+  width: 350px;
+  display: flex;
+  justify-content: space-between; */
+  position: fixed;
+  /* margin-right: 15px; */
+  bottom: 0;
+  width: 200px;
+  display: flex;
+  /* justify-content: space-evenly; */
+  padding: 30px 0;
+}
+
+/* Hides for google chrome but test with other browsers hiding the scroll bar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.column {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100vh;
+  /* width: 50%; */
+  /* float: left; */
+}
+
+.following {
+  /* flex-grow: 1;   */
+  width: 350px; 
+  /* padding: 30px 0 10px 20px; */
+  /* padding: 28px 20px 15px; */
+  /* overflow: scroll; */
+}
+
+.following-header {
+  padding: 28px 20px 15px;
+}
+
+.home-blogs {
+  flex-grow: 1;
+  border-color: #d4d4d4;
+  border-left-style: solid;
+  border-right-style: solid;
+  border-width: 1px;
+  /* overflow: scroll; */
+  max-width: 750px;
+  /* padding: 10px 20px 10px 20px; */
+}
+
+.main-header {
+  padding: 28px 20px 15px;
+  border-bottom: solid #E9E9E9;
+}
+
+.select-button {
+  /* background-color: #E9E9E9; */
+  /* border-radius: 15px; */
+  /* height: 20px; */
+  padding: 20px 0;
+}
+
+.select-button div {
+  background-color: #E9E9E9;
+  border-radius: 15px;
+  /* width: 100%; */
+  padding: 8px 0; 
+  /* background-color: #E9E9E9;  */
+  margin: 0 50px;
+  /* width: 85%; */
+  /* margin: 0 30px; */
+}
+
+.select-button p {
+  margin: 0;
+  text-align: center;
+}
+
+.carta {
+  /* width: "18rem"; 
+  margin: '0 auto'; 
+  margin-bottom: '30px'; */
+  /* max-width: 700px; */
+  margin: 0 50px;
+  /* max-width: 50%; */
+  border: solid #E9E9E9;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  /* padding: 20px; */
+}
+
+.carta-body {
+  padding: 20px;
+}
+
+.carta-bottom {
+  display: inline-block;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  /* margin-top: 10px; */
+}
+
+.carta-text {
+  margin-top: 10px;
+}
+
+
+/* .home-blogs, h1 {
+  padding: 10px 0 10px 20px;
+} */
+
+.user-bar {
+  /* position: fixed; */
+  /* margin-right: 15px; */
+  /* bottom: 0; */
+  width: 100%;
+  display: flex;
+  /* justify-content: space-evenly; */
+  padding: 16px;
+}
+
+.post {
+  position: fixed;
+  /* display: flex; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 300px;
+  background-color: white;
+  border-radius: 15px;
+  /* border: solid; */
+  /* Fade screen while highlighting this div */
+  box-shadow: 0 0 0 1000px rgba(0,0,0,.3);
+  /* for real browsers */
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
+  /* pointer-events: none; */
+}
+
+.blog-switch {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  /* height: 200px; */
+  background-color: white;
+  border-radius: 15px;
+  /* Fade screen while highlighting this div */
+  box-shadow: 0 0 0 1000px rgba(0,0,0,.3);
+  /* for real browsers */
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
+  /* pointer-events: none; */
+}
+
+.blog-switch-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 25px;
+}
+
+.blog-switch input {
+  color: red;
+}
+
+.post-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 25px;
+}
+
+.post-text {
+  /* padding: 10px; */
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  height: 100%;
+}
+
+.submit-button {
+  width: 100px;
+  border: none;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border-radius: 15px;
+  float: right;
+}
+
+.save-button {
+  width: 80px;
+  border: none;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border-radius: 15px;
+  float: right;
+}
+
+.center-button {
+  /* text-align: center; */
+  margin: 0 auto;
+  /* position: absolute; */
+  /* top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
+}
+
+.select-button {
+  cursor: pointer;
+}
+
+.close-selection img {
+  float: right;
+}
+
+.close-selection {
+  padding: 8px;
+}
+
+textarea {
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.post-header {
+  padding: 0 2px 5px;
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  color: red;
+}
+
+.close {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+/* .post-header label */

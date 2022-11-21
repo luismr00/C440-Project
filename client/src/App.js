@@ -18,7 +18,7 @@ function App() {
           <Route exact path={"/register"} component={Register} />
           <Route exact path={"/userpage"} component={UserPage} />
           <Route exact path={"/new-blog"} component={CreateBlog} />
-          <Route exact path={"/blogs"} component={Blogs} />
+          {/* <Route exact path={"/blogs"} component={Blogs} /> */}
           <Route exact path={"/blog/:id"} component={Blog} />
           <Route exact path={"/user-blogs"} component={UserBlogs} />
           <Route exact path={"/mutual-followers"} component={MutualFollowers} />
