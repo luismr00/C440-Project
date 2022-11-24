@@ -4,6 +4,15 @@ h1, h2, h3, h4, h5, h6, p, label {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: black;
+}
+
 .sidebar h1 {
   font-family: 'Marhey', cursive;
   font-size: 42px;
@@ -140,6 +149,11 @@ h2 {
   margin: 0;
 }
 
+.navigations div {
+  display: inline-block;
+  cursor: pointer;
+}
+
 .icon {
   height: 35px;
   width: 35px;
@@ -172,7 +186,7 @@ h2 {
   /* padding: 15px 3px; */
 }
 
-.user-options {
+.user-button {
   /* position: fixed; */
   /* bottom: 0;
   width: 350px;
@@ -180,11 +194,73 @@ h2 {
   justify-content: space-between; */
   position: fixed;
   /* margin-right: 15px; */
-  bottom: 0;
-  width: 200px;
+  bottom: 20px;
+  width: 250px;
   display: flex;
   /* justify-content: space-evenly; */
-  padding: 30px 0;
+  /* padding: 30px 0; */
+  /* background-color: #d4d4d4; */
+  border-radius: 30px;
+  height: 65px;
+  padding: 8px 12px;
+  /* width: 200; */
+  cursor: pointer;
+}
+
+.user-button img {
+  width: 50px;
+  height: 50px;
+}
+
+.user-button p {
+  font-size: 20px; 
+  /* margin: 8px 0 0 15px; */
+  flex-grow: 2;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* text-align: center; */
+  margin: 10px 0 10px 20px;
+}
+
+.user-button:hover {
+  background-color: #D4D4D4;
+
+}
+
+.user-options {
+  position: fixed;
+  bottom: 100px;
+  width: 230px;
+  margin-left: 10px;
+  /* border: solid red; */
+  background-color: red;
+  color: white;
+  border-width: 1px;
+  /* margin: 10px; */
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* For the small pointer below user-options div */
+.user-options:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-top-color: red;
+	border-bottom: 0;
+	margin-left: -15px;
+	margin-bottom: -15px;
+}
+
+.user-options p {
+  padding: 10px;
+  text-align: center;
 }
 
 /* Hides for google chrome but test with other browsers hiding the scroll bar */
@@ -212,14 +288,25 @@ h2 {
   padding: 28px 20px 15px;
 }
 
-.home-blogs {
-  flex-grow: 1;
+.main-display {
   border-color: #d4d4d4;
   border-left-style: solid;
   border-right-style: solid;
   border-width: 1px;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  /* border-color: #d4d4d4;
+  border-left-style: solid;
+  border-right-style: solid;
+  border-width: 1px; */
   /* overflow: scroll; */
-  max-width: 750px;
+  /* max-width: 750px; */
+  /* min-width: 600px; */
+  width: 750px;
+  /* min-height: 100vh; */
   /* padding: 10px 20px 10px 20px; */
 }
 
@@ -293,6 +380,61 @@ h2 {
   display: flex;
   /* justify-content: space-evenly; */
   padding: 16px;
+}
+
+.search-select {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  /* height: 200px; */
+  background-color: white;
+  border-radius: 15px;
+  /* Fade screen while highlighting this div */
+  box-shadow: 0 0 0 1000px rgba(0,0,0,.3);
+  /* for real browsers */
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
+  /* pointer-events: none; */
+}
+
+.search-selection-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 3px;
+}
+
+.header-selection {
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 25px;
+  border-radius: 10px 10px 0 0;
+}
+
+.header-selection .close {
+  margin: 5px 0;
+}
+
+.header-selection h3, .header-selection img {
+  /* justify-content: space-between; */
+  /* padding: 10px; */
+}
+
+.search-option {
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.search-option p {
+  padding-left: 20px;
+}
+
+.search-option:hover {
+  background-color: #D4D4D4;
+  border-radius: 10px;
 }
 
 .post {
@@ -374,11 +516,34 @@ h2 {
   font-weight: bold;
   border-radius: 15px;
   float: right;
+  margin: 0 auto;
+}
+
+/* Change continue to back */
+.continue-button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  float: right;
+  margin: 0 auto;
+}
+
+.search-selection-body input {
+  height: 40px;
+  border-radius: 20px;
+  /* border-color: red; */
+  border: solid red;
+  text-indent: 10px;
 }
 
 .center-button {
   /* text-align: center; */
   margin: 0 auto;
+  padding: 12px 0;
   /* position: absolute; */
   /* top: 50%;
   left: 50%;
@@ -419,3 +584,260 @@ textarea {
 }
 
 /* .post-header label */
+
+.hobby-lists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 50px;
+}
+
+.hobby-option {
+  width: 185px;
+  /* background-color: #D4D4D4; */
+  padding: 5px 0;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+/* .hobby-option:hover {
+  background-color: red;
+  color: white;
+} */
+
+.hobby-header {
+  margin: 5px 52px 30px;
+}
+
+.save-hobbies {
+  position: fixed;
+  width: 600px;
+  /* height: 50px; */
+  padding: 5px 15px ;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  /* background-color:#AAAAAA; */
+  border: solid red;
+  border-radius: 5px;
+  /* color: white; */
+}
+
+.save-hobbies p {
+  margin: 7px 0;
+}
+
+.hobby-buttons button {
+  /* position: fixed; */
+  width: 100px;
+  height: 40px;
+  border: none;
+  /* background-color: red; */
+  /* color: white; */
+  font-weight: bold;
+  border-radius: 3px;
+  /* float: right; */
+  margin: 0 10px;
+}
+
+.hobby-save {
+  background-color: red;
+  color: white;
+}
+
+.hobby-clear {
+  background-color: #D4D4D4;
+  color: black;
+}
+
+.profile-header {
+  border: solid #d4d4d4;
+  border-width: 2px;
+  margin: 20px 50px;
+  border-radius: 15px;
+  /* height: 200px; */
+}
+
+.profile-header-body {
+  padding: 20px;
+  display: flex;
+  /* justify-content: center; */
+}
+
+.profile-header-image img {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-header-text {
+  padding: 0 20px;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* .profile-header-text div {
+  padding-bottom: 30px;
+} */
+
+.profile-header-top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.profile-header-follows {
+  display: flex;
+  margin-top: 20px;
+  /* margin-right: 20px; */
+  /* justify-content: space-between; */
+}
+
+.profile-header-follows p {
+  padding-right: 25px;
+  font-weight: bold;
+}
+
+.follow-button {
+  background-color: red;
+  text-align: center;
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  width: 150px;
+  font-size: 18px;
+  border: none;
+  margin: 0;
+}
+
+.comment {
+  border-color: #D4D4D4;
+  border-bottom-style: solid;
+  border-width: 1px;
+  
+}
+
+.comment-body {
+  padding: 20px;
+}
+
+.comment-title {
+  font-weight: bold;
+}
+
+.comment-bottom {
+  display: inline-block;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  border-color: #D4D4D4;
+  border-bottom-style: solid;
+  border-width: 1px;
+  /* margin-top: 10px; */
+}
+
+.comment-text {
+  margin-top: 15px;
+}
+
+.comment-info {
+  margin: 10px 0;
+}
+
+.comment-reply {
+  border-color: #D4D4D4;
+  border-bottom-style: solid;
+  border-width: 1px;
+  /* overflow: auto; */
+  padding: 20px;
+}
+
+.comment-reply-text {
+    /* border: 1px solid black; */
+    /* max-height: 500px; */
+    /* overflow: auto; */
+}
+
+/* div[contenteditable]{
+  border: 1px solid black;
+  max-height: 200px;
+  overflow: auto;
+} */
+
+.comment-reply-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.comment-ratings {
+  display: flex;
+  padding: 7px 0;
+
+}
+
+.comment-button {
+  background-color: red;
+  text-align: center;
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  width: 120px;
+  font-size: 18px;
+  border: none;
+  margin: 0;
+  padding: 7px 0;
+}
+
+.rating-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 12px;
+  /* filter: invert(67%) sepia(89%) saturate(7492%) hue-rotate(346deg) brightness(84%) contrast(146%); */
+  /* fill: red; */
+  cursor: pointer;
+}
+
+.comment-rating-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.comment-header {
+  display: flex;
+}
+
+.comment-header img {
+  margin-left: 10px;
+}
+
+/* .rating-icon {
+  fill: red;
+} */
+
+.user-search {
+  margin: 0 50px;
+  /* max-width: 50%; */
+  border: solid #E9E9E9;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  border: solid #D4D4D4;
+}
+
+.user-search-body {
+  display: flex;
+  padding: 20px;
+}
+
+.user-search-text {
+  margin-left: 10px;
+}
+
+.user-search-text h5{
+  font-weight: bold;
+}

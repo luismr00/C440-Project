@@ -96,7 +96,7 @@ const Blogs = () => {
                             <h6 className="carta-subtitle" style={{color: 'red'}}>by {blog.user_id}</h6>
                             <p className="carta-text">{blog.description}</p>
                             <div className='carta-bottom'>
-                                <p className="carta-text" onClick={() => {history.push(`/blog/:${blog.id}`, {state: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>Comments</p>
+                                <p className="carta-text" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>Comments</p>
                                 <p className="carta-text">Likes</p>
                                 <p className="carta-text">Disikes</p>
                                 <p className="carta-text">Tags: {blog.tags}</p>

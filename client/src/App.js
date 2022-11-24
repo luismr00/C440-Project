@@ -5,9 +5,12 @@ import Register from './components/Register';
 import UserPage from './components/UserPage';
 import CreateBlog from './components/CreateBlog';
 import Blogs from './components/Blogs';
-import Blog from './components/Blog';
+import Blog from './pages/Blog';
 import UserBlogs from './components/UserBlogs';
 import MutualFollowers from './components/MutualFollowers';
+import Search from './pages/Search';
+import Hobbies from './pages/Hobbies';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Route exact path={"/blog/:id"} component={Blog} />
           <Route exact path={"/user-blogs"} component={UserBlogs} />
           <Route exact path={"/mutual-followers"} component={MutualFollowers} />
+          <Route exact path={"/search"} component={Search} />
+          <Route exact path={"/hobbies"} component={Hobbies} />
+          <Route exact path={"/profile/:username"} component={Profile} />
         </Switch>
       </div>
     </Router>

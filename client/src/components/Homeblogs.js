@@ -3,8 +3,8 @@ import Blogs from "./Blogs";
 
 function Homeblogs(props) { 
     return (
-        <div className="column">
-        <div className="home-blogs">
+        <div className="column main-display">
+        <div className="main-content">
             <div className="main-header">
                 <h1>Home</h1>
             </div>

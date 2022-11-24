@@ -370,6 +370,9 @@ app.post('/api/:id/comment', (req, res) => {
         const rating = req.body.rating;
         console.log("rating: " + rating)
         db.query("SELECT COUNT(date) from comment WHERE date > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND username = ?",[username], (err, result) => {
+            console.log("Here is the result variable returning");
+            console.log(result);
+            console.log("Here is the blog id " + blog_id);
             if(err){
                 console.log(err)
                 res.status(400).json({ success: false, err: err });

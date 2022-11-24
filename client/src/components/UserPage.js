@@ -275,7 +275,7 @@ function UserPage() {
           <Post postWindow = {postWindow} showPostWindow={setPostWindow}/>
           <BlogSelection blogSelection={blogSelection} setBlogSelection={setBlogSelection}/> 
           <div className="three-way-grid">
-            <Sidebar user = {user} showPostWindow={setPostWindow} />
+            <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <div className="right-grids"> */}
               <Homeblogs user = {user} setBlogSelection={setBlogSelection}/>
               <Followings />
