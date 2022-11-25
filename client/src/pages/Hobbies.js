@@ -107,7 +107,7 @@ function Hobbies() {
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <SearchDisplay user={user} setSearchSelection={setSearchSelection}/> */}
             <HobbiesDisplay user={user}/>
-            <Followings />
+            <Followings user={user} />
           </div>
         </div>
           : 

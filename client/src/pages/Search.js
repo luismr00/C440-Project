@@ -105,7 +105,7 @@ function Search() {
           <div className="three-way-grid">
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             <SearchDisplay user={user} setSearchSelection={setSearchSelection}/>
-            <Followings />
+            <Followings user={user} />
           </div>
         </div>
           : 

@@ -89,7 +89,7 @@ function Blog() {
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <ProfileDisplay user={user} /> */}
             <BlogDisplay />
-            <Followings />
+            <Followings user={user} />
           </div>
         </div>
           : 

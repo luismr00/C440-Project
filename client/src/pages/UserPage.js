@@ -300,7 +300,7 @@ function UserPage() {
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <div className="right-grids"> */}
               <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList}/>
-              <Followings />
+              <Followings user={user} />
             {/* </div> */}
             {/* <button onClick={logout}>Logout</button> */}
           </div>

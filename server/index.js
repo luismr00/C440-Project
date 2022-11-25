@@ -514,3 +514,63 @@ app.post('/api/follow', (req, res) => {
         }
     });
 });
+
+
+app.get('/api/profile/:username', (req, res) => {
+
+    const username = req.params.username.split(':')[0];
+    let userInfo = null;
+    let hobbies = null;
+
+    console.log('received: ' + username);
+
+    db.query("SELECT username, first_name, last_name FROM user WHERE username = ?", [
+        username
+    ], (err, result) => { 
+        // console.log(userInfo[0]['lastName']);
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            userInfo = result;
+        }
+    });
+
+    db.query("SELECT hobby FROM hobby WHERE user_id = ?;", [
+        username
+    ], (err, result) => { 
+        // console.log(userInfo[0]['lastName']);
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            hobbies = result;
+            console.log("successfully fetched user's information");
+            res.status(201).json({ success: true, profileInfo: userInfo, hobbies: hobbies });
+        }
+    });
+});
+
+app.get('/api/:username/followings', (req, res) => {
+
+    const follower = req.params.username.split(':')[0];
+    console.log("follower: " + follower);
+
+    db.query("SELECT username, first_name, last_name FROM user WHERE username IN (SELECT user_id FROM followers WHERE follower_id = ?)", [
+        follower
+    ], (err, result) => { 
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            console.log("successfully retrieved following users");
+            res.status(201).json({ success: true, followings: result });
+            // console.log(result);
+        }
+    });
+
+
+});
+
+
+

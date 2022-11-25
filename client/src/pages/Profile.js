@@ -9,6 +9,7 @@ import Post from "../components/Post";
 function Profile() {
 
     const [user, setUser] = useState(null);
+    const [follower, setFollower] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
@@ -66,6 +67,7 @@ function Profile() {
       if(data.user != null){
         setUser(data.user);
         setAuthenticated(true);
+        setFollower(data.user.username);
         console.log(data.user)
       } else {
         console.log("user is not logged in");
@@ -96,8 +98,8 @@ function Profile() {
           <div className="three-way-grid">
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <HobbiesDisplay user={user}/> */}
-            <ProfileDisplay user={user} BlogList={BlogList} />
-            <Followings />
+            <ProfileDisplay user={user} BlogList={BlogList} follower={follower} />
+            <Followings user={user} />
           </div>
         </div>
           : 

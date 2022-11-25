@@ -861,3 +861,8 @@ textarea {
 .user-search-text h5{
   font-weight: bold;
 }
+
+.hobby-list p {
+  display: inline-block;
+  padding-right: 5px;
+}
