@@ -11,7 +11,7 @@ function Homeblogs(props) {
             <div className="select-button">
                 <div className="selection-button" onClick={() => props.setBlogSelection("visible")}><p>Hi {props.user.name}, what would you like to check today?</p></div>
             </div>
-            <Blogs />   
+            <Blogs BlogList={props.BlogList}/>   
         </div>
         </div>
     );

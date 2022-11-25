@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Sidebar from "./Sidebar";
-import Homeblogs from "./Homeblogs";
-import Followings from "./Followings";
-import Post from "./Post";
-import BlogSelection from "./BlogsSelection";
+import Sidebar from "../components/Sidebar";
+import Homeblogs from "../components/Homeblogs";
+import Followings from "../components/Followings";
+import Post from "../components/Post";
+import BlogSelection from "../components/BlogsSelection";
 
 
 
@@ -27,6 +27,8 @@ function UserPage() {
   const [tagy, setTagy] = useState("Y");
   const [postWindow, setPostWindow] = useState("hidden");
   const [blogSelection, setBlogSelection] = useState("hidden");
+  const [postSuccess, setPostSuccess] = useState(false);
+  const [BlogList,setBlogList] = useState([]);
   // const [darkenScreen, setDarkenScreen] = useState("hidden");
   // const [showPostWindow, setShowPostWindow] = useState("hidden");
 
@@ -53,6 +55,26 @@ function UserPage() {
   //   setPostWindow(visibility);
 
   // }
+
+  const fetchpost = async () => {
+    const res = await fetch("http://localhost:4000/api/blogs", {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+    const data = await res.json();
+    if(data.blogs != null){
+        console.log("fetching post from mainpage component")
+        console.log(data.blogs);
+        setBlogList(data.blogs);
+    }
+  }
+
+  useEffect(() => {
+    fetchpost();
+  }, []);
 
   const logout = async () => {
     const res = await fetch("http://localhost:4000/logout", {
@@ -272,12 +294,12 @@ function UserPage() {
         { authenticated ?
 
         <div>
-          <Post postWindow = {postWindow} showPostWindow={setPostWindow}/>
+          <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/>
           <BlogSelection blogSelection={blogSelection} setBlogSelection={setBlogSelection}/> 
           <div className="three-way-grid">
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <div className="right-grids"> */}
-              <Homeblogs user = {user} setBlogSelection={setBlogSelection}/>
+              <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList}/>
               <Followings />
             {/* </div> */}
             {/* <button onClick={logout}>Logout</button> */}

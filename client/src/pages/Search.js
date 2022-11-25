@@ -5,15 +5,37 @@ import Followings from "../components/Followings";
 import SearchDisplay from "../components/SearchDisplay";
 import SearchSelection from "../components/SearchSelection";
 import LookUp from "../components/LookUp";
+import Post from "../components/Post";
 
 function Search() {
 
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [postWindow, setPostWindow] = useState("hidden");
+    const [BlogList,setBlogList] = useState([]);
     const [searchSelection, setSearchSelection] = useState("hidden");
     const [searchPage, setSearchPage] = useState(0);
     const history = useHistory();
+
+    const fetchpost = async () => {
+      const res = await fetch("http://localhost:4000/api/blogs", {
+          method: "GET",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+      })
+      const data = await res.json();
+      if(data.blogs != null){
+          console.log("fetching post from mainpage component")
+          console.log(data.blogs);
+          setBlogList(data.blogs);
+      }
+    }
+  
+    useEffect(() => {
+      fetchpost();
+    }, []);
 
   const logout = async () => {
     const res = await fetch("http://localhost:4000/logout", {
@@ -79,6 +101,7 @@ function Search() {
 
         <div>
           {displayPage()}
+          <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/>
           <div className="three-way-grid">
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             <SearchDisplay user={user} setSearchSelection={setSearchSelection}/>

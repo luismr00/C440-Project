@@ -4,13 +4,35 @@ import Sidebar from "../components/Sidebar";
 import Followings from "../components/Followings";
 import HobbiesDisplay from "../components/HobbiesDisplay";
 import ProfileDisplay from "../components/ProfileDisplay";
+import Post from "../components/Post";
 
 function Profile() {
 
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [postWindow, setPostWindow] = useState("hidden");
+    const [BlogList,setBlogList] = useState([]);
     const history = useHistory();
+
+    const fetchpost = async () => {
+      const res = await fetch("http://localhost:4000/api/blogs", {
+          method: "GET",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+      })
+      const data = await res.json();
+      if(data.blogs != null){
+          console.log("fetching post from mainpage component")
+          console.log(data.blogs);
+          setBlogList(data.blogs);
+      }
+    }
+  
+    useEffect(() => {
+      fetchpost();
+    }, []);
 
   const logout = async () => {
     const res = await fetch("http://localhost:4000/logout", {
@@ -70,10 +92,11 @@ function Profile() {
         { authenticated ?
 
         <div>
+          <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/>
           <div className="three-way-grid">
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <HobbiesDisplay user={user}/> */}
-            <ProfileDisplay user={user} />
+            <ProfileDisplay user={user} BlogList={BlogList} />
             <Followings />
           </div>
         </div>

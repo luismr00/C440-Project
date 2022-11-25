@@ -3,30 +3,31 @@ import { useHistory } from "react-router-dom";
 // import PostiveBlogs from './UserBlogs';
 
 
-const Blogs = () => {
+const Blogs = (props) => {
     const [authenticated, setAuthenticated] = useState(false);
     const history = useHistory();
-    const [BlogList,setBlogList] = useState([]);
+    // const [BlogList,setBlogList] = useState([]);
     const [follower, setFollower] = useState(null);
 
-    useEffect(() => {
-        const fetchpost = async () => {
-            const res = await fetch("http://localhost:4000/api/blogs", {
-                method: "GET",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            })
-            const data = await res.json();
-            if(data.blogs != null){
-                console.log(data.blogs);
-                setBlogList(data.blogs);
-            }
-        }
-        fetchpost();
 
-    }, []);
+    // const fetchpost = async () => {
+    //     const res = await fetch("http://localhost:4000/api/blogs", {
+    //         method: "GET",
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
+    //     const data = await res.json();
+    //     if(data.blogs != null){
+    //         console.log(data.blogs);
+    //         setBlogList(data.blogs);
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     fetchpost();
+    // }, []);
     
     useEffect(() => {
         const fetchcookie = async () => {
@@ -86,8 +87,8 @@ const Blogs = () => {
 
     return (
         <div>
-            {console.log(BlogList)}
-            {BlogList.map((blog,i) => {
+            {console.log(props.BlogList)}
+            {props.BlogList.map((blog,i) => {
                 return (
                     <div className="carta" key={i}>
                     {/* <button onClick={() => followUser(blog.user_id)}>Follow</button> */}

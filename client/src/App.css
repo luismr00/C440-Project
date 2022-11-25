@@ -85,7 +85,7 @@ a:hover {
 
 form {
   /* margin: 20px 0; */
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 label {
@@ -444,7 +444,7 @@ h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
-  height: 300px;
+  height: 360px;
   background-color: white;
   border-radius: 15px;
   /* border: solid; */
@@ -489,6 +489,14 @@ h2 {
   padding: 25px;
 }
 
+.post-subject, .post-tags {
+  border: 1px solid #D4D4D4;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+}
+
 .post-text {
   /* padding: 10px; */
   width: 100%;
@@ -496,6 +504,18 @@ h2 {
   overflow-x: hidden;
   flex: 1;
   height: 100%;
+  border: 1px solid #D4D4D4;
+  padding: 3px 0 0 3px;
+  border-radius: 5px;
+}
+
+/* .post textarea {
+  border: 1px solid #D4D4D4;
+  padding: 3px 0 0 3px;
+} */
+
+.post input {
+  padding: 12px 10px 12px 3px;
 }
 
 .submit-button {
