@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
 import { Link, useHistory } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Followings from "../components/Followings";
@@ -8,15 +9,19 @@ import Post from "../components/Post";
 
 function Profile() {
 
+    const location = useLocation();
+    const { pathname } = location;
     const [user, setUser] = useState(null);
     const [follower, setFollower] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
+
     const history = useHistory();
 
     const fetchpost = async () => {
-      const res = await fetch("http://localhost:4000/api/blogs", {
+      console.log("getting posts from the user");
+      const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/blogs`, {
           method: "GET",
           headers: {
               'Accept': 'application/json',
@@ -25,7 +30,7 @@ function Profile() {
       })
       const data = await res.json();
       if(data.blogs != null){
-          console.log("fetching post from mainpage component")
+          console.log("fetching all posts from profile component")
           console.log(data.blogs);
           setBlogList(data.blogs);
       }

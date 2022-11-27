@@ -11,6 +11,59 @@ function ProfileDisplay(props) {
     const { pathname } = location;
     const [userProfile, setUserProfile] = useState(null);
     const [userHobbies, setUserHobbies] = useState(null);
+    const [followingUsers, setFollowingUsers] = useState(0);
+    const [userFollowers, setUserFollowers] = useState(0);
+    const [blogCount, setBlogCount] = useState(0);
+
+    const getFollowings = async (username) => {
+        // e.preventDefault();
+        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/followings`, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+            // , body: JSON.stringify({
+            //     follower: username
+            // }),
+        })
+        const data = await res.json();
+        if(data.success) {
+            // alert("Getting information over the console...");
+            console.log(data.followings);
+            setFollowingUsers(data.followings.length);
+            // setUserProfile(data.profileInfo[0]);
+            // setUserHobbies(data.hobbies);
+        } else {
+            alert(data?.err);
+            console.log(data.err);
+        }
+    }
+
+    const getFollowers = async (username) => {
+        // e.preventDefault();
+        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/followers`, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+            // , body: JSON.stringify({
+            //     follower: username
+            // }),
+        })
+        const data = await res.json();
+        if(data.success) {
+            // alert("Getting information over the console...");
+            console.log(data.followers);
+            setUserFollowers(data.followers.length);
+            // setUserProfile(data.profileInfo[0]);
+            // setUserHobbies(data.hobbies);
+        } else {
+            alert(data?.err);
+            console.log(data.err);
+        }
+    }
 
     const followUser = async (followedUser) => {
         console.log(props.follower + ' will now follow ' + followedUser);
@@ -54,11 +107,13 @@ function ProfileDisplay(props) {
         })
         const data = await res.json();
         if(data.success) {
-            // alert("Getting information over the console...");
-            console.log(data.profileInfo);
-            console.log(data.hobbies);
+            // console.log("Getting information from getUser...");
+            // console.log(data.profileInfo);
+            // console.log(data.hobbies);
+            // console.log(data.blogs_count[0].blogs_count);
             setUserProfile(data.profileInfo[0]);
             setUserHobbies(data.hobbies);
+            setBlogCount(data.blogs_count[0].blogs_count);
         } else {
             alert(data?.err);
             console.log(data.err);
@@ -67,6 +122,8 @@ function ProfileDisplay(props) {
 
     useEffect(() => {
         getUser();
+        getFollowings();
+        getFollowers();
     }, []);
 
     return (
@@ -97,8 +154,9 @@ function ProfileDisplay(props) {
                                     })}
                                 </div>
                                 <div className="profile-header-follows">
-                                    <p>10k Followers</p>
-                                    <p>52 Following</p>
+                                    <p>{blogCount} Blogs</p>
+                                    <p>{userFollowers} Followers</p>
+                                    <p>{followingUsers} Following</p>
                                     {/* <p>0 Mutual Followers</p> */}
                                 </div>
                             </div>

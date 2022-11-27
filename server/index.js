@@ -202,31 +202,35 @@ app.post('/api/hobby', (req, res) => {
 })
 
 app.get('/api/blogs', (req, res) => {
-    db.query("SELECT * FROM blog", (err, result) => {
+    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog;", (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
         }
         else {
-            console.log("successfully retrieved searched user blogs");
+            console.log("successfully retrieved ALL user blogs");
             res.status(201).json({ success: true, blogs: result });
         }
     });
 });
 
-app.post('/api/userBlogs', (req, res) => {
 
-    const userName = req.body.userName;
+app.get('/api/:username/blogs', (req, res) => {
 
-    db.query("SELECT * FROM blog WHERE user_id = ?", [
-        userName
+    const username = req.params.username.split(':')[0];
+
+    console.log("fetching posts from the user:");
+    console.log(username);
+
+    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog WHERE user_id = ?;", [
+        username
     ], (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
         }
         else {
-            console.log("successfully retrieved");
+            console.log("successfully retrieved ALL blogs from the specific user");
             res.status(201).json({ success: true, blogs: result  });
         }
     });
@@ -521,6 +525,7 @@ app.get('/api/profile/:username', (req, res) => {
     const username = req.params.username.split(':')[0];
     let userInfo = null;
     let hobbies = null;
+    let blogs_count = null;
 
     console.log('received: ' + username);
 
@@ -536,6 +541,17 @@ app.get('/api/profile/:username', (req, res) => {
         }
     });
 
+    db.query("SELECT COUNT(*) as blogs_count FROM blog WHERE user_id = ?", [
+        username
+    ], (err, result) => {
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            blogs_count = result;
+        }
+    });
+
     db.query("SELECT hobby FROM hobby WHERE user_id = ?;", [
         username
     ], (err, result) => { 
@@ -546,7 +562,7 @@ app.get('/api/profile/:username', (req, res) => {
         } else {
             hobbies = result;
             console.log("successfully fetched user's information");
-            res.status(201).json({ success: true, profileInfo: userInfo, hobbies: hobbies });
+            res.status(201).json({ success: true, profileInfo: userInfo, blogs_count: blogs_count ,hobbies: hobbies });
         }
     });
 });
@@ -565,6 +581,27 @@ app.get('/api/:username/followings', (req, res) => {
         } else {
             console.log("successfully retrieved following users");
             res.status(201).json({ success: true, followings: result });
+            // console.log(result);
+        }
+    });
+
+
+});
+
+app.get('/api/:username/followers', (req, res) => {
+
+    const following = req.params.username.split(':')[0];
+    console.log("following: " + following);
+
+    db.query("SELECT username, first_name, last_name FROM user WHERE username IN (SELECT follower_id FROM followers WHERE user_id = ?)", [
+        following
+    ], (err, result) => { 
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            console.log("successfully retrieved followers");
+            res.status(201).json({ success: true, followers: result });
             // console.log(result);
         }
     });

@@ -97,9 +97,9 @@ const Blogs = (props) => {
                             <h6 className="carta-subtitle" style={{color: 'red'}}>by {blog.user_id}</h6>
                             <p className="carta-text">{blog.description}</p>
                             <div className='carta-bottom'>
-                                <p className="carta-text" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>Comments</p>
-                                <p className="carta-text">Likes</p>
-                                <p className="carta-text">Disikes</p>
+                                <p className="carta-text" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>{blog.comment_count} Comments</p>
+                                <p className="carta-text">{blog.pos_rating} Likes</p>
+                                <p className="carta-text">{blog.neg_rating} Disikes</p>
                                 <p className="carta-text">Tags: {blog.tags}</p>
                                 {/* <button onClick={() => {history.push(`/blog/:${blog.id}`, {state: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>Comments</button> */}
                             </div>
