@@ -202,13 +202,105 @@ app.post('/api/hobby', (req, res) => {
 })
 
 app.get('/api/blogs', (req, res) => {
-    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog;", (err, result) => {
+    const username = session.user.username;
+    
+    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog WHERE user_id IN (SELECT user_id FROM followers WHERE follower_id = ?);", [
+        username
+    ], (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
         }
         else {
-            console.log("successfully retrieved ALL user blogs");
+            console.log("successfully retrieved ALL blogs");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/blogsNC', (req, res) => {
+    const username = session.user.username;
+    
+    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog WHERE user_id IN (SELECT user_id FROM followers WHERE follower_id = ?) HAVING comment_count = 0", [
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved ALL blogs with NO COMMENTS");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/blogsMPR', (req, res) => {
+    const username = session.user.username;
+
+    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog WHERE user_id IN (SELECT user_id FROM followers WHERE follower_id = ?) HAVING pos_rating > neg_rating", [
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved ALL blogs with MORE positive than negative comments");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/blogsMNR', (req, res) => {
+    const username = session.user.username;
+    
+    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog WHERE user_id IN (SELECT user_id FROM followers WHERE follower_id = ?) HAVING pos_rating < neg_rating", [
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved ALL blogs with MORE negative than positive comments");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/blogsOPR', (req, res) => {
+    const username = session.user.username;
+    
+    db.query("SELECT *, id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating,(SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog WHERE user_id IN (SELECT user_id FROM followers WHERE follower_id = ?) HAVING neg_rating = 0", [
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved ALL blogs with ONLY positive comments");
+            res.status(201).json({ success: true, blogs: result });
+        }
+    });
+});
+
+app.get('/api/hobbyBlogs', (req, res) => {
+    const username = session.user.username;
+    console.log("hobbyBlogs username");
+    console.log(username);
+
+    db.query("SELECT DISTINCT blog.id, blog.subject, blog.description, blog.tags, blog.date, blog.user_id, blog.id as blogID, (SELECT COUNT(*) FROM comment WHERE blog_id = blogID) as comment_count, (SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 1) as pos_rating, (SELECT COUNT(*) FROM rating WHERE blog_id = blogID AND rating = 0) as neg_rating FROM blog JOIN hobby ON blog.tags LIKE CONCAT('%', hobby.hobby, '%') AND hobby.user_id = ? AND blog.user_id IN (SELECT user_id FROM followers WHERE follower_id = ?);",[
+        username,
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            console.log("successfully retrieved ALL blogs that share mutual hobbies with you");
             res.status(201).json({ success: true, blogs: result });
         }
     });
@@ -605,8 +697,6 @@ app.get('/api/:username/followers', (req, res) => {
             // console.log(result);
         }
     });
-
-
 });
 
 

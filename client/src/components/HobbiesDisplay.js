@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import HobbyOption from "./HobbyOption";
+import { main_hobbies } from "../data/mainHobbies.js";
 
-const list = ["hobby1", "hobby2", "hobby3", "hobby4"];
+// const list = ["hobby1", "hobby2", "hobby3", "hobby4"];
+const list = main_hobbies;
 const selectedHobbies = new Set();
 
 function HobbiesDisplay(props) { 
@@ -56,7 +58,7 @@ function HobbiesDisplay(props) {
                 <h1>Hobbies</h1>
             </div>
             <div className="select-button">
-                <div className="selection-button" onClick={() => props.setSearchSelection("visible")}><p>Hi {props.user.name}, would you like to add a new hobby or modify existing ones?</p></div>
+                <div className="selection-button" onClick={() => props.setHobbySelection("visible")}><p>Hi {props.user.name}, would you like to add a new hobby or modify existing ones?</p></div>
             </div>
             <div className="hobby-header">
                 <h4>All Hobbies</h4>
@@ -72,6 +74,9 @@ function HobbiesDisplay(props) {
                     ))}
                 </div>
             </div>
+            <br></br>
+            <br></br>
+            <br></br>
             <div className="save-hobbies" style={showSavePopup}>
                 <p>You have unsaved changes</p>
                 <div className="hobby-buttons">

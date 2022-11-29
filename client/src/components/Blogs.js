@@ -87,17 +87,17 @@ const Blogs = (props) => {
 
     return (
         <div>
-            {console.log(props.BlogList)}
+            {/* {console.log(props.BlogList)} */}
             {props.BlogList.map((blog,i) => {
                 return (
                     <div className="carta" key={i}>
                     {/* <button onClick={() => followUser(blog.user_id)}>Follow</button> */}
-                        <div className="carta-body">
+                        <div className="carta-body" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>
                             <h5 className="carta-title" style={{fontWeight: 'bold'}}>{blog.subject}</h5>
                             <h6 className="carta-subtitle" style={{color: 'red'}}>by {blog.user_id}</h6>
                             <p className="carta-text">{blog.description}</p>
                             <div className='carta-bottom'>
-                                <p className="carta-text" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>{blog.comment_count} Comments</p>
+                                <p className="carta-text">{blog.comment_count} Comments</p>
                                 <p className="carta-text">{blog.pos_rating} Likes</p>
                                 <p className="carta-text">{blog.neg_rating} Disikes</p>
                                 <p className="carta-text">Tags: {blog.tags}</p>

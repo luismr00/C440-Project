@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Close from "../assets/close.svg";
 
-function LookUp(props) {
+function MutualFollowingSearch(props) {
     return (
         <div className="search-select" style={{visibility: props.searchSelection}}>
             <div className="header-selection">
@@ -10,7 +10,7 @@ function LookUp(props) {
             </div>
             <div className="search-selection-body">
                 <form>
-                    <input type="text" placeholder="Search users"></input>
+                    <input type="text" placeholder="Search user with mutual followings"></input>
                 </form>
                 <div className="center-button">
                 <button className="continue-button">Next</button>
@@ -22,4 +22,4 @@ function LookUp(props) {
 
 }
 
-export default LookUp;
+export default MutualFollowingSearch;

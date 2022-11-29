@@ -353,6 +353,7 @@ h2 {
 
 .carta-body {
   padding: 20px;
+  cursor: pointer;
 }
 
 .carta-bottom {
@@ -365,6 +366,7 @@ h2 {
 
 .carta-text {
   margin-top: 10px;
+  /* cursor: pointer; */
 }
 
 

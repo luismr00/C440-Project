@@ -7,6 +7,9 @@ import Post from "../components/Post";
 // import SearchDisplay from "../components/SearchDisplay";
 // import SearchSelection from "../components/SearchSelection";
 // import LookUp from "../components/LookUp";
+import HobbySelection from "../components/HobbySelection";
+import AddHobby from "../components/AddHobby";
+import HobbyCategories from "../components/HobbyCategories";
 
 function Hobbies() {
 
@@ -14,7 +17,7 @@ function Hobbies() {
     const [authenticated, setAuthenticated] = useState(false);
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
-    const [searchSelection, setSearchSelection] = useState("hidden");
+    const [hobbySelection, setHobbySelection] = useState("hidden");
     const [searchPage, setSearchPage] = useState(0);
     const history = useHistory();
 
@@ -83,30 +86,32 @@ function Hobbies() {
   }, [authenticated]);
 
   const closeSelection = () => {
-    setSearchSelection("hidden");
+    setHobbySelection("hidden");
     setSearchPage(0);
   }
 
-//   const displayPage = () => {
-//     switch(searchPage) {
-//         case 0: 
-//             return <SearchSelection searchSelection={searchSelection} setSearchSelection={setSearchSelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
-//         case 1:
-//             return <LookUp searchSelection={searchSelection} setSearchSelection={setSearchSelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
-//     }
-//   }
+  const displayPage = () => {
+    switch(searchPage) {
+        case 0: 
+            return <HobbySelection hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
+        case 1: 
+            return <AddHobby hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
+        case 2: 
+            return <HobbyCategories hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
+      }
+  }
 
     return (
       <div className="default">
         { authenticated ?
 
         <div>
-          {/* {displayPage()} */}
+          {displayPage()}
           <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/>
           <div className="three-way-grid">
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
             {/* <SearchDisplay user={user} setSearchSelection={setSearchSelection}/> */}
-            <HobbiesDisplay user={user}/>
+            <HobbiesDisplay user={user} setHobbySelection={setHobbySelection}/>
             <Followings user={user} />
           </div>
         </div>

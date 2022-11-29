@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Close from "../assets/close.svg";
 
-function SearchSelection(props) {
+// CHANGE THE NAME OF THE CLASSNAMES RELATED TO HOBBY BUT TARGET ALONG WITH SEARCH CLASSNAMES OVER CSS FILE
+function HobbySelection(props) {
     return (
-        <div className="search-select" style={{visibility: props.searchSelection}}>
+        <div className="search-select" style={{visibility: props.hobbySelection}}>
             {/* <img className="close" src={Close} onClick={() => props.showPostWindow("hidden")}></img> */}
             <div className="header-selection">
                 {/* <img className="close" src={Close} onClick={() => props.setBlogSelection("hidden")}></img> */}
@@ -12,14 +13,17 @@ function SearchSelection(props) {
             </div>
             <div className="search-selection-body">
                 <div className="search-option" onClick={() => props.setSearchPage(1)}>
-                    <p>Search user</p>
+                    <p>Add hobby</p>
                 </div>
                 <div className="search-option">
-                    <p>Search users with mutual hobbies</p>
+                    <p>Manage your hobbies</p>
                 </div>
                 <div className="search-option" onClick={() => props.setSearchPage(2)}>
-                    <p>Search mutual followers from following users</p>
+                    <p>View hobbies by category</p>
                 </div>
+                {/* <div className="search-option" onClick={() => props.setSearchPage(2)}>
+                    <p>Search mutual followers from following users</p>
+                </div> */}
                 {/* <div className="center-button">
                 <button className="continue-button">Continue</button>
                 </div> */}
@@ -29,4 +33,4 @@ function SearchSelection(props) {
 
 }
 
-export default SearchSelection;
+export default HobbySelection;

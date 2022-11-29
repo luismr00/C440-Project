@@ -6,6 +6,7 @@ import SearchDisplay from "../components/SearchDisplay";
 import SearchSelection from "../components/SearchSelection";
 import LookUp from "../components/LookUp";
 import Post from "../components/Post";
+import MutualFollowingSearch from "../components/MutualFollowingSearch";
 
 function Search() {
 
@@ -92,6 +93,8 @@ function Search() {
             return <SearchSelection searchSelection={searchSelection} setSearchSelection={setSearchSelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
         case 1:
             return <LookUp searchSelection={searchSelection} setSearchSelection={setSearchSelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
+        case 2: 
+            return <MutualFollowingSearch searchSelection={searchSelection} setSearchSelection={setSearchSelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
     }
   }
 
