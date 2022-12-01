@@ -400,11 +400,58 @@ h2 {
   /* pointer-events: none; */
 }
 
+#hobby-search {
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+#hobby-search-body {
+  height: 430px;
+}
+
+.hobby-search-input {
+  margin: 20px 40px 0;
+  /* width: 100px; */
+}
+
+.search-hobby {
+    /* width: 165px; */
+    /* max-height: 60px; */
+    /* max-width: 185px; */
+    /* min-width: 100px; */
+    background-color: red;
+    padding: 5px 10px;
+    margin: 0 5px 10px;
+    text-align: center;
+    border-radius: 10px;
+    /* margin: 0 17px 20px; */
+    color: white;
+    cursor: pointer;
+}
+
+.hobby-search-header {
+  margin: 15px 40px 0;
+  /* font-weight: bold; */
+  text-align: center;
+}
+
 .search-selection-body {
   display: flex;
   flex-direction: column;
   height: 100%;
   padding: 3px;
+  justify-content: space-between;
+}
+
+.search-results {
+  display: flex;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  flex-grow: 2;
+  margin: 15px 38px 0;
 }
 
 .header-selection {
@@ -488,7 +535,7 @@ h2 {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 25px;
+  padding: 25px 25px 0 25px;
 }
 
 .post-subject, .post-tags {
@@ -505,7 +552,7 @@ h2 {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1;
-  height: 100%;
+  height: 200px;
   border: 1px solid #D4D4D4;
   padding: 3px 0 0 3px;
   border-radius: 5px;
@@ -520,14 +567,21 @@ h2 {
   padding: 12px 10px 12px 3px;
 }
 
+.submit-post {
+  text-align: center;
+  margin-top: 7px;
+}
+
 .submit-button {
   width: 100px;
+  height: 40px;
   border: none;
   background-color: red;
   color: white;
   font-weight: bold;
-  border-radius: 15px;
-  float: right;
+  border-radius: 3px;
+  margin: 0 auto;
+  /* float: right; */
 }
 
 .save-button {
@@ -565,7 +619,7 @@ h2 {
 .center-button {
   /* text-align: center; */
   margin: 0 auto;
-  padding: 12px 0;
+  padding: 5px 0;
   /* position: absolute; */
   /* top: 50%;
   left: 50%;
@@ -644,13 +698,15 @@ textarea {
   display: flex;
   justify-content: space-between;
   /* background-color:#AAAAAA; */
-  border: solid red;
+  /* border: solid red; */
+  background-color: black;
   border-radius: 5px;
-  /* color: white; */
+  color: white;
 }
 
 .save-hobbies p {
   margin: 7px 0;
+  font-weight: bold;
 }
 
 .hobby-buttons button {
@@ -663,7 +719,7 @@ textarea {
   font-weight: bold;
   border-radius: 3px;
   /* float: right; */
-  margin: 0 10px;
+  margin: 0 5px;
 }
 
 .hobby-save {
@@ -672,8 +728,14 @@ textarea {
 }
 
 .hobby-clear {
-  background-color: #D4D4D4;
-  color: black;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  color: white;
+}
+
+.hobby-clear:hover {
+  text-decoration: underline;
 }
 
 .profile-header {
@@ -867,4 +929,123 @@ textarea {
 .hobby-list p {
   display: inline-block;
   padding-right: 5px;
+}
+
+.tags-header {
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 25px;
+  border-radius: 10px 10px 0 0;
+}
+
+.tags-selection-body {
+  display: flex;
+  flex-direction: column;
+  height: 435px;
+  padding: 3px;
+  justify-content: space-between;
+}
+
+.hobby-tags {
+  display: flex;
+  align-content: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  flex-grow: 2;
+  margin: 15px 14px 0;
+}
+
+.tag-error {
+  display: flex;
+  /* align-content: center; */
+  text-align: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  flex-grow: 2;
+  margin: 0 40px 70px;
+}
+
+.tag-selection {
+  /* width: 165px; */
+  /* max-height: 60px; */
+  /* max-width: 185px; */
+  /* min-width: 100px; */
+  /* background-color: red; */
+  padding: 5px 10px;
+  margin: 0 5px 10px;
+  text-align: center;
+  border-radius: 10px;
+  /* margin: 0 17px 20px; */
+  /* color: white; */
+  cursor: pointer;
+}
+
+.tags-button {
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  /* float: right; */
+  margin: 0 auto;
+}
+
+.tag-center-button {
+  text-align: center;
+  margin: 0 auto;
+  padding: 12px 0;
+  /* position: absolute; */
+  /* top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
+}
+
+.tags-select {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  /* height: 200px; */
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 15px;
+  /* Fade screen while highlighting this div */
+  box-shadow: 0 0 0 1000px rgba(0,0,0,.3);
+  /* for real browsers */
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
+  /* pointer-events: none; */
+}
+
+/* #hobby-search {
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+} */
+
+.compliment {
+  position: fixed;
+  /* display: flex; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 360px;
+  background-color: white;
+  border-radius: 15px;
+  /* border: solid; */
+  /* Fade screen while highlighting this div */
+  box-shadow: 0 0 0 1000px rgba(0,0,0,.3);
+  /* for real browsers */
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
+  /* pointer-events: none; */
 }

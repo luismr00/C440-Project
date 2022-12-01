@@ -12,6 +12,9 @@ let PORT = process.env.PORT || 4000;
 const fs = require('fs');
 const path = require('path');
 
+let hobbies_list = require('./data/hobbies_list.js')
+// let main_hobbies = module.main_hobbies; 
+
 db.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
@@ -24,9 +27,117 @@ db.connect(function(err) {
 
     db.query(create,  (err, result) => {
         if (err) throw err;
-        else console.log("user table successfully created");
+        else console.log("User table successfully created");
     });
+
+    //SEEDING TABLES
+    const initializeFile2 = fs.readFileSync(path.join(__dirname, './data.sql')).toString();
+    db.query(initializeFile2, (err, result) => {
+        if (err) throw err;
+        else {
+            console.log("Data initialized");
+            // result.status(201).json({ success: true });
+        }
+    })
+
+    //SEEDING HOBBIES LIST
+    const hobbies = hobbies_list.hobbies;
+
+    db.query("SELECT COUNT(*) FROM hobbies_list", (err, result) => { 
+        if(err) {
+            console.log(err);
+            // res.status(400).json({ success: false, err: err });
+        } else {
+            // console.log("returned count of table");
+            // console.log(result[0]['COUNT(*)']);
+
+            if(result[0]['COUNT(*)'] === 0) {
+                //seed
+                db.query("INSERT INTO hobbies_list (hobby) VALUES ?",[
+                    hobbies
+                ], (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            // res.status(400).json({ success: false, err: err });
+                        }
+                        else {
+                            console.log("Successfully seeded data");
+                            // res.status(201).json({ success: true });
+                        }
+                    }
+                );
+            } else {
+                //no seed
+                console.log("No seeding required");
+                // res.status(304).json({ success: false });
+            }
+        }
+    });
+
 });
+
+app.post('/api/testseed', (req, res) => {
+
+    const hobbies = hobbies_list.hobbies;
+
+    db.query("SELECT COUNT(*) FROM hobbies_list", (err, result) => { 
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            console.log("returned count of table");
+            console.log(result[0]['COUNT(*)']);
+
+            if(result[0]['COUNT(*)'] === 0) {
+                //seed
+                db.query("INSERT INTO hobbies_list (hobby) VALUES ?",[
+                    hobbies
+                ], (err, result) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(400).json({ success: false, err: err });
+                        }
+                        else {
+                            console.log("Successfully seeded data");
+                            res.status(201).json({ success: true });
+                        }
+                    }
+                );
+            } else {
+                //no seed
+                console.log("seeding already created");
+                res.status(304).json({ success: false });
+            }
+        }
+    });
+            
+    // db.query("INSERT INTO hobbies_list (hobby) VALUES ?",[
+    //     hobbies
+    // ], (err, result) => {
+    //         if (err) {
+    //             console.log(err)
+    //             res.status(400).json({ success: false, err: err });
+    //         }
+    //         else {
+    //             console.log("successfully seeded data");
+    //             res.status(201).json({ success: true });
+    //         }
+    //     }
+    // );
+})
+
+//Seed this data upon connecting but handle IF NOT EXISTS instances first over data.sql
+// app.post('/api/initialize', (req, res) => {
+
+//     const initializeFile2 = fs.readFileSync(path.join(__dirname, './data.sql')).toString();
+//     db.query(initializeFile2, (err, result) => {
+//         if (err) throw err;
+//         else {
+//             console.log("data initialized");
+//             res.status(201).json({ success: true });
+//         }
+//     })
+// });
 
 app.use(cors());
 app.use(express.json());
@@ -110,18 +221,6 @@ app.post('/api/register', (req, res) => {
     });
 });
 
-app.post('/api/initialize', (req, res) => {
-
-    const initializeFile2 = fs.readFileSync(path.join(__dirname, './data.sql')).toString();
-    db.query(initializeFile2, (err, result) => {
-        if (err) throw err;
-        else {
-            console.log("initialized data");
-            res.status(201).json({ success: true });
-        }
-    })
-});
-
 app.get('/logout',(req,res) => {
     req.session.destroy();
     session.user = null;
@@ -200,6 +299,120 @@ app.post('/api/hobby', (req, res) => {
         res.status(400).json({ success: false, err: "You must be logged in to create a post" });
     }
 })
+
+app.post('/api/hobbies', (req, res) => {
+    if(session.user !== undefined && session.user !== null) {
+        const username = session.user.username;
+        const hobbies = req.body.hobbies;
+        const user_id = session.user.username;
+
+        console.log("Here are the list of hobbies to be added:");
+        console.log(hobbies);
+
+        let newList = [];
+
+        hobbies.map((hobby)=> {
+            let temp = [hobby, user_id];
+            newList.push(temp);
+        });
+
+        console.log(newList);
+
+        if (hobbies.length === 0) {
+            db.query("DELETE FROM hobby WHERE user_id = ?;",[
+                username
+            ], (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(400).json({ success: false, err: err });
+                    }
+                    else {
+                        console.log("successfully created");
+                        res.status(201).json({ success: true });
+                    }
+                }
+            );
+        } else {       
+            db.query("INSERT INTO hobby (hobby, user_id) VALUES ?",[
+                newList
+            ], (err, result) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(400).json({ success: false, err: err });
+                    }
+                    else {
+                        console.log("successfully created");
+                        res.status(201).json({ success: true });
+                    }
+                }
+            );
+        }
+    } else {
+        res.status(400).json({ success: false, err: "You must be logged in to create a post" });
+    }
+})
+
+app.get('/api/getHobbies', (req, res) => {
+    const username = session.user.username;
+    
+    db.query("SELECT hobby FROM hobby WHERE user_id = ?;", [
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+            let temp = [];
+            result.map((hobby) => {
+                temp.push(hobby.hobby);
+            });
+
+            console.log("successfully retrieved ALL hobbies from the user");
+            res.status(201).json({ success: true, hobbies: temp });
+        }
+    });
+});
+
+app.get('/api/hobbies_list', (req, res) => {
+    
+    db.query("SELECT hobby FROM hobbies_list", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+
+            let temp = [];
+            result.map((hobby) => {
+                temp.push(hobby.hobby);
+            });
+
+            console.log("successfully retrieved list of hobbies");
+            res.status(201).json({ success: true, hobbies: temp });
+        }
+    });
+});
+
+app.get('/api/users_hobbies_list', (req, res) => {
+    
+    db.query("SELECT hobby FROM hobby", (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+
+            let temp = [];
+            result.map((hobby) => {
+                temp.push(hobby.hobby);
+            });
+
+            console.log("successfully retrieved list of hobbies");
+            res.status(201).json({ success: true, hobbies: temp });
+        }
+    });
+});
 
 app.get('/api/blogs', (req, res) => {
     const username = session.user.username;

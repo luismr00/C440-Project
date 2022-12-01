@@ -2,8 +2,8 @@ use `COMP440`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment` (
+-- DROP TABLE IF EXISTS `comment`;
+CREATE TABLE IF NOT EXISTS `comment` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `comment` text NOT NULL,
     `date` datetime NOT NULL,
@@ -14,8 +14,8 @@ CREATE TABLE `comment` (
     FOREIGN KEY (`blog_id`) REFERENCES blog(`id`)
 );
 
-DROP TABLE IF EXISTS `blog`;
-CREATE TABLE `blog` (
+-- DROP TABLE IF EXISTS `blog`;
+CREATE TABLE IF NOT EXISTS `blog` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `subject` varchar(255) NOT NULL,
     `description` text NOT NULL,
@@ -26,8 +26,8 @@ CREATE TABLE `blog` (
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 
-DROP TABLE IF EXISTS `rating`;
-CREATE TABLE `rating` (
+-- DROP TABLE IF EXISTS `rating`;
+CREATE TABLE IF NOT EXISTS `rating` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `rating` int(1) NOT NULL,
     `blog_id` int(11) NOT NULL,
@@ -37,8 +37,8 @@ CREATE TABLE `rating` (
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 
-DROP TABLE IF EXISTS `hobby`;
-CREATE TABLE `hobby` (
+-- DROP TABLE IF EXISTS `hobby`;
+CREATE TABLE IF NOT EXISTS `hobby` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `hobby` varchar(255) NOT NULL,
     `user_id` varchar(255) NOT NULL,
@@ -46,14 +46,20 @@ CREATE TABLE `hobby` (
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 
-DROP TABLE IF EXISTS `followers`;
-CREATE TABLE `followers` (
+-- DROP TABLE IF EXISTS `followers`;
+CREATE TABLE IF NOT EXISTS `followers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(50) NOT NULL,
   `follower_id` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES user(`username`),
   FOREIGN KEY (`follower_id`) REFERENCES user(`username`)
+);
+
+CREATE TABLE IF NOT EXISTS `hobbies_list` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `hobby` text NOT NULL,
+    PRIMARY KEY (`id`)
 );
 
 SET FOREIGN_KEY_CHECKS = 1;

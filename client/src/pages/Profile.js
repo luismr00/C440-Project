@@ -6,6 +6,7 @@ import Followings from "../components/Followings";
 import HobbiesDisplay from "../components/HobbiesDisplay";
 import ProfileDisplay from "../components/ProfileDisplay";
 import Post from "../components/Post";
+import SelectTags from "../components/SelectTags";
 
 function Profile() {
 
@@ -16,8 +17,11 @@ function Profile() {
     const [authenticated, setAuthenticated] = useState(false);
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
-
+    const [switchDisplay, setSwitchDisplay] = useState(0);
+    const [userHobbies, setUserHobbies] = useState([]);
+    const [tags, setTags] = useState('');
     const history = useHistory();
+    let hobbySelections = new Set();
 
     const fetchpost = async () => {
       console.log("getting posts from the user");
@@ -35,9 +39,27 @@ function Profile() {
           setBlogList(data.blogs);
       }
     }
+
+    const fetchHobbies = async () => {
+      const res = await fetch("http://localhost:4000/api/getHobbies", {
+          method: "GET",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+      })
+      const data = await res.json();
+      if(data.hobbies != null){
+  
+          console.log("Showing hobbies fetched");
+          console.log(data.hobbies);
+          setUserHobbies(data.hobbies);
+      }
+    }
   
     useEffect(() => {
       fetchpost();
+      fetchHobbies();
     }, []);
 
   const logout = async () => {
@@ -85,23 +107,39 @@ function Profile() {
     }
   }, [authenticated]);
 
-//   const displayPage = () => {
-//     switch(searchPage) {
-//         case 0: 
-//             return <SearchSelection searchSelection={searchSelection} setSearchSelection={setSearchSelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
-//         case 1:
-//             return <LookUp searchSelection={searchSelection} setSearchSelection={setSearchSelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
-//     }
-//   }
+  const openPostWindow = () => {
+    setSwitchDisplay(0);
+    setPostWindow("visible")
+  }
+
+  const closePostWindow = () => {
+    // console.log("hobbySelections values before closing and after");
+    // console.log(hobbySelections);
+    hobbySelections = new Set();
+    setPostWindow("hidden");
+    setSwitchDisplay(null);
+    // console.log(hobbySelections);
+  }
+
+
+  const postDisplay = () => {
+    switch(switchDisplay) {
+        case 0: 
+            return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
+        case 1: 
+            return <Post tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
+      }
+  }
 
     return (
       <div className="default">
         { authenticated ?
 
         <div>
-          <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/>
+          {postDisplay()}
+          {/* <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/> */}
           <div className="three-way-grid">
-            <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
+            <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <HobbiesDisplay user={user}/> */}
             <ProfileDisplay user={user} BlogList={BlogList} follower={follower} />
             <Followings user={user} />

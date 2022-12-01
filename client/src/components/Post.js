@@ -4,13 +4,13 @@ import Close from "../assets/close.svg";
 function Post(props) {
 
   const [subject, setSubject] = useState('');
-  const [tags, setTags] = useState('');
+  // const [tags, setTags] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if(subject.length === 0 || tags.length === 0 || description.length === 0) {
+    if(subject.length === 0 || props.tags.length === 0 || description.length === 0) {
       console.log("Fill in all the fields before submitting again");
     } else {
       // console.log(subject);
@@ -18,7 +18,7 @@ function Post(props) {
       // console.log(description);
       post(event);
       // props.setPostSuccess(true);
-      props.showPostWindow("hidden");
+      props.closePostWindow();
       // props.fetchpost();
       // console.log("testing blogList");
       
@@ -37,7 +37,7 @@ function Post(props) {
       body: JSON.stringify({
               description: description,
               subject: subject,
-              tags: tags,
+              tags: props.tags,
       }),
       }) 
       const data = await res.json();
@@ -47,7 +47,7 @@ function Post(props) {
           alert("Blog created successfully");
           setDescription("");
           setSubject("");
-          setTags("");
+          props.setTags("");
           props.fetchpost();
       } else {
           alert(data?.err);
@@ -61,17 +61,21 @@ function Post(props) {
           <div className="post-body">
           <div className="post-header">
             <label>luismi</label>
-            {/* <label style={{size: "18px"}}>x</label> */}
-            <img className="close" src={Close} onClick={() => props.showPostWindow("hidden")}></img>
+            {/* handle showPostWindow below to change switch automatically to tags display */}
+            {console.log("the tags selected are: " + props.tags)}
+            <img className="close" src={Close} onClick={() => props.closePostWindow()}></img>
           </div>
-          <form onSubmit={handleSubmit}>
-            <input className="post-subject" placeholder="Subject" value={subject} onChange={(event) => setSubject(event.target.value)}></input>
-            <input className="post-tags" placeholder="Tags" value={tags} onChange={(event) => setTags(event.target.value)}></input>
-            <textarea className="post-text" placeholder="Description" value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
-            <div className="submit-post">
-              <button type="submit" className="submit-button">Submit</button>
-            </div>
-          </form>
+          <div className="form-body">
+            <form onSubmit={handleSubmit}>
+              <input className="post-subject" placeholder="Subject" value={subject} onChange={(event) => setSubject(event.target.value)}></input>
+              {/* <input className="post-tags" placeholder="Tags" value={tags} onChange={(event) => setTags(event.target.value)}></input> */}
+              <textarea className="post-text" placeholder="Description" value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
+              <div className="submit-post">
+                <button type="submit" className="submit-button">Submit</button>
+                <button className="submit-button" onClick={() => props.setSwitchDisplay(0)}>Back</button>
+              </div>
+            </form>
+          </div>
           </div>
         </div>
     );

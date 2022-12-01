@@ -7,6 +7,7 @@ import Homeblogs from "../components/Homeblogs";
 import Followings from "../components/Followings";
 import Post from "../components/Post";
 import BlogSelection from "../components/BlogsSelection";
+import SelectTags from "../components/SelectTags";
 
 
 
@@ -25,7 +26,6 @@ function UserPage() {
   const [date, setDate] = useState(new Date('2022-04-13'));
   const [tagx, setTagx] = useState("X");
   const [tagy, setTagy] = useState("Y");
-  const [postWindow, setPostWindow] = useState("hidden");
   const [blogSelection, setBlogSelection] = useState("hidden");
   const [postSuccess, setPostSuccess] = useState(false);
   const [BlogList,setBlogList] = useState([]);
@@ -35,6 +35,11 @@ function UserPage() {
   const [BlogListMNR,setBlogListMNR] = useState([]);
   const [BlogListOPR,setBlogListOPR] = useState([]);
   const [blogListHobbies, setBlogListHobbies] = useState([]);
+  const [postWindow, setPostWindow] = useState("hidden");
+  const [switchDisplay, setSwitchDisplay] = useState(0);
+  const [userHobbies, setUserHobbies] = useState([]);
+  const [tags, setTags] = useState('');
+  let hobbySelections = new Set();
   
 
   //Change this to update automatic
@@ -68,6 +73,23 @@ function UserPage() {
         console.log(data.blogs);
         setBlogList(data.blogs);
         setBlogListALL(data.blogs);
+    }
+  }
+
+  const fetchHobbies = async () => {
+    const res = await fetch("http://localhost:4000/api/getHobbies", {
+        method: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+    const data = await res.json();
+    if(data.hobbies != null){
+
+        console.log("Showing hobbies fetched");
+        console.log(data.hobbies);
+        setUserHobbies(data.hobbies);
     }
   }
 
@@ -148,6 +170,7 @@ function UserPage() {
 
   useEffect(() => {
     fetchpost();
+    fetchHobbies();
     fetchpostNC();
     fetchpostMPR();
     fetchpostMNR();
@@ -181,36 +204,39 @@ function UserPage() {
     }
   }, [authenticated]);
 
-    //Paste this over Hobby page
-    const postHobby = async (e) => {
-      e.preventDefault();
-      const res = await fetch("http://localhost:4000/api/hobby", {
-          method: "POST",
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'credentials': 'include'
-          },
-          body: JSON.stringify({
-                  hobby: HobbyList,
-          }),
-          }) 
-          const data = await res.json();
-          if(data.success) {
-              console.log("create successful");
-              alert("Hobby added successfully");
-              setHobbyList("");
-          } else {
-              console.log("create failed");
-          }
+  const openPostWindow = () => {
+    setSwitchDisplay(0);
+    setPostWindow("visible")
+  }
+
+  const closePostWindow = () => {
+    // console.log("hobbySelections values before closing and after");
+    // console.log(hobbySelections);
+    hobbySelections = new Set();
+    setPostWindow("hidden");
+    setSwitchDisplay(null);
+    // console.log(hobbySelections);
+  }
+
+    
+
+  const postDisplay = () => {
+    switch(switchDisplay) {
+        case 0: 
+            return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
+        case 1: 
+            return <Post tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
       }
+  }
 
     return (
       <div className="default">
         { authenticated ?
 
           <div>
-            <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/>
+            {postDisplay()}
+            {/* <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/> */}
+            {/* <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/> */}
             <BlogSelection 
               blogSelection={blogSelection} 
               setBlogSelection={setBlogSelection}
@@ -223,7 +249,7 @@ function UserPage() {
               BlogListHobbies={blogListHobbies}
             /> 
             <div className="three-way-grid">
-              <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} showPostWindow={setPostWindow} />
+              <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
               <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList}/>
               <Followings user={user} />
             </div>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-function HobbyOption(props) { 
+function ManageHobbies(props) { 
 
     const [hover, setHover] = useState(false);
-    const [selected, setSelected] = useState(false);
+    const [selected, setSelected] = useState(true);
 
     //function to use selected state and selectHobby prop function one after the other
     const handleSelection = (hobby) => {
@@ -35,4 +35,4 @@ function HobbyOption(props) {
 
 }
 
-export default HobbyOption;
+export default ManageHobbies;

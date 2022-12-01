@@ -53,7 +53,7 @@ function Sidebar(props) {
                         <img className="icon" src={Person}></img>
                         <div onClick={() => {history.push(`/profile/${props.user.username}`)}}><h2>Profile</h2></div>
                     </div>
-                    <button className="post-button" onClick={() => props.showPostWindow("visible")}>Post</button>
+                    <button className="post-button" onClick={() => props.openPostWindow()}>Post</button>
                 </div>
                 <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}}>
                     <div onClick={() => logout()}><p>Log out</p></div>
