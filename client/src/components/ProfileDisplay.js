@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import Blogs from "./Blogs";
 import UserIcon from "../assets/person-circle.svg";
 import NotFound from "./NotFound";
@@ -8,6 +8,7 @@ function ProfileDisplay(props) {
 
     // const [follower, setFollower] = useState(null);
     const location = useLocation();
+    const history = useHistory();
     const { pathname } = location;
     const [userProfile, setUserProfile] = useState(null);
     const [userHobbies, setUserHobbies] = useState(null);
@@ -155,8 +156,12 @@ function ProfileDisplay(props) {
                                 </div>
                                 <div className="profile-header-follows">
                                     <p>{blogCount} Blogs</p>
-                                    <p>{userFollowers} Followers</p>
-                                    <p>{followingUsers} Following</p>
+                                    <div className="follow-count-select" onClick={() => {history.push(`/${userProfile.username}/follow-page`, {view: "followers"})}}>
+                                        <p>{userFollowers} Followers</p>
+                                    </div>
+                                    <div className="follow-count-select" onClick={() => {history.push(`/${userProfile.username}/follow-page`, {view: "followings"})}}>
+                                        <p>{followingUsers} Following</p>
+                                    </div>
                                     {/* <p>0 Mutual Followers</p> */}
                                 </div>
                             </div>

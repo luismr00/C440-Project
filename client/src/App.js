@@ -11,6 +11,7 @@ import UserPage from './pages/UserPage';
 import Search from './pages/Search';
 import Hobbies from './pages/Hobbies';
 import Profile from './pages/Profile';
+import FollowPage from './pages/FollowPage';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route exact path={"/search"} component={Search} />
           <Route exact path={"/hobbies"} component={Hobbies} />
           <Route exact path={"/profile/:username"} component={Profile} />
+          <Route exact path={"/:username/follow-page"} component={FollowPage} />
         </Switch>
       </div>
     </Router>

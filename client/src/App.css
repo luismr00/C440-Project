@@ -1055,3 +1055,33 @@ textarea {
   display: inline-block;
   padding-right: 5px;
 }
+
+.follow-tabs {
+  display: flex;
+  justify-content: space-evenly;
+  height: 50px;
+  border-bottom: 1px solid #D4D4D4;
+  /* margin: 0 40px; */
+}
+
+.tab {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tab:hover {
+  background-color: #d4d4d4;
+  cursor: pointer;
+}
+
+.tab p {
+  margin: 0;
+}
+
+.follow-count-select:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

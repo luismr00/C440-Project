@@ -11,14 +11,19 @@ function UserSearchResult(props) {
             <div className="user-search-body">
                 <img src={UserIcon}></img>
                 <div className="user-search-text">
-                    <h5>{props.user.firstName} {props.user.lastName}</h5>
-                    {console.log("hobbies: " + props.user.hobbies)}
-                    {props.user.hobbies.map((hobby, index) => {
-                        if(index === props.user.hobbies.length - 1)
-                            return(<p className="user-hobby-list">{hobby}</p>)
-                        else
-                            return(<p className="user-hobby-list">{hobby},</p>);
-                    })}
+                    <h5>{props.user.first_name} {props.user.last_name}</h5>
+                    {/* {console.log("hobbies: " + props.user.hobbies)} */}
+                    {props.user.hobbies ? 
+                        props.user.hobbies.map((hobby, index) => {
+                            if(index === props.user.hobbies.length - 1)
+                                return(<p className="user-hobby-list">{hobby}</p>)
+                            else
+                                return(<p className="user-hobby-list">{hobby},</p>);
+                        }) : 
+                        <div>
+                            <p>@{props.username}</p>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

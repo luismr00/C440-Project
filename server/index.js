@@ -259,8 +259,8 @@ app.get('/api/users/search', (req, res) => {
             for(let user of result) {
                 if (!newUserList[user.username]) {
                     newUserList[user.username] = {
-                        firstName: user.first_name,
-                        lastName: user.last_name,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
                         hobbies: [user.hobby]
                     };
                 } else { 
@@ -295,8 +295,8 @@ app.get('/api/users/search/mutualHobbies', (req, res) => {
             for(let user of result) {
                 if (!newUserList[user.username]) {
                     newUserList[user.username] = {
-                        firstName: user.first_name,
-                        lastName: user.last_name,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
                         hobbies: [user.hobby]
                     };
                 } else { 
