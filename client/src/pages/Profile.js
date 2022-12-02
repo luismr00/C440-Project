@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DotLoader from "react-spinners/DotLoader";
 import { useLocation } from 'react-router-dom';
 import { Link, useHistory } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
@@ -15,6 +16,7 @@ function Profile() {
     const [user, setUser] = useState(null);
     const [follower, setFollower] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
+    const [loading, setLoading] = useState("Loading");
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
     const [switchDisplay, setSwitchDisplay] = useState(0);
@@ -121,6 +123,12 @@ function Profile() {
     // console.log(hobbySelections);
   }
 
+  const loadingTimer = () => {
+    setTimeout(() => {
+      setLoading("This is taking longer than expected but hang on tight...");
+    }, 30000);
+  }
+
 
   const postDisplay = () => {
     switch(switchDisplay) {
@@ -146,10 +154,16 @@ function Profile() {
           </div>
         </div>
           : 
-          <div>
-            <h1>Please login</h1>
-            <a href="/"><p>Sign in</p></a>
-            <a href="/register"><p>Register</p></a>
+          <div className="loader">
+            {loadingTimer()}
+            <DotLoader
+              color={"#FF2301"}
+              loading={true}
+              size={80}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+            <p style={{fontSize: "24px", margin: "40px 0 0 0"}}>{loading}</p>
           </div>
         }
       </div>

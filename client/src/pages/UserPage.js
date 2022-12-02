@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DotLoader from "react-spinners/DotLoader";
 import { Link, useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,6 +15,7 @@ import SelectTags from "../components/SelectTags";
 function UserPage() {
   const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState("Loading");
   const history = useHistory();
   const [noBlogList, setNoBlogList] = useState([]);
   const [noCommentsList, setNoCommentsList] = useState([]);
@@ -189,6 +191,7 @@ function UserPage() {
 
       })
       const data = await res.json();
+      console.log("This should stall until it fetches data...");
       if(data.user != null){
         setUser(data.user);
         setAuthenticated(true);
@@ -216,6 +219,12 @@ function UserPage() {
     setPostWindow("hidden");
     setSwitchDisplay(null);
     // console.log(hobbySelections);
+  }
+
+  const loadingTimer = () => {
+    setTimeout(() => {
+      setLoading("This is taking longer than expected but hang on tight...");
+    }, 30000);
   }
 
     
@@ -255,10 +264,16 @@ function UserPage() {
             </div>
           </div>
           : 
-          <div>
-            <h1>Please login</h1>
-            <a href="/"><p>Sign in</p></a>
-            <a href="/register"><p>Register</p></a>
+          <div className="loader">
+            {loadingTimer()}
+            <DotLoader
+              color={"#FF2301"}
+              loading={true}
+              size={80}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+            <p style={{fontSize: "24px", margin: "40px 0 0 0"}}>{loading}</p>
           </div>
         }
       </div>

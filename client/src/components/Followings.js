@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom"
 import UserIcon from "../assets/person-circle.svg";
 
 function Followings(props) { 
 
     const [followingUsers, setFollowingUsers] = useState([]);
+    const history = useHistory();
 
     const getFollowings = async (username) => {
         // e.preventDefault();
@@ -48,7 +50,7 @@ function Followings(props) {
                     :
                     followingUsers.map((following) => {
                         return(
-                            <div className="user-bar">
+                            <div className="user-bar" onClick={() => {history.push(`/${following.username}`)}}>
                                 <img src={UserIcon}></img>
                                 <p style={{fontSize: '20px', margin: '8px 0 0 15px'}}>{following.first_name} {following.last_name}</p>
                             </div>

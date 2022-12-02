@@ -26,6 +26,7 @@ function Sidebar(props) {
           console.log("logout successful");
           props.setAuthenticated(false);
           props.setUser(null);
+          history.push("/");
         } else {
           console.log("logout failed");
         }

@@ -4,7 +4,7 @@ import Blogs from "./Blogs";
 import UserIcon from "../assets/person-circle.svg";
 import NotFound from "./NotFound";
 
-function ProfileDisplay(props) { 
+function ExternalProfileDisplay(props) { 
 
     // const [follower, setFollower] = useState(null);
     const location = useLocation();
@@ -18,7 +18,7 @@ function ProfileDisplay(props) {
 
     const getFollowings = async (username) => {
         // e.preventDefault();
-        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/followings`, {
+        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[1]}/followings`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -43,7 +43,7 @@ function ProfileDisplay(props) {
 
     const getFollowers = async (username) => {
         // e.preventDefault();
-        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/followers`, {
+        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[1]}/followers`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -99,7 +99,7 @@ function ProfileDisplay(props) {
 
     const getUser = async (e) => {
         // e.preventDefault();
-        const res = await fetch(`http://localhost:4000/api/profile/${pathname.split("/")[2]}`, {
+        const res = await fetch(`http://localhost:4000/api/profile/${pathname.split("/")[1]}`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -128,7 +128,7 @@ function ProfileDisplay(props) {
     }, []);
 
     return (
-        (userProfile && userHobbies && props.user.username === pathname.split("/")[2]) ? 
+        (userProfile && userHobbies && props.user.username != pathname.split("/")[1]) ? 
             <div className="column main-display">
                 <div className="main-content">
                     <div className="main-header">
@@ -176,4 +176,4 @@ function ProfileDisplay(props) {
 
 }
 
-export default ProfileDisplay;
+export default ExternalProfileDisplay;

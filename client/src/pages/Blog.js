@@ -141,9 +141,9 @@ function Blog() {
         </div>
           : 
           <div>
-            <h1>Please login</h1>
+            {/* <h1>Please login</h1>
             <a href="/"><p>Sign in</p></a>
-            <a href="/register"><p>Register</p></a>
+            <a href="/register"><p>Register</p></a> */}
           </div>
         }
       </div>

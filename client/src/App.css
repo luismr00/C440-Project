@@ -382,6 +382,7 @@ h2 {
   display: flex;
   /* justify-content: space-evenly; */
   padding: 16px;
+  cursor: pointer;
 }
 
 .search-select {
@@ -1084,4 +1085,20 @@ textarea {
 .follow-count-select:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.loader, .load-repeat {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  animation: fadeIn 3s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
