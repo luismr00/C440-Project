@@ -240,6 +240,77 @@ app.get('/api/users', (req, res) => {
     });
 });
 
+app.get('/api/users/search', (req, res) => {
+
+    const username = session.user.username;
+
+    db.query("SELECT user.username, user.first_name, user.last_name, hobby.hobby FROM user INNER JOIN hobby ON hobby.user_id = user.username AND user.username != ?", [
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+
+            //ADJUSTING MYSQL QUERY RESULTS TO AVOID DUPLICATE USERS WITH MULTIPLE HOBBIES
+            let newUserList = {};
+        
+            for(let user of result) {
+                if (!newUserList[user.username]) {
+                    newUserList[user.username] = {
+                        firstName: user.first_name,
+                        lastName: user.last_name,
+                        hobbies: [user.hobby]
+                    };
+                } else { 
+                    newUserList[user.username]["hobbies"].push(user.hobby);
+                }
+            }
+
+            console.log(newUserList);
+            console.log("successfully retrieved ALL users");
+            res.status(201).json({ success: true, users: newUserList });
+        }
+    });
+});
+
+app.get('/api/users/search/mutualHobbies', (req, res) => {
+
+    const username = session.user.username;
+
+    db.query("SELECT user.username, user.first_name, user.last_name, hobby.hobby FROM user INNER JOIN hobby ON hobby.user_id = user.username AND user.username != ? AND user.username IN (SELECT DISTINCT user_id FROM hobby WHERE hobby IN (SELECT hobby FROM hobby WHERE user_id = 'S2J'));", [
+        username,
+        username
+    ], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        }
+        else {
+
+            //ADJUSTING MYSQL QUERY RESULTS TO AVOID DUPLICATE USERS WITH MULTIPLE HOBBIES
+            let newUserList = {};
+        
+            for(let user of result) {
+                if (!newUserList[user.username]) {
+                    newUserList[user.username] = {
+                        firstName: user.first_name,
+                        lastName: user.last_name,
+                        hobbies: [user.hobby]
+                    };
+                } else { 
+                    newUserList[user.username]["hobbies"].push(user.hobby);
+                }
+            }
+
+            console.log(newUserList);
+            console.log("successfully retrieved ALL users with mutual hobbies");
+            res.status(201).json({ success: true, users: newUserList });
+        }
+    });
+});
+
 app.post('/api/create', (req, res) => {
     if(session.user !== undefined && session.user !== null) {
         const subject = req.body.subject;

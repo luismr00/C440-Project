@@ -400,13 +400,13 @@ h2 {
   /* pointer-events: none; */
 }
 
-#hobby-search {
+#hobby-search, #search {
   min-height: 500px;
   max-height: 500px;
   overflow-y: auto;
 }
 
-#hobby-search-body {
+#hobby-search-body, #search-body{
   height: 430px;
 }
 
@@ -911,6 +911,7 @@ textarea {
   border-radius: 15px;
   margin-bottom: 20px;
   border: solid #D4D4D4;
+  cursor: pointer;
 }
 
 .user-search-body {
@@ -1048,4 +1049,9 @@ textarea {
   /* for real browsers */
   box-shadow: 0 0 0 100vmax rgba(0,0,0,.3);
   /* pointer-events: none; */
+}
+
+.user-hobby-list {
+  display: inline-block;
+  padding-right: 5px;
 }

@@ -14,12 +14,12 @@ function SearchSelection(props) {
                 <div className="search-option" onClick={() => props.setSearchPage(1)}>
                     <p>Search user</p>
                 </div>
-                <div className="search-option">
+                <div className="search-option" onClick={() => props.handleUserSelection("mutual-hobbies")}>
                     <p>Search users with mutual hobbies</p>
                 </div>
-                <div className="search-option" onClick={() => props.setSearchPage(2)}>
+                {/* <div className="search-option" onClick={() => props.setSearchPage(2)}>
                     <p>Search mutual followers from following users</p>
-                </div>
+                </div> */}
                 {/* <div className="center-button">
                 <button className="continue-button">Continue</button>
                 </div> */}
