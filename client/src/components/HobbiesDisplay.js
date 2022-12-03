@@ -3,6 +3,8 @@ import HobbyOption from "./HobbyOption";
 import HobbyOptionSelected from "./HobbyOptionSelected";
 import { main_hobbies } from "../data/mainHobbies.js";
 import ManageHobbies from "./ManageHobbies";
+import UserIcon from "../assets/person-circle.svg"
+
 
 function HobbiesDisplay(props) { 
 
@@ -186,7 +188,7 @@ function HobbiesDisplay(props) {
     // }
 
     return (
-        <div className="column main-display">
+        <div className="column main-display" id="column-grow">
         <div className="main-content">
             <div className="main-header">
                 <h1>Hobbies</h1>
@@ -230,9 +232,9 @@ function HobbiesDisplay(props) {
                         </div>
                 }
             </div>
+            {/* <br></br>
             <br></br>
-            <br></br>
-            <br></br>
+            <br></br> */}
             <div className="save-hobbies" style={{visibility: props.savePopup}}>
                 <p>You have unsaved changes</p>
                 <div className="hobby-buttons">

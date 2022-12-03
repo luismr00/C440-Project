@@ -37,17 +37,18 @@ function Followings(props) {
     }, []);
 
     return (
-        <div className="column">
+        <div className="column" id="col-follow">
             <div className="following">
                 <div className="following-header">
                     <h1>Following</h1>
                 </div>
-
+                <div className="user-container">
                 {followingUsers.length === 0 ? 
                     <div className="user-bar">
-                        <p>You are not following anybody at this time</p>
+                        {/* <p>You are not following anybody at this time</p> */}
                     </div>
                     :
+                    // <div>TEST VIEW</div>
                     followingUsers.map((following) => {
                         return(
                             <div className="user-bar" onClick={() => {history.push(`/${following.username}`)}}>
@@ -57,6 +58,7 @@ function Followings(props) {
                         );
                     })
                 }
+                </div>
 
                 {/* {followingUsers.map((u) => {
                     return(

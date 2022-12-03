@@ -9,6 +9,7 @@ import ProfileDisplay from "../components/ProfileDisplay";
 import Post from "../components/Post";
 import SelectTags from "../components/SelectTags";
 import FollowPageDisplay from "../components/FollowPageDisplay";
+import BottomSidebar from "../components/BottomSidebar";
 
 function FollowPage(props) {
 
@@ -143,7 +144,7 @@ function FollowPage(props) {
   }
 
     return (
-      <div className="default">
+      <div className="default" id="main-container">
         { authenticated ?
 
         <div>
@@ -169,6 +170,7 @@ function FollowPage(props) {
             <p style={{fontSize: "24px", margin: "40px 0 0 0"}}>{loading}</p>
           </div>
         }
+        <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
       </div>
     );
 }

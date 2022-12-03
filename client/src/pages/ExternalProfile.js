@@ -8,6 +8,7 @@ import HobbiesDisplay from "../components/HobbiesDisplay";
 import ExternalProfileDisplay from "../components/ExternalProfileDisplay";
 import Post from "../components/Post";
 import SelectTags from "../components/SelectTags";
+import BottomSidebar from "../components/BottomSidebar";
 
 function ExternalProfile() {
 
@@ -140,7 +141,7 @@ function ExternalProfile() {
   }
 
     return (
-      <div className="default">
+      <div className="default" id="main-container">
         { authenticated ?
 
         <div>
@@ -166,6 +167,7 @@ function ExternalProfile() {
             <p style={{fontSize: "24px", margin: "40px 0 0 0"}}>{loading}</p>
           </div>
         }
+        <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
       </div>
     );
 }

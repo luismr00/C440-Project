@@ -5,6 +5,7 @@ import Followings from "../components/Followings";
 import BlogDisplay from "../components/BlogDisplay";
 import Post from "../components/Post";
 import SelectTags from "../components/SelectTags";
+import BottomSidebar from "../components/BottomSidebar";
 
 function Blog() {
 
@@ -126,7 +127,7 @@ function Blog() {
 
 
     return (
-      <div className="default">
+      <div className="default" id="main-container">
         { authenticated ?
 
         <div>
@@ -146,6 +147,7 @@ function Blog() {
             <a href="/register"><p>Register</p></a> */}
           </div>
         }
+        <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
       </div>
     );
 }

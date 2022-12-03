@@ -7,8 +7,7 @@ import Interests from "../assets/interests.svg";
 import Person from "../assets/person.svg";
 import Comment from "../assets/comment.svg";
 
-
-function Sidebar(props) { 
+function BottomSidebar(props) {
 
     const history = useHistory();
     const [showLogout, setShowLogout] = useState(false);
@@ -33,56 +32,52 @@ function Sidebar(props) {
       }
 
     return (
-        <div className="column" id="sidebar">
-            <div className="main-menu">
-                <div className="main-options">
-                    <h1 className="logo-name">Blogger</h1>
-                    <div className="logo" id="hide-logo"><p>B</p></div>
+        <div className="bottom-sidebar">
+            {/* MAKE BOTTOM BUTTON NAVIGATION FIXED */}
+            {/* <div className="navigations comment-icon" onClick={() => props.openPostWindow()}>
+                <img className="icon" src={Comment}></img>
+            </div> */}
+            <div className="bottom-menu">
+                {/* <div className="bottom-options"> */}
                     <a href="/userPage">
-                        <div className="navigations">
+                        <div className="bottom-navigations">
                             <img className="icon" src={Home}></img>
-                            <h2>Home</h2>
+                            {/* <h2>Home</h2> */}
                         </div>
                     </a>
                     <a href="/search">
-                        <div className="navigations">
+                        <div className="bottom-navigations">
                             <img className="icon" src={Search}></img>
-                            <h2>Search</h2>
+                            {/* <h2>Search</h2> */}
                         </div>
                     </a>
                     {/* <span class="material-symbols-outlined">interests</span> */}
                     <a href="/hobbies">
-                        <div className="navigations">
+                        <div className="bottom-navigations">
                             <img className="icon" src={Interests}></img>
-                            <h2>Hobbies</h2>
+                            {/* <h2>Hobbies</h2> */}
                         </div>
                     </a>
-                    <div className="navigations" onClick={() => {history.push(`/profile/${props.user.username}`)}}>
+                    <div className="bottom-navigations" onClick={() => {history.push(`/profile/${props.user.username}`)}}>
                         <img className="icon" src={Person}></img>
-                        <div><h2>Profile</h2></div>
+                        {/* <div><h2>Profile</h2></div> */}
                     </div>
+                    {/* Make the logout button a 100% width fixed button above */}
+                    {/* <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}}>
+                        <div onClick={() => logout()}><p>Log out</p></div>
+                    </div> */}
+                    {/* <div className="bottom-navigations" onClick={()=>showLogout ? setShowLogout(false) : setShowLogout(true)}>
+                        <div className="user-icon">
+                            <img src={UserIcon}></img>
+                        </div>
+                    </div> */}
                     <div className="navigations comment-icon" onClick={() => props.openPostWindow()}>
                         <img className="icon" src={Comment}></img>
                     </div>
-                    <button className="post-button" onClick={() => props.openPostWindow()}>Post</button>
-                </div>
-                <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}}>
-                    <div onClick={() => logout()}><p>Log out</p></div>
-                </div>
-                <div className="user-button" onClick={()=>showLogout ? setShowLogout(false) : setShowLogout(true)}>
-                    <div className="user-icon">
-                        <img src={UserIcon}></img>
-                    </div>
-                    <p className="user-button-name">{props.user.firstName} {props.user.lastName}</p>
-                </div>
+                {/* </div> */}
             </div>
-
-            {/* image next to user's name */}
-            {/* <span class="material-symbols-outlined">account_circle</span> */}
-            {/* <i class="bi bi-person-circle"></i> */}
         </div>
     );
-
 }
 
-export default Sidebar;
+export default BottomSidebar;

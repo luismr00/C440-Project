@@ -10,7 +10,7 @@ let obj = {
 
 function SearchDisplay(props) { 
     return (
-        <div className="column main-display">
+        <div className="column main-display" id="column-grow">
         <div className="main-content">
             <div className="main-header">
                 <h1>Search</h1>

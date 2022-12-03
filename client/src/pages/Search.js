@@ -9,6 +9,7 @@ import LookUp from "../components/LookUp";
 import Post from "../components/Post";
 // import MutualFollowingSearch from "../components/MutualFollowingSearch";
 import SelectTags from "../components/SelectTags";
+import BottomSidebar from "../components/BottomSidebar";
 
 function Search() {
 
@@ -212,7 +213,7 @@ function Search() {
       }
 
     return (
-      <div className="default">
+      <div className="default" id="main-container">
         { authenticated ?
 
         <div>
@@ -237,6 +238,7 @@ function Search() {
             <p style={{fontSize: "24px", margin: "40px 0 0 0"}}>{loading}</p>
           </div>
         }
+        <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
       </div>
     );
 }

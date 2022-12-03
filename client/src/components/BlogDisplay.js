@@ -4,7 +4,7 @@ import ThumbsUp from '../assets/thumbs_up.svg';
 import ThumbsDown from '../assets/thumbs_down.svg';
 import SelectedThumbsUp from '../assets/selected_thumbs_up.svg';
 import SelectedThumbsDown from '../assets/selected_thumbs_down.svg';
-
+import UserIcon from "../assets/person-circle.svg"
 
 const MIN_TEXTAREA_HEIGHT = 32;
 
@@ -91,9 +91,13 @@ const Blog = (props) => {
     <div className="column main-display">
         <div className="main-content">
             <div className="main-header">
-                <h1>Blog</h1>
+                <div className="logo-header"><p>B</p></div>
+                <h1>Comments</h1>
+                <div className="user-icon-header">
+                    <img src={UserIcon}></img>
+                </div>
             </div>
-            <div className="default">
+            {/* <div className="default"> */}
                 <div className="comment">
                     <div className="comment-body">
                         <h5 className="comment-title">{location.state.props.subject}</h5>
@@ -172,7 +176,7 @@ const Blog = (props) => {
                     </div>
                     <button style={{textAlign: "center"}}>Post Comment</button>
                 </form> */}
-            </div>
+            {/* </div> */}
         </div>
     </div>
 

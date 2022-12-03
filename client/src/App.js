@@ -13,12 +13,14 @@ import Hobbies from './pages/Hobbies';
 import Profile from './pages/Profile';
 import ExternalProfile from './pages/ExternalProfile';
 import FollowPage from './pages/FollowPage';
+import Grid from './components/Grid';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
+          <Route exact path={"/grid"} component={Grid} />
           <Route exact path={"/"} component={Login} />
           <Route exact path={"/register"} component={Register} />
           <Route exact path={"/userpage"} component={UserPage} />

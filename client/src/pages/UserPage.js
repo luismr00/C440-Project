@@ -9,6 +9,7 @@ import Followings from "../components/Followings";
 import Post from "../components/Post";
 import BlogSelection from "../components/BlogsSelection";
 import SelectTags from "../components/SelectTags";
+import BottomSidebar from "../components/BottomSidebar";
 
 
 
@@ -235,11 +236,11 @@ function UserPage() {
             return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
         case 1: 
             return <Post tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
-      }
-  }
-
-    return (
-      <div className="default">
+          }
+        }
+        
+        return (
+          <div className="default" id="main-container">
         { authenticated ?
 
           <div>
@@ -276,6 +277,8 @@ function UserPage() {
             <p style={{fontSize: "24px", margin: "40px 0 0 0"}}>{loading}</p>
           </div>
         }
+        <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
+        {/* <div className="bottom-sidebar"><p>FOOTER</p></div> */}
       </div>
     );
 }

@@ -132,7 +132,11 @@ function ProfileDisplay(props) {
             <div className="column main-display">
                 <div className="main-content">
                     <div className="main-header">
+                        <div className="logo-header"><p>B</p></div>
                         <h1>{userProfile.first_name} {userProfile.last_name}</h1>
+                        <div className="user-icon-header">
+                            <img src={UserIcon}></img>
+                        </div>
                     </div>
                     <div className="follow-tabs">
                         <div className="tab" style={selection === "followers" ? selectionColors : defaultColor} onClick={() => handleTabs("followers")}><p>Followers</p></div>
