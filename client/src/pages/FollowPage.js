@@ -113,6 +113,10 @@ function FollowPage(props) {
     }
   }, [authenticated]);
 
+  const clickEvents = {
+    pointerEvents: postWindow != "hidden" ? "none" : "auto"
+  }
+
   const openPostWindow = () => {
     setSwitchDisplay(0);
     setPostWindow("visible")
@@ -139,7 +143,7 @@ function FollowPage(props) {
         case 0: 
             return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
         case 1: 
-            return <Post tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
+            return <Post user={user} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
       }
   }
 
@@ -150,7 +154,7 @@ function FollowPage(props) {
         <div>
           {postDisplay()}
           {/* <Post postWindow = {postWindow} showPostWindow={setPostWindow} fetchpost={fetchpost}/> */}
-          <div className="three-way-grid">
+          <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <HobbiesDisplay user={user}/> */}
             <FollowPageDisplay user={user} view={location.state ? location.state.view : null}/>

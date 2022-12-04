@@ -152,10 +152,16 @@ function ProfileDisplay(props) {
                                 </div>
                                 <div className="hobby-list">
                                     <p>Hobbies:</p>
-                                    {userHobbies.map((e)=> {
-                                        return (
-                                            <p>{e.hobby}</p>
-                                        );
+                                    {userHobbies.map((e, i)=> {
+                                        if(i === userHobbies.length - 1) {
+                                            return (
+                                                <p>{e.hobby}</p>
+                                            );
+                                        } else {
+                                            return (
+                                                <p>{e.hobby}, </p>
+                                            );
+                                        }
                                     })}
                                 </div>
                                 <div className="profile-header-follows">

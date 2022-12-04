@@ -228,14 +228,17 @@ function UserPage() {
     }, 30000);
   }
 
-    
+  const clickEvents = {
+    // pointerEvents: postWindow != "hidden" ? "none" : "auto"
+    pointerEvents: postWindow === "visible" || blogSelection === "visible" ? "none" : "auto"
+  } 
 
   const postDisplay = () => {
     switch(switchDisplay) {
         case 0: 
             return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
         case 1: 
-            return <Post tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
+            return <Post user={user} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
           }
         }
         
@@ -258,7 +261,7 @@ function UserPage() {
               BlogListOPR={BlogListOPR}
               BlogListHobbies={blogListHobbies}
             /> 
-            <div className="three-way-grid">
+            <div className="three-way-grid" style={clickEvents}>
               <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
               <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList}/>
               <Followings user={user} />

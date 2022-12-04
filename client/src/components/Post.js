@@ -60,7 +60,7 @@ function Post(props) {
         <div className="post" style={{visibility: props.postWindow}}>
           <div className="post-body">
           <div className="post-header">
-            <label>luismi</label>
+            <label>{props.user.username}</label>
             {/* handle showPostWindow below to change switch automatically to tags display */}
             {console.log("the tags selected are: " + props.tags)}
             <img className="close" src={Close} onClick={() => props.closePostWindow()}></img>

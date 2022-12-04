@@ -103,12 +103,13 @@ const Blog = (props) => {
                         <h5 className="comment-title">{location.state.props.subject}</h5>
                         <h6 className="comment-subtitle" style={{color: 'red'}}>by {location.state.props.user_id}</h6>
                         <p className="comment-text">{location.state.props.description}</p>
+                        <p className="comment-info">Tags: {location.state.props.tags}</p>
                     </div>
                 </div>
                 <div className='comment-bottom'>
-                    <p className="comment-info">Likes</p>
-                    <p className="comment-info">Disikes</p>
-                    <p className="comment-info">{location.state.props.tags}</p>
+                    <p className="comment-info">{location.state.props.likes} Likes</p>
+                    <p className="comment-info">{location.state.props.dislikes} Disikes</p>
+                    {/* <p className="comment-info">{location.state.props.tags}</p> */}
                 </div>
 
                 <div className='comment-reply'>

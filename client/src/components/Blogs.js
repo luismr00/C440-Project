@@ -9,6 +9,7 @@ const Blogs = (props) => {
     // const [BlogList,setBlogList] = useState([]);
     const [follower, setFollower] = useState(null);
 
+    let tags = 0;
 
     // const fetchpost = async () => {
     //     const res = await fetch("http://localhost:4000/api/blogs", {
@@ -85,14 +86,26 @@ const Blogs = (props) => {
 
     }
 
+    const tagCount = (blogTags) => {
+        tags = blogTags.split(",").length;
+        console.log("fetching tag count");
+        console.log(tags);
+        // if(tags.includes(","))
+        //     console.log(true);
+        // else 
+        //     console.log(false);
+            
+    }
+
     return (
         <div>
             {/* {console.log(props.BlogList)} */}
             {props.BlogList.map((blog,i) => {
+                tagCount(blog.tags);
                 return (
                     <div className="carta" key={i}>
                     {/* <button onClick={() => followUser(blog.user_id)}>Follow</button> */}
-                        <div className="carta-body" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>
+                        <div className="carta-body" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags, likes: blog.pos_rating, dislikes: blog.neg_rating }})}}>
                             <h5 className="carta-title" style={{fontWeight: 'bold'}}>{blog.subject}</h5>
                             <h6 className="carta-subtitle" style={{color: 'red'}}>by {blog.user_id}</h6>
                             <p className="carta-text">{blog.description}</p>
@@ -100,7 +113,7 @@ const Blogs = (props) => {
                                 <p className="carta-text">{blog.comment_count} Comments</p>
                                 <p className="carta-text">{blog.pos_rating} Likes</p>
                                 <p className="carta-text">{blog.neg_rating} Disikes</p>
-                                <p className="carta-text">Tags: {blog.tags}</p>
+                                <p className="carta-text">Tags: {tags}</p>
                                 {/* <button onClick={() => {history.push(`/blog/:${blog.id}`, {state: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>Comments</button> */}
                             </div>
                             

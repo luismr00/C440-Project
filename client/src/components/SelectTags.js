@@ -36,7 +36,8 @@ function SelectTags(props) {
         if(props.hobbySelections.size === 0) {
             console.log("Selection is required before moving forward/disable button");
         } else {
-            props.setTags(Array.from(props.hobbySelections));
+            console.log("Saving as tags: " + Array.from(props.hobbySelections).join(","));
+            props.setTags(Array.from(props.hobbySelections).join(","));
             props.setSwitchDisplay(1);
         }
     }

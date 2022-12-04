@@ -191,7 +191,11 @@ function HobbiesDisplay(props) {
         <div className="column main-display" id="column-grow">
         <div className="main-content">
             <div className="main-header">
+                <div className="logo-header"><p>B</p></div>
                 <h1>Hobbies</h1>
+                <div className="user-icon-header">
+                    <img src={UserIcon}></img>
+                </div>
             </div>
             <div className="select-button">
                 <div className="selection-button" onClick={() => props.setHobbySelection("visible")}><p>Hi {props.user.name}, would you like to add a new hobby or modify existing ones?</p></div>

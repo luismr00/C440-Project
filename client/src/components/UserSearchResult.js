@@ -7,7 +7,7 @@ function UserSearchResult(props) {
     const history = useHistory();
 
     return (
-        <div className="user-search" onClick={() => {history.push(`/profile/${props.username}`)}}>
+        <div className="user-search" onClick={() => {history.push(`/${props.username}`)}}>
             <div className="user-search-body">
                 <img src={UserIcon}></img>
                 <div className="user-search-text">

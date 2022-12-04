@@ -279,7 +279,7 @@ app.get('/api/users/search/mutualHobbies', (req, res) => {
 
     const username = session.user.username;
 
-    db.query("SELECT user.username, user.first_name, user.last_name, hobby.hobby FROM user INNER JOIN hobby ON hobby.user_id = user.username AND user.username != ? AND user.username IN (SELECT DISTINCT user_id FROM hobby WHERE hobby IN (SELECT hobby FROM hobby WHERE user_id = 'S2J'));", [
+    db.query("SELECT user.username, user.first_name, user.last_name, hobby.hobby FROM user INNER JOIN hobby ON hobby.user_id = user.username AND user.username != ? AND user.username IN (SELECT DISTINCT user_id FROM hobby WHERE hobby IN (SELECT hobby FROM hobby WHERE user_id = ?));", [
         username,
         username
     ], (err, result) => {
@@ -960,8 +960,6 @@ app.get('/api/:username/followings', (req, res) => {
             // console.log(result);
         }
     });
-
-
 });
 
 app.get('/api/:username/followers', (req, res) => {
@@ -979,6 +977,28 @@ app.get('/api/:username/followers', (req, res) => {
             console.log("successfully retrieved followers");
             res.status(201).json({ success: true, followers: result });
             // console.log(result);
+        }
+    });
+});
+
+
+app.get('/api/friends', (req, res) => {
+
+    // const follower = req.params.username.split(':')[0];
+    // console.log("follower: " + follower);
+
+    const username = session.user.username;
+
+    db.query("SELECT username, first_name, last_name FROM user WHERE username IN (SELECT user_id FROM followers WHERE follower_id = ? AND user_id IN (SELECT follower_id FROM followers WHERE user_id = ?)) ", [
+        username,
+        username
+    ], (err, result) => { 
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            console.log("successfully friends from user");
+            res.status(201).json({ success: true, friends: result });
         }
     });
 });
