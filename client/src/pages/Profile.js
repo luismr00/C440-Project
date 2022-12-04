@@ -28,7 +28,7 @@ function Profile() {
 
     const fetchpost = async () => {
       console.log("getting posts from the user");
-      const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/blogs`, {
+      const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[1]}/blogs`, {
           method: "GET",
           headers: {
               'Accept': 'application/json',
@@ -63,7 +63,7 @@ function Profile() {
     useEffect(() => {
       fetchpost();
       fetchHobbies();
-    }, []);
+    }, [pathname.split("/")[1]]);
 
   const logout = async () => {
     const res = await fetch("http://localhost:4000/logout", {

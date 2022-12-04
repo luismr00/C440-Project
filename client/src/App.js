@@ -11,7 +11,7 @@ import UserPage from './pages/UserPage';
 import Search from './pages/Search';
 import Hobbies from './pages/Hobbies';
 import Profile from './pages/Profile';
-import ExternalProfile from './pages/ExternalProfile';
+// import ExternalProfile from './pages/Profile';
 import FollowPage from './pages/FollowPage';
 import Grid from './components/Grid';
 
@@ -31,8 +31,9 @@ function App() {
           <Route exact path={"/mutual-followers"} component={MutualFollowers} />
           <Route exact path={"/search"} component={Search} />
           <Route exact path={"/hobbies"} component={Hobbies} />
-          <Route exact path={"/:username"} component={ExternalProfile} />
-          <Route exact path={"/profile/:username"} component={Profile} />
+          {/* <Route exact path={"/:username"} component={ExternalProfile} /> */}
+          {/* <Route exact path={"/profile/:username"} component={Profile} /> */}
+          <Route exact path={"/:username"} component={Profile} />
           <Route exact path={"/:username/follow-page"} component={FollowPage} />
         </Switch>
       </div>
