@@ -220,7 +220,7 @@ function Hobbies() {
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <SearchDisplay user={user} setSearchSelection={setSearchSelection}/> */}
-            <HobbiesDisplay user={user} setHobbySelection={setHobbySelection} view={view} savePopup={savePopup} setSavePopup={setSavePopup} hobbiesList={hobbiesList} selectedHobbies={selectedHobbies} setSelectedHobbies={setSelectedHobbies} tempHobbies={tempHobbies} />
+            <HobbiesDisplay user={user} setHobbySelection={setHobbySelection} view={view} savePopup={savePopup} setSavePopup={setSavePopup} hobbiesList={hobbiesList} selectedHobbies={selectedHobbies} setSelectedHobbies={setSelectedHobbies} tempHobbies={tempHobbies} setUserHobbies={setUserHobbies} />
             <Followings user={user} />
           </div>
         </div>

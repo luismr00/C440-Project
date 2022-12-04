@@ -165,6 +165,7 @@ function HobbiesDisplay(props) {
             props.setSelectedHobbies(new Set(hobbies));
             //hide savePopup ofc
             props.setSavePopup("hidden");
+            props.setUserHobbies(hobbies);
         } else {
             console.log("create failed");
         }
