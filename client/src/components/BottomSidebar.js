@@ -58,7 +58,7 @@ function BottomSidebar(props) {
                             {/* <h2>Hobbies</h2> */}
                         </div>
                     </a>
-                    <div className="bottom-navigations" onClick={() => {history.push(`/profile/${props.user.username}`)}}>
+                    <div className="bottom-navigations" onClick={() => {history.push(`/${props.user.username}`)}}>
                         <img className="icon" src={Person}></img>
                         {/* <div><h2>Profile</h2></div> */}
                     </div>

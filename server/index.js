@@ -318,8 +318,8 @@ app.post('/api/create', (req, res) => {
         const tags = req.body.tags;
         const date = new Date();
         const user_id = session.user.username;
-        db.query("SELECT COUNT(date) from blog WHERE date > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND user_id = ?",[user_id], (err, result) => {
-            if(result[0]['COUNT(date)'] < 2) {
+        // db.query("SELECT COUNT(date) from blog WHERE date > DATE_SUB(NOW(), INTERVAL 24 HOUR) AND user_id = ?",[user_id], (err, result) => {
+            // if(result[0]['COUNT(date)'] < 2) {
                 db.query("INSERT INTO blog (subject, description, tags, date, user_id) VALUES(?, ?, ?, ?, ?)",[
                     subject,
                     description,
@@ -337,12 +337,12 @@ app.post('/api/create', (req, res) => {
                         }
                     }
                 );
-            }
-            else {
-                console.log("You have reached the limit of 2 post per 24 hours");
-                res.status(400).json({ success: false, err: "You have reached the limit of 2 post per 24 hours" });
-            }
-        });
+            // }
+            // else {
+                // console.log("You have reached the limit of 2 post per 24 hours");
+                // res.status(400).json({ success: false, err: "You have reached the limit of 2 post per 24 hours" });
+            // }
+        // });
     } else {
         res.status(400).json({ success: false, err: "You must be logged in to create a post" });
     }
@@ -404,7 +404,7 @@ app.post('/api/hobbies', (req, res) => {
                 }
             );
         } else {       
-            db.query("INSERT INTO hobby (hobby, user_id) VALUES ?",[
+            db.query("INSERT IGNORE INTO hobby (hobby, user_id) VALUES ?",[
                 newList
             ], (err, result) => {
                     if (err) {

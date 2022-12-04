@@ -46,6 +46,9 @@ CREATE TABLE IF NOT EXISTS `hobby` (
     FOREIGN KEY (`user_id`) REFERENCES user(`username`)
 );
 
+-- AVOID DUPLICATES ON TABLE `hobby`;
+ALTER TABLE `hobby` ADD UNIQUE INDEX(`hobby`, `user_id`);
+
 -- DROP TABLE IF EXISTS `followers`;
 CREATE TABLE IF NOT EXISTS `followers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
