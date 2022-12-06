@@ -60,6 +60,72 @@ a:hover {
     transform: rotate(360deg);
   }
 }
+
+.message {
+  color: white;
+  /* border: 1px solid black; */
+  background-color: red;
+  /* text-align: center; */
+  width: 400px;
+  height: 50px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -400px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 3px;
+  animation: drop 0.5s ease forwards; 
+             /* moveUp 1s 4s ease forwards; */
+}
+
+@keyframes drop {
+  0%{opacity: 0}
+  70%{transform: translate(-50%, 440px)}
+  100%{transform: translate(-50%, 420px); opacity: 1;}
+}
+
+/* @keyframes moveUp {
+  0%{transform: translate(-50%, 420px)}
+  40%{transform: translate(-50%, 440px)}
+  70%{transform: translate(-50%, 0px)}
+  100%{transform: translate(-50%, -400px)}
+} */
+
+@keyframes slidein-low  {
+  from {
+     top:0;
+  }
+  
+  to {
+     top:40px;
+  }
+
+}
+
+@keyframes hold {
+  from {
+    top:40px;
+ }
+ 
+ to {
+    top:41px;
+ }
+}
+
+@keyframes slideout-up  {
+  from {
+     top:50px;
+  }
+  
+  to {
+     top:0;
+  }
+
+}
+
+
 .default{
   /* background-image: url("https://img.freepik.com/free-photo/green-grass-with-sun-beam-sunset-soft-focus_117265-929.jpg"); */
   background-color: white;

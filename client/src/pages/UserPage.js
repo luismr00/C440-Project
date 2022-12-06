@@ -282,6 +282,11 @@ function UserPage() {
         }
         <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
         {/* <div className="bottom-sidebar"><p>FOOTER</p></div> */}
+        {/* <div class="message" style={{display: "flex"}}>
+          <div style={{margin: "0px"}}>
+            <p>Username or password is invalid. Try again!</p>
+          </div>
+        </div> */}
       </div>
     );
 }

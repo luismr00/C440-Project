@@ -11,6 +11,8 @@ function Register() {
   const [email, setEmail] = useState("");
   const [errMsg, setErrMsg] = useState("hidden");
   const [pwErr, setPwError] = useState("hidden");
+  const [message, setMessage] = useState("");
+  const [response, setResponse] = useState("none")
   const [authenticated, setAuthenticated] = useState(false);
 
   const history = useHistory();
@@ -19,11 +21,15 @@ function Register() {
     e.preventDefault();
 
     if ((!username || !password || !firstName || !lastName || !email)) {
-      setErrMsg("visible");
-      setPwError("hidden");
+      // setErrMsg("visible");
+      // setPwError("hidden");
+      setMessage("Some fields are missing. Try again!");
+      setResponse("flex");
     } else if (password !== password2) {
-      setPwError("visible");
-      setErrMsg("hidden"); 
+      // setPwError("visible");
+      // setErrMsg("hidden");
+      setMessage("The passwords do not match. Try again!");
+      setResponse("flex"); 
     } else {
       const res = await fetch("http://localhost:4000/api/register", {
         method: "POST",
@@ -42,10 +48,13 @@ function Register() {
       const data = await res.json();
       if(data.success) {
         console.log("registered successful");
-        setErrMsg("hidden");
+        // setErrMsg("hidden");
+        setResponse("none");
         history.push("/userpage");
       } else {
-        setErrMsg("visible");
+        // setErrMsg("visible");
+        setMessage("Registration failed. Check your connection.");
+        setResponse("flex");
         console.log("registered failed: ", data.err);
       }
     }
@@ -108,8 +117,14 @@ function Register() {
           </form>
           <a href="/"><p>Registered already? Sign in.</p></a>
         </div>
-        <p style={{color: 'red', visibility: errMsg}}>Some fields are missing. Try again!</p>
-        <p style={{color: 'red', visibility: pwErr}}>The passwords do not match. Try again!</p>
+        <div class="message" style={{display: response}}>
+          <div>
+            <p>{message}</p>
+          </div>
+        </div>
+
+        {/* <p style={{color: 'red', visibility: errMsg}}>Some fields are missing. Try again!</p> */}
+        {/* <p style={{color: 'red', visibility: pwErr}}>The passwords do not match. Try again!</p> */}
       </div>
     );
 }

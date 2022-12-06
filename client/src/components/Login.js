@@ -7,6 +7,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("hidden");
+  const [message, setMessage] = useState("");
+  const [response, setResponse] = useState("none")
   const [authenticated, setAuthenticated] = useState(false);
 
   const history = useHistory();
@@ -32,10 +34,24 @@ function Login() {
     const data = await res.json();
     if(data.success) {
       console.log("login successful");
-      setErrMsg("hidden");
+      setResponse("none");
       history.push("/userpage");
     } else {
-      setErrMsg("visible");
+
+      setMessage("Username or password is invalid. Try again!")
+      setResponse("flex");
+
+      // if(response === true) {
+      //   console.log("no message rerender");
+      // } else {
+      //   response = true;
+      //   setMessage("flex");
+      //   setTimeout(() => {
+      //     setMessage("none");
+      //     response = false;
+      //   }, 4500);
+      // }
+
       console.log("login failed: ", data.err);
     }
   }
@@ -89,7 +105,11 @@ function Login() {
           </form>
           <a href="/register"><p>Not registered? Sign up.</p></a>
         </div>
-        <p style={{color: 'red', visibility: errMsg}}>Username or password is invalid. Try again!</p>
+        <div class="message" style={{display: response}}>
+          <div>
+            <p>{message}</p>
+          </div>
+        </div>
       </div>
     );
 }
