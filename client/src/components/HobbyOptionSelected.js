@@ -5,6 +5,11 @@ function HobbyOptionSelected(props) {
     const [hover, setHover] = useState(false);
     const [selected, setSelected] = useState(props.check);
 
+    // if(props.reset && props.check) {
+    //     console.log("Should reset hobby #" + props.id);
+    //     setSelected(true);
+    // }
+
     //function to use selected state and selectHobby prop function one after the other
     const handleSelection = (hobby) => {
         setSelected(selected ? false : true);       
@@ -22,7 +27,7 @@ function HobbyOptionSelected(props) {
     }
 
     return (
-        <div className="hobby-option" 
+        <div className="hobby-option" id={props.id}
             style={selected ? hobbySelected : sectionStyle} 
             onClick={()=>handleSelection(props.hobby)} 
             onMouseEnter={()=>setHover(true)} 

@@ -5,7 +5,6 @@ import { main_hobbies } from "../data/mainHobbies.js";
 import ManageHobbies from "./ManageHobbies";
 import UserIcon from "../assets/person-circle.svg"
 
-
 function HobbiesDisplay(props) { 
 
     // const [colorBG, setColorBG] = useState("#D4D4D4");
@@ -139,13 +138,8 @@ function HobbiesDisplay(props) {
     //     fetchHobbyList();
     //   }, []);
 
-    const postHobbies = async (e) => {
-        e.preventDefault();
-
-        //convert tempHobbies to array to pass to server
-        let hobbies = Array.from(props.tempHobbies);
-
-        const res = await fetch("http://localhost:4000/api/hobbies", {
+    const addHobbies = async (addList, hobbies) => {
+        const res = await fetch("http://localhost:4000/api/addHobbies", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -153,13 +147,15 @@ function HobbiesDisplay(props) {
                 'credentials': 'include'
             },
             body: JSON.stringify({
-                hobbies: hobbies,
+                list: addList
+                // previousHobbies: Array.from(props.selectedHobbies), 
+                // hobbies: hobbies,
             }),
         }) 
         const data = await res.json();
         if(data.success) {
             console.log("create successful");
-            alert("Hobbies added successfully");
+            // alert("Hobbies added successfully");
             //reset selectedHobbies and tempHobbies if necessary
             //pass a different copy of tempHobbies to avoid selectedHobbies and tempHobbies behaving like pointers after
             props.setSelectedHobbies(new Set(hobbies));
@@ -168,6 +164,117 @@ function HobbiesDisplay(props) {
             props.setUserHobbies(hobbies);
         } else {
             console.log("create failed");
+        }
+    }
+
+    const deleteHobbies = async (deleteList, hobbies) => {
+        const res = await fetch("http://localhost:4000/api/deleteHobbies", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'credentials': 'include'
+            },
+            body: JSON.stringify({
+                list: deleteList
+                // previousHobbies: Array.from(props.selectedHobbies), 
+                // hobbies: hobbies,
+            }),
+        }) 
+        const data = await res.json();
+        if(data.success) {
+            console.log("create successful");
+            // alert("Hobbies deleted successfully");
+            //reset selectedHobbies and tempHobbies if necessary
+            //pass a different copy of tempHobbies to avoid selectedHobbies and tempHobbies behaving like pointers after
+            props.setSelectedHobbies(new Set(hobbies));
+            //hide savePopup ofc
+            props.setSavePopup("hidden");
+            props.setUserHobbies(hobbies);
+
+            if(props.view === 'manage') {
+                // props.fetchHobbies();
+                props.setView("");
+                props.setView("manage");
+            }
+        } else {
+            console.log("create failed");
+        }
+    }
+
+    const postHobbies = (e) => {
+        e.preventDefault();
+
+        //convert tempHobbies to array to pass to server
+        let hobbies = Array.from(props.tempHobbies);
+        let original = new Set(props.selectedHobbies); 
+        let addList = [];
+        let deleteList = [];
+
+        //SEPERATING LIST BETWEEN ADD AND DELETE
+        hobbies.map((hobby) => {
+            if(original.has(hobby))
+                original.delete(hobby);
+            else 
+                addList.push([hobby, props.user.username]);
+        });
+
+        let newList = Array.from(original);
+
+        newList.map((hobby)=> {
+            let temp = [hobby, props.user.username];
+            deleteList.push(temp);
+        });
+
+        console.log("Sending the following data to the server");
+        console.log(addList);
+        console.log(deleteList);
+
+        if (deleteList.length != 0) {
+            deleteHobbies(deleteList, hobbies);
+        } 
+
+        if (addList.length != 0) {
+            addHobbies(addList, hobbies);
+        }
+
+        // const res = await fetch("http://localhost:4000/api/hobbies", {
+        //     method: "POST",
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //         'credentials': 'include'
+        //     },
+        //     body: JSON.stringify({
+        //         previousHobbies: Array.from(props.selectedHobbies), 
+        //         hobbies: hobbies,
+        //     }),
+        // }) 
+        // const data = await res.json();
+        // if(data.success) {
+        //     console.log("create successful");
+        //     alert("Hobbies added successfully");
+        //     //reset selectedHobbies and tempHobbies if necessary
+        //     //pass a different copy of tempHobbies to avoid selectedHobbies and tempHobbies behaving like pointers after
+        //     props.setSelectedHobbies(new Set(hobbies));
+        //     //hide savePopup ofc
+        //     props.setSavePopup("hidden");
+        //     props.setUserHobbies(hobbies);
+        // } else {
+        //     console.log("create failed");
+        // }
+    }
+
+    const resetHobbies = async (e) => {
+
+        await props.fetchHobbies();
+
+        if(props.view === 'main') {
+            props.setView("");
+            props.setView("main");
+        } else if (props.view === "manage") {
+            props.setView("");
+            props.setView("manage");
         }
     }
 
@@ -206,35 +313,31 @@ function HobbiesDisplay(props) {
                 <p>Choose as many hobbies as you'd like and then hit save</p>
             </div>
             <div className="hobby-container">
-                {/* {console.log("changing views here...")}
-                {console.log(selectedHobbies)}
-                {console.log(tempHobbies)} */}
                 {props.view === 'main' ? 
-                    props.selectedHobbies.size === 0 ? 
+                    props.selectedHobbies.size != 0 ?
                         <div className="hobby-lists">
                             {props.hobbiesList.map((hobby, id) => (
-                                <HobbyOption key={id} id={id} hobby={hobby} selectHobby={selectHobby}/>
+                                <HobbyOptionSelected key={id} id={id} hobby={hobby} selectHobby={selectHobby} check={props.selectedHobbies.has(hobby) ? true : false}/>
                             ))}
                         </div> 
                         :
                         <div className="hobby-lists">
-                            {/* {console.log("changing views here...")}
-                            {console.log(selectedHobbies)}
-                            {console.log(tempHobbies)} */}
                             {props.hobbiesList.map((hobby, id) => (
-                                <HobbyOptionSelected key={id} id={id} hobby={hobby} selectHobby={selectHobby} check={props.selectedHobbies.has(hobby) ? true : false}/>
+                                <HobbyOption key={id} id={id} hobby={hobby} selectHobby={selectHobby}/>
                             ))}
                         </div>
-                    :
+                    : props.view === "manage" ?
                     props.selectedHobbies.size === 0 ? 
                         <div className="hobby-lists">You have no hobbies saved</div>
                         :
                         <div className="hobby-lists">
-                            {console.log(Array.from(props.selectedHobbies))}
+                            {/* {console.log(Array.from(props.selectedHobbies))} */}
                             {Array.from(props.selectedHobbies).map((hobby, id) => (
                                 <ManageHobbies key={id} id={id} hobby={hobby} selectHobby={selectHobby}/>
                             ))}
                         </div>
+                    : 
+                    <div></div>
                 }
             </div>
             {/* <br></br>
@@ -243,7 +346,7 @@ function HobbiesDisplay(props) {
             <div className="save-hobbies" style={{visibility: props.savePopup}}>
                 <p>You have unsaved changes</p>
                 <div className="hobby-buttons">
-                <button className="hobby-clear">Clear</button>
+                <button className="hobby-clear" onClick={(e)=>resetHobbies(e)}>Clear</button>
                 <button className="hobby-save" onClick={(e)=>postHobbies(e)}>Save</button>
                 </div>
             </div>

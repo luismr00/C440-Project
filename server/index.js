@@ -371,57 +371,131 @@ app.post('/api/hobby', (req, res) => {
     }
 })
 
-app.post('/api/hobbies', (req, res) => {
+app.post('/api/addHobbies', (req, res) => {
     if(session.user !== undefined && session.user !== null) {
         const username = session.user.username;
-        const hobbies = req.body.hobbies;
-        const user_id = session.user.username;
-
-        console.log("Here are the list of hobbies to be added:");
-        console.log(hobbies);
-
-        let newList = [];
-
-        hobbies.map((hobby)=> {
-            let temp = [hobby, user_id];
-            newList.push(temp);
-        });
-
-        console.log(newList);
-
-        if (hobbies.length === 0) {
-            db.query("DELETE FROM hobby WHERE user_id = ?;",[
-                username
-            ], (err, result) => {
-                    if (err) {
-                        console.log(err)
-                        res.status(400).json({ success: false, err: err });
-                    }
-                    else {
-                        console.log("successfully created");
-                        res.status(201).json({ success: true });
-                    }
+        const list = req.body.list;
+        
+        db.query("INSERT IGNORE INTO hobby (hobby, user_id) VALUES ?",[
+            list
+        ], (err, result) => {
+                if (err) {
+                    console.log(err)
+                    res.status(400).json({ success: false, err: err });
                 }
-            );
-        } else {       
-            db.query("INSERT IGNORE INTO hobby (hobby, user_id) VALUES ?",[
-                newList
-            ], (err, result) => {
-                    if (err) {
-                        console.log(err)
-                        res.status(400).json({ success: false, err: err });
-                    }
-                    else {
-                        console.log("successfully created");
-                        res.status(201).json({ success: true });
-                    }
+                else {
+                    console.log("successfully added new hobbies");
+                    // successful = true;
+                    res.status(201).json({ success: true });
                 }
-            );
-        }
+            }
+        );
+    
     } else {
         res.status(400).json({ success: false, err: "You must be logged in to create a post" });
     }
 })
+
+app.post('/api/deleteHobbies', (req, res) => {
+    if(session.user !== undefined && session.user !== null) {
+        const username = session.user.username;
+        const list = req.body.list;
+        
+        db.query("DELETE FROM hobby WHERE (hobby, user_id) IN (?)", [
+            list
+        ] , (err, result) => {
+                if (err) {
+                    console.log(err)
+                    res.status(400).json({ success: false, err: err });
+                }
+                else {
+                    console.log("successfully deleted hobbies");
+                    // successful = true;
+                    res.status(201).json({ success: true });
+                }
+            }
+        );
+
+    } else {
+        res.status(400).json({ success: false, err: "You must be logged in to create a post" });
+    }
+})
+
+// app.post('/api/hobbies', (req, res) => {
+//     if(session.user !== undefined && session.user !== null) {
+//         const username = session.user.username;
+//         const previousHobbies = req.body.previousHobbies;
+//         const hobbies = req.body.hobbies;
+//         const user_id = session.user.username;
+
+//         console.log("Here are the list of hobbies to be removed and added");
+//         console.log(previousHobbies);
+//         console.log(hobbies);
+
+//         let original = new Set(previousHobbies);
+//         let addList = [];
+//         let deleteList = [];
+//         let successful = false;
+
+//         //SEPERATING LIST BETWEEN ADD AND DELETE
+//         hobbies.map((hobby) => {
+//             if(original.has(hobby))
+//                 original.delete(hobby);
+//             else 
+//                 addList.push([hobby, username]);
+//         });
+
+//         let newList = Array.from(original);
+
+//         newList.map((hobby)=> {
+//             let temp = [hobby, username];
+//             deleteList.push(temp);
+//         });
+
+//         console.log(deleteList);
+//         console.log(addList);
+
+//         if (deleteList.length != 0) {
+//             db.query("DELETE FROM hobby WHERE (hobby, user_id) IN (?)", [
+//                 deleteList
+//             ] , (err, result) => {
+//                     if (err) {
+//                         console.log(err)
+//                         res.status(400).json({ success: false, err: err });
+//                     }
+//                     else {
+//                         console.log("successfully deleted hobbies");
+//                         successful = true;
+//                         res.status(201).json({ success: true });
+//                     }
+//                 }
+//             );
+//         }  
+        
+//         if (addList.length != 0) {       
+//             db.query("INSERT IGNORE INTO hobby (hobby, user_id) VALUES ?",[
+//                 addList
+//             ], (err, result) => {
+//                     if (err) {
+//                         console.log(err)
+//                         res.status(400).json({ success: false, err: err });
+//                     }
+//                     else {
+//                         console.log("successfully added new hobbies");
+//                         successful = true;
+//                         res.status(201).json({ success: true });
+//                     }
+//                 }
+//             );
+//         }
+
+//         // if (successful === true)
+//         //     res.status(201).json({ success: true });
+
+//     } else {
+//         res.status(400).json({ success: false, err: "You must be logged in to create a post" });
+//     }
+// })
 
 app.get('/api/getHobbies', (req, res) => {
     const username = session.user.username;

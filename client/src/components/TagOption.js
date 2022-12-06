@@ -5,7 +5,7 @@ function TagOption(props) {
   const [selected, setSelected] = useState(false);
 
     const handleSelection = (hobby) => {
-        console.log("save selection and change color");
+        // console.log("save selection and change color");
         if(selected)
             setSelected(false);
         else
@@ -27,7 +27,7 @@ function TagOption(props) {
         onClick={() => handleSelection(props.hobby)}
         style={hobbyColors}
         >
-            {console.log("inserting option...")}
+            {/* {console.log("inserting option...")} */}
             <p>{props.hobby}</p>
         </div>
     );

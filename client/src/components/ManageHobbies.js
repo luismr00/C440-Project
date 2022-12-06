@@ -5,6 +5,8 @@ function ManageHobbies(props) {
     const [hover, setHover] = useState(false);
     const [selected, setSelected] = useState(true);
 
+    console.log("checking selected state: " + selected);
+
     //function to use selected state and selectHobby prop function one after the other
     const handleSelection = (hobby) => {
         setSelected(selected ? false : true);       

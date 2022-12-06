@@ -35,6 +35,10 @@ function AddHobby(props) {
     const postHobby = async (e) => {
 
         let hobbyExists = validateHobby();
+        let newHobbies = props.userHobbies;
+        newHobbies.push(hobby);
+
+        console.log(newHobbies);
 
         if(hobbyExists === true) {
             console.log("Cannot add existing saved hobby");
@@ -48,15 +52,28 @@ function AddHobby(props) {
                     'credentials': 'include'
                 },
                 body: JSON.stringify({
-                    hobby: hobby,
+                    hobby: hobby, 
+                    // list: [[hobby, props.user.username]]
                 }),
             }) 
             const data = await res.json();
             if(data.success) {
                 console.log("create successful");
-                alert("Hobby added successfully");
+                // alert("Hobby added successfully");
                 setHobby("");
                 props.closeSelection();
+                // props.fetchHobbies();
+                props.setUserHobbies(newHobbies);
+                props.setSelectedHobbies(new Set(newHobbies));
+                props.setTempHobbies(new Set(newHobbies));
+
+                //SELECT THE HOBBY WITH DOCUMENT.ELEMENT....
+                if(props.view === 'main') {
+                    // props.fetchHobbies();
+                    props.setView("");
+                    props.setView("main");
+                }
+
             } else {
                 console.log("create failed");
             }

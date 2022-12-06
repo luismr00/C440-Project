@@ -94,10 +94,10 @@ function Hobbies() {
       const data = await res.json();
       if(data.hobbies != null){
 
-          console.log("Showing hobbies fetched");
-          console.log(data.hobbies);
+          // console.log("Showing hobbies fetched");
+          // console.log(JSON.stringify(data.hobbies));
           setSelectedHobbies(new Set(data.hobbies));
-          console.log(selectedHobbies);
+          // console.log(selectedHobbies);
           setTempHobbies(new Set(data.hobbies));
           setUserHobbies(data.hobbies);
       }
@@ -203,7 +203,7 @@ function Hobbies() {
         case 0: 
             return <HobbySelection hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} setView={setView} />
         case 1: 
-            return <AddHobby hobbiesList={hobbiesList} otherHobbies={otherHobbies} selectedHobbies={selectedHobbies} hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
+            return <AddHobby user={user} view={view} setView={setView} hobbiesList={hobbiesList} otherHobbies={otherHobbies} selectedHobbies={selectedHobbies} setTempHobbies={setTempHobbies} hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} userHobbies={userHobbies} setUserHobbies={setUserHobbies} setSelectedHobbies={setSelectedHobbies} fetchHobbies={fetchHobbies} />
         // case 2: 
         //     return <HobbyCategories hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
       }
@@ -220,7 +220,7 @@ function Hobbies() {
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <SearchDisplay user={user} setSearchSelection={setSearchSelection}/> */}
-            <HobbiesDisplay user={user} setHobbySelection={setHobbySelection} view={view} savePopup={savePopup} setSavePopup={setSavePopup} hobbiesList={hobbiesList} selectedHobbies={selectedHobbies} setSelectedHobbies={setSelectedHobbies} tempHobbies={tempHobbies} setUserHobbies={setUserHobbies} />
+            <HobbiesDisplay fetchHobbies={fetchHobbies} setHobbiesList={setHobbiesList} user={user} setHobbySelection={setHobbySelection} view={view} setView={setView} savePopup={savePopup} setSavePopup={setSavePopup} hobbiesList={hobbiesList} selectedHobbies={selectedHobbies} setSelectedHobbies={setSelectedHobbies} tempHobbies={tempHobbies} setTempHobbies={setTempHobbies} userHobbies={userHobbies} setUserHobbies={setUserHobbies} />
             <Followings user={user} />
           </div>
         </div>
