@@ -92,22 +92,31 @@ function Login() {
 
     return (
       <div className="default">
-        <div className="SignOrReg">
-          <div className="form-title">
-              <h2>Log In</h2>
+        <div className="credentials" style={{marginTop: "150px"}}>
+          <div className="credentials-header">
+            <h1>Blogger</h1>
           </div>
-          <form onSubmit={signIn}>
-              <label>Email</label>
-              <input type="text" id="username" onChange={(e) => {setEmail(e.target.value)}}></input>
-              <label>Password</label>
-              <input type="password" id="password" onChange={(e) => {setPassword(e.target.value)}}></input>
-              <button type="submit">Submit</button>
-          </form>
-          <a href="/register"><p>Not registered? Sign up.</p></a>
-        </div>
-        <div class="message" style={{display: response}}>
-          <div>
-            <p>{message}</p>
+          <div className="SignOrReg">
+            <div className="form-title">
+                <h2>Log In</h2>
+            </div>
+              <div className="form-body">
+                <form onSubmit={signIn}>
+                    <label>Email</label>
+                    <input type="text" id="username" onChange={(e) => {setEmail(e.target.value)}}></input>
+                    <label>Password</label>
+                    <input type="password" id="password" onChange={(e) => {setPassword(e.target.value)}}></input>
+                    <div className="center-button">
+                      <button className="submit-button" type="submit">Submit</button>
+                    </div>
+                </form>
+                <a href="/register"><p style={{textAlign: "center"}}>Not registered? Sign up.</p></a>
+              </div>
+          </div>
+          <div class="message" style={{display: response}}>
+            <div>
+              <p>{message}</p>
+            </div>
           </div>
         </div>
       </div>

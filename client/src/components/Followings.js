@@ -67,7 +67,7 @@ function Followings(props) {
         <div className="column" id="col-follow">
             <div className="following">
                 <div className="following-header">
-                    <h1>Following</h1>
+                    <h1>Friends</h1>
                 </div>
                 <div className="user-container">
                 {friends.length === 0 ? 

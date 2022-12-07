@@ -96,35 +96,44 @@ function Register() {
 
     return (
       <div className="default">
-        <div className="SignOrReg">
-          <div className="form-title">
-              <h2>Register</h2>
+        <div className="credentials" style={{marginTop: "80px"}}>
+          <div className="credentials-header">
+            <h1>Blogger</h1>
           </div>
-          <form onSubmit={signup}>
-              <label>Username</label>
-              <input type="text" onChange={(e) => {setUsername(e.target.value)}}></input>
-              <label>Password</label>
-              <input type="password" onChange={(e) => {setPassword(e.target.value)}}></input>
-              <label>Re-enter Password</label>
-              <input type="password" onChange={(e) => {setPassword2(e.target.value)}}></input>
-              <label>First Name</label>
-              <input type="text" onChange={(e) => {setFirstName(e.target.value)}}></input>
-              <label>Last Name</label>
-              <input type="text" onChange={(e) => {setLastName(e.target.value)}}></input>
-              <label>Email</label>
-              <input type="text" onChange={(e) => {setEmail(e.target.value)}}></input>
-              <button type="submit">Submit</button>
-          </form>
-          <a href="/"><p>Registered already? Sign in.</p></a>
-        </div>
-        <div class="message" style={{display: response}}>
-          <div>
-            <p>{message}</p>
+          <div className="SignOrReg">
+            <div className="form-title">
+                <h2>Register</h2>
+            </div>
+            <div className="form-body">
+              <form onSubmit={signup}>
+                  <label>Username</label>
+                  <input type="text" onChange={(e) => {setUsername(e.target.value)}}></input>
+                  <label>Password</label>
+                  <input type="password" onChange={(e) => {setPassword(e.target.value)}}></input>
+                  <label>Re-enter Password</label>
+                  <input type="password" onChange={(e) => {setPassword2(e.target.value)}}></input>
+                  <label>First Name</label>
+                  <input type="text" onChange={(e) => {setFirstName(e.target.value)}}></input>
+                  <label>Last Name</label>
+                  <input type="text" onChange={(e) => {setLastName(e.target.value)}}></input>
+                  <label>Email</label>
+                  <input type="text" onChange={(e) => {setEmail(e.target.value)}}></input>
+                  <div className="center-button">
+                      <button className="submit-button" type="submit">Submit</button>
+                  </div>
+              </form>
+              <a href="/"><p style={{textAlign: "center"}}>Registered already? Sign in.</p></a>
+            </div>
           </div>
-        </div>
+          <div class="message" style={{display: response}}>
+            <div>
+              <p>{message}</p>
+            </div>
+          </div>
 
         {/* <p style={{color: 'red', visibility: errMsg}}>Some fields are missing. Try again!</p> */}
         {/* <p style={{color: 'red', visibility: pwErr}}>The passwords do not match. Try again!</p> */}
+        </div>
       </div>
     );
 }

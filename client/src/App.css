@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Marhey&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Marhey&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Halant:wght@500&family=Inter:wght@300;400;500;600;700&family=Marhey&display=swap');
 
 h1, h2, h3, h4, h5, h6, p, label, body {
   margin: 0;
@@ -13,9 +14,13 @@ a:hover {
   color: black;
 }
 
-.sidebar h1 {
+/* .navigations {
+  font-family: 'Halant', serif;
+} */
+
+.logo-name {
   font-family: 'Marhey', cursive;
-  font-size: 42px;
+  font-size: 35px;
   color: red;
 }
 
@@ -140,14 +145,66 @@ a:hover {
   /* opacity: 0.2; */
 }
 
-.SignOrReg {
-  background-image: url("https://media.istockphoto.com/photos/light-blue-watercolor-background-picture-id1301156172?b=1&k=20&m=1301156172&s=170667a&w=0&h=Ag7FeKGlohIwsKuJqTU180CL01lSGQieqEWv6mKK4n4=");
-  margin: 0 auto;
-  background-size: cover;
+.credentials {
+
   width: 80%;
-  border-style: solid;
+  margin: 120px auto 50px;
+
+  /* position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 750px; */
+
+
+  /* height: 100px; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* height: 100vh; */
+  /* width: 100%; */
+  /* margin-top: 320px; */
+}
+
+.credentials-header {
+  text-align: center;
+  margin-bottom: 15px;
+  /* font-size: 50px; */
+  font-family: 'Marhey', cursive;
+  color: red;
+}
+
+.SignOrReg {
+  /* background-image: url("https://media.istockphoto.com/photos/light-blue-watercolor-background-picture-id1301156172?b=1&k=20&m=1301156172&s=170667a&w=0&h=Ag7FeKGlohIwsKuJqTU180CL01lSGQieqEWv6mKK4n4="); */
+  /* margin: 0 100px; */
+  /* background-size: cover; */
+  /* width: 80%; */
+  /* margin: 20px; */
+  border: 3px solid red;
+  
   /* padding: 30px; */
 }
+
+.form-body {
+  padding: 20px;
+}
+
+.form-body input {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  margin-bottom: 15px;
+  height: 30px;
+}
+
+input:focus {
+  border: 3px solid red;
+}
+
+/* select {
+  border-style: inset;
+  outline-color: red;
+} */
 
 form {
   /* margin: 20px 0; */
@@ -176,8 +233,15 @@ h2 {
 }
 
 .form-title {
-  background-color: black;
+  background-color: red;
   padding: 10px;
+  color: white;
+} 
+
+.form-title h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  margin-left: 10px;
 }
 
 /* .three-way-grid {
@@ -200,16 +264,19 @@ h2 {
 }
 
 .navigations {
+  font-family: 'Halant', serif;
   margin: 30px 0;
   cursor: pointer;
 }
 
 .navigations h2 {
+  font-size: 30px;
   display: inline-block;
   margin: 0;
 }
 
 .navigations div {
+  font-size: 30px;
   display: inline-block;
   cursor: pointer;
 }
@@ -230,8 +297,12 @@ h2 {
   border-radius: 25px;
   font-weight: bold;
   width: 200px;
-  font-size: 21px;
   border: none;
+}
+
+.post-button p {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
 }
 
 /* .main-menu {
@@ -271,7 +342,8 @@ h2 {
 }
 
 .user-button p {
-  font-size: 20px; 
+  font-family: 'Halant', serif;
+  font-size: 22px; 
   flex-grow: 2;
   margin: 10px 0 10px 20px;
 }
@@ -350,7 +422,15 @@ h2 {
   width: 750px;
 } */
 
+.main-header h1, .following-header h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+}
+
 .main-header {
+  /* font-family: 'Inter', sans-serif;
+  font-weight: 700; */
   padding: 28px 20px 15px;
   border-bottom: solid #E9E9E9;
 }
@@ -391,6 +471,12 @@ h2 {
   /* padding: 20px; */
 }
 
+/* .carta p {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+} */
+
 .carta-body {
   padding: 20px;
   cursor: pointer;
@@ -415,6 +501,8 @@ h2 {
 } */
 
 .user-bar {
+  font-family: 'Halant', serif;
+  font-size: 22px;
   /* position: fixed; */
   /* margin-right: 15px; */
   /* bottom: 0; */
@@ -658,7 +746,7 @@ h2 {
 }
 
 .center-button {
-  /* text-align: center; */
+  text-align: center;
   margin: 0 auto;
   padding: 5px 0;
   /* position: absolute; */
@@ -1193,6 +1281,10 @@ textarea {
   height: 100vh;
 }
 
+.main-menu {
+
+}
+
 .navigations {
   margin: 30px 0;
 }
@@ -1549,4 +1641,13 @@ textarea {
   body {
     margin: 0;
   }
+}
+
+.empty-content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  margin-top: 320px;
 }

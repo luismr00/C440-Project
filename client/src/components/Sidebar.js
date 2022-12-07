@@ -64,7 +64,7 @@ function Sidebar(props) {
                     <div className="navigations comment-icon" onClick={() => props.openPostWindow()}>
                         <img className="icon" src={Comment}></img>
                     </div>
-                    <button className="post-button" onClick={() => props.openPostWindow()}>Post</button>
+                    <button className="post-button" onClick={() => props.openPostWindow()}><p>Post</p></button>
                 </div>
                 <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}}>
                     <div onClick={() => logout()}><p>Log out</p></div>
