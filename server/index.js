@@ -932,7 +932,7 @@ app.post('/api/mutualFollowers', (req, res) => {
 
 app.post('/api/follow', (req, res) => {
     const followedUser = req.body.followedUser;
-    const follower = req.body.follower;
+    const follower = session.user.username;
 
     console.log('received: ' + followedUser + ', ' + follower);
 
@@ -967,6 +967,23 @@ app.post('/api/follow', (req, res) => {
             }
         }
     });
+});
+
+app.post('/api/unfollow', (req, res) => {
+    const follow_id = req.body.follow_id;
+
+    db.query("DELETE FROM followers WHERE (id = ?)", [
+        follow_id
+    ], (err, result) => { 
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+            console.log("successfully unfollowed user");
+            res.status(201).json({ success: true });
+        }
+    });
+
 });
 
 
@@ -1053,6 +1070,34 @@ app.get('/api/:username/followers', (req, res) => {
             // console.log(result);
         }
     });
+});
+
+app.post('/api/followed', (req, res) => {
+    // const username = session.user.username;
+    const followed = req.body.followed;
+    const follower = session.user.username;
+
+    // console.log(followed);
+
+    db.query("SELECT id FROM followers WHERE user_id = ? AND follower_id = ?", [
+        followed,
+        follower
+    ], (err, result) => { 
+        if(err) {
+            console.log(err)
+            res.status(400).json({ success: false, err: err });
+        } else {
+
+            if(result.length === 0) {
+                console.log("users are not following each other");
+                res.status(201).json({ success: true, follower_id: null });
+            } else {
+                console.log("successfully fetched follower id");
+                res.status(201).json({ success: true, follower_id: result[0].id });
+            }
+        }
+    });
+
 });
 
 

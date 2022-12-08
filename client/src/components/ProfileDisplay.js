@@ -4,6 +4,7 @@ import Blogs from "./Blogs";
 import UserIcon from "../assets/person-circle.svg";
 import NotFound from "./NotFound";
 import NotAvailable from "./NotAvailable";
+import FollowButton from "./FollowButton";
 
 function ProfileDisplay(props) { 
 
@@ -67,37 +68,6 @@ function ProfileDisplay(props) {
         }
     }
 
-    const followUser = async (followedUser) => {
-        console.log(props.follower + ' will now follow ' + followedUser);
-
-        //follower MUST NOT follow itself
-        if (props.follower != followedUser) {
-            const res = await fetch("http://localhost:4000/api/follow", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    followedUser: followedUser,
-                    follower: props.follower
-                }),
-            })
-            const data = await res.json();
-            if(data.success === true){
-                alert("Followed successfully");
-                console.log('successfully followed the user');
-            }
-            else{
-                alert(data?.err);
-            }
-
-        } else {
-            alert("You cannot follow yourself");
-            console.log('following oneself is not permitted');
-        }
-    }
-
     const getUser = async (e) => {
         // e.preventDefault();
         const res = await fetch(`http://localhost:4000/api/profile/${pathname.split("/")[2]}`, {
@@ -116,6 +86,7 @@ function ProfileDisplay(props) {
             setUserProfile(data.profileInfo[0]);
             setUserHobbies(data.hobbies);
             setBlogCount(data.blogs_count[0].blogs_count);
+            // followStatus(data.profileInfo[0].username);
         } else {
             alert(data?.err);
             console.log(data.err);
@@ -126,6 +97,7 @@ function ProfileDisplay(props) {
         getUser();
         getFollowings();
         getFollowers();
+        // followStatus(); 
     }, [pathname.split("/")[2]]);
 
     return (
@@ -149,7 +121,15 @@ function ProfileDisplay(props) {
                                 <div className="profile-header-top">
                                     <h4>{userProfile.first_name} {userProfile.last_name}</h4>
                                     {/* <p>follow button</p> */}
-                                    <button className="follow-button" style={userProfile.username === props.user.username ? {visibility: "hidden"} : {visibility: "visible"}} onClick={() => followUser(userProfile.username)}>Follow</button>
+                                    {/* {console.log("follower id: " + followed)} */}
+                                    {/* <button className="follow-button" style={userProfile.username === props.user.username ? {visibility: "hidden"} : {visibility: "visible"}} onClick={() => followUser(userProfile.username)}>Follow</button> */}
+                                    {/* {followed != null ?
+                                        <FollowButton user={props.user} userProfile={userProfile} class={"follow-button"} actionName={"Follow"} followUser={followUser} />
+                                        :
+                                        <FollowButton user={props.user} userProfile={userProfile} class={"unfollow-button"} actionName={"Unfollow"} followUser={followUser} />
+                                    } */}
+                                    <FollowButton user={props.user} userProfile={userProfile} />
+
                                 </div>
                                 <div className="hobby-list">
                                     <p>Hobbies:</p>

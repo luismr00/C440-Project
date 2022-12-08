@@ -126,6 +126,18 @@ a:hover {
   margin: 0;
 }
 
+.unfollow-button {
+  background-color: grey;
+  text-align: center;
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  width: 150px;
+  font-size: 18px;
+  border: none;
+  margin: 0;
+}
+
 .hobby-buttons button {
   width: 100px;
   height: 40px;
