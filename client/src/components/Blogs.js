@@ -103,17 +103,17 @@ const Blogs = (props) => {
             {props.BlogList.map((blog,i) => {
                 tagCount(blog.tags);
                 return (
-                    <div className="carta" key={i}>
+                    <div className="blog" key={i}>
                     {/* <button onClick={() => followUser(blog.user_id)}>Follow</button> */}
-                        <div className="carta-body" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags, likes: blog.pos_rating, dislikes: blog.neg_rating }})}}>
-                            <h5 className="carta-title" style={{fontWeight: 'bold'}}>{blog.subject}</h5>
-                            <h6 className="carta-subtitle" style={{color: 'red'}} onClick={() => {history.push(`/profile/:${blog.user_id}`)}}>by {blog.user_id}</h6>
-                            <p className="carta-text">{blog.description}</p>
-                            <div className='carta-bottom'>
-                                <p className="carta-text">{blog.comment_count} Comments</p>
-                                <p className="carta-text">{blog.pos_rating} Likes</p>
-                                <p className="carta-text">{blog.neg_rating} Disikes</p>
-                                <p className="carta-text">Tags: {tags}</p>
+                        <div className="blog-body">
+                            <h5 className="blog-title" style={{fontWeight: 'bold'}}>{blog.subject}</h5>
+                            <h6 className="blog-subtitle" style={{color: 'red'}} onClick={() => {history.push(`/profile/${blog.user_id}`)}}>by {blog.user_id}</h6>
+                            <p className="blog-text">{blog.description}</p>
+                            <div className='blog-bottom'>
+                                <p className="blog-text blog-id" onClick={() => {history.push(`/blog/:${blog.id}`, {props: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags, likes: blog.pos_rating, dislikes: blog.neg_rating }})}}>{blog.comment_count} Comments</p>
+                                <p className="blog-text">{blog.pos_rating} Likes</p>
+                                <p className="blog-text">{blog.neg_rating} Disikes</p>
+                                <p className="blog-text">Tags: {tags}</p>
                                 {/* <button onClick={() => {history.push(`/blog/:${blog.id}`, {state: {user_id: blog.user_id, subject: blog.subject, description: blog.description, tags: blog.tags}})}}>Comments</button> */}
                             </div>
                             

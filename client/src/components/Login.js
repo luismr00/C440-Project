@@ -100,7 +100,7 @@ function Login() {
             <div className="form-title">
                 <h2>Log In</h2>
             </div>
-              <div className="form-body">
+              <div className="form-body-signin">
                 <form onSubmit={signIn}>
                     <label>Email</label>
                     <input type="text" id="username" onChange={(e) => {setEmail(e.target.value)}}></input>

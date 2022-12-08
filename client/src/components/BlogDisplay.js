@@ -14,6 +14,8 @@ const Blog = (props) => {
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(1);
     const [commentList, setCommentList] = useState([]);
+    const [likes, setLikes] = useState(location.state.props.likes);
+    const [dislikes, setDislikes] = useState(location.state.props.dislikes);
 
     //For textarea adjustment text growth/shrink
     const textareaRef = useRef(null);
@@ -54,34 +56,40 @@ const Blog = (props) => {
                 username: data.username,
                 rating: rating
             }
-            newCommentList.push(newComment);
+            // newCommentList.push(newComment);
             setComment("");
-            setCommentList(newCommentList);
+            // setCommentList(newCommentList);
+            callComments();
+            if(rating === 1)
+                setLikes(likes + 1);
+            else
+                setDislikes(dislikes + 1);
         } else {
             alert(data?.err);
             console.log(data.err);
         }
     }
 
+    const callComments = async () => {
+        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/comments`, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'credentials': 'include'
+            },
+        })
+            const data = await res.json();
+            if(data.success) {
+                console.log("comments successful");
+                console.log(data.comments);
+                setCommentList(data.comments);
+            } else {
+                console.log("comments failed");
+            }
+    }
+
     useEffect(() => {
-        const callComments = async () => {
-            const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/comments`, {
-                method: "GET",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'credentials': 'include'
-                },
-            })
-                const data = await res.json();
-                if(data.success) {
-                    console.log("comments successful");
-                    console.log(data.comments);
-                    setCommentList(data.comments);
-                } else {
-                    console.log("comments failed");
-                }
-        }
         callComments();
     }, [])
     
@@ -107,8 +115,8 @@ const Blog = (props) => {
                     </div>
                 </div>
                 <div className='comment-bottom'>
-                    <p className="comment-info">{location.state.props.likes} Likes</p>
-                    <p className="comment-info">{location.state.props.dislikes} Disikes</p>
+                    <p className="comment-info">{likes} Likes</p>
+                    <p className="comment-info">{dislikes} Disikes</p>
                     {/* <p className="comment-info">{location.state.props.tags}</p> */}
                 </div>
 

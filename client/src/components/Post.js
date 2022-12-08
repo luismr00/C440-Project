@@ -19,7 +19,7 @@ function Post(props) {
       post(event);
       // props.setPostSuccess(true);
       props.closePostWindow();
-      // props.fetchpost();
+      props.fetchpost();
       // console.log("testing blogList");
       
     }
@@ -71,8 +71,8 @@ function Post(props) {
               {/* <input className="post-tags" placeholder="Tags" value={tags} onChange={(event) => setTags(event.target.value)}></input> */}
               <textarea className="post-text" placeholder="Description" value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
               <div className="submit-post">
-                <button type="submit" className="submit-button">Submit</button>
                 <button className="submit-button" onClick={() => props.setSwitchDisplay(0)}>Back</button>
+                <button type="submit" className="submit-button">Submit</button>
               </div>
             </form>
           </div>

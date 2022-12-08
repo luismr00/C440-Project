@@ -5,7 +5,7 @@ import UserIcon from "../assets/person-circle.svg";
 import NotFound from "./NotFound";
 import NotAvailable from "./NotAvailable";
 
-function ExternalProfileDisplay(props) { 
+function ProfileDisplay(props) { 
 
     // const [follower, setFollower] = useState(null);
     const location = useLocation();
@@ -191,4 +191,4 @@ function ExternalProfileDisplay(props) {
 
 }
 
-export default ExternalProfileDisplay;
+export default ProfileDisplay;

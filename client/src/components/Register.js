@@ -104,7 +104,7 @@ function Register() {
             <div className="form-title">
                 <h2>Register</h2>
             </div>
-            <div className="form-body">
+            <div className="form-body-signin">
               <form onSubmit={signup}>
                   <label>Username</label>
                   <input type="text" onChange={(e) => {setUsername(e.target.value)}}></input>
