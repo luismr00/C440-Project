@@ -71,14 +71,17 @@ function Followings(props) {
                 </div>
                 <div className="user-container">
                 {friends.length === 0 ? 
-                    <div className="user-bar">
-                        {/* <p>You are not following anybody at this time</p> */}
-                    </div>
+                    // <div className="following-empty">
+                    //     <h3>Welp</h3>
+                    //     <p>No friends yet</p>
+                    //     <a href="/search"><button className="continue-button" style={{marginTop: "20px"}}><p>Find</p></button></a>
+                    // </div>
+                    <div></div>
                     :
                     // <div>TEST VIEW</div>
                     friends.map((friend) => {
                         return(
-                            <div className="user-bar" onClick={() => {history.push(`/${friend.username}`)}}>
+                            <div className="user-bar" onClick={() => {history.push(`/profile/${friend.username}`)}}>
                                 <img src={UserIcon}></img>
                                 <p style={{fontSize: '20px', margin: '8px 0 0 15px'}}>{friend.first_name} {friend.last_name}</p>
                             </div>

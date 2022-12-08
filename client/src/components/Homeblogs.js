@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Blogs from "./Blogs";
 import UserIcon from "../assets/person-circle.svg"
+import NotFound from "./NotFound";
+import NotAvailable from "./NotAvailable";
 
 function Homeblogs(props) { 
     return (
@@ -16,7 +18,15 @@ function Homeblogs(props) {
             <div className="select-button">
                 <div className="selection-button" onClick={() => props.setBlogSelection("visible")}><p>Hi {props.user.name}, what would you like to check today?</p></div>
             </div>
-            <Blogs BlogList={props.BlogList}/>
+            {props.BlogList.length != 0 ?
+                
+                <Blogs BlogList={props.BlogList}/>
+                :
+                // <NotFound />
+                <NotAvailable title={"No blogs available"} message={"Select a different selection from the button above or follow users to view more blogs"} button={"Search"} margin={"200px 100px 0"} />
+
+                
+            }
         </div>
         </div>
     );

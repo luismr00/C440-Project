@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-function NotFound(props) {
+function NotAvailable(props) {
     return(
-        <div className="column main-display">
-        {/* <div> */}
+        // <div className="column main-display">
+        <div>
             <div className="main-content">
                 <div className="empty-content" style={{margin: props.margin}}>
                     <h3>{props.title}</h3>
@@ -17,5 +17,5 @@ function NotFound(props) {
     );
 }
 
-export default NotFound;
+export default NotAvailable;
 

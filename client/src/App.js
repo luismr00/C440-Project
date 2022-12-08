@@ -33,7 +33,7 @@ function App() {
           <Route exact path={"/hobbies"} component={Hobbies} />
           {/* <Route exact path={"/:username"} component={ExternalProfile} /> */}
           {/* <Route exact path={"/profile/:username"} component={Profile} /> */}
-          <Route exact path={"/:username"} component={Profile} />
+          <Route exact path={"/profile/:username"} component={Profile} />
           <Route exact path={"/:username/follow-page"} component={FollowPage} />
         </Switch>
       </div>

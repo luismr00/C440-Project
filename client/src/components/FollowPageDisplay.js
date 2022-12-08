@@ -152,13 +152,14 @@ function ProfileDisplay(props) {
                                 // <p>result</p>
                             );
                         }) : 
-
                         <div></div>
                     }
                 </div>
             </div>
         :
-        <NotFound />
+        // <NotFound />
+        <NotFound title={"User not found"} message={"Try searching instead"} button={"Search"} margin={"355px 0 0 0"} />
+
     );
 
 }

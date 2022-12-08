@@ -3,6 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import Blogs from "./Blogs";
 import UserIcon from "../assets/person-circle.svg";
 import NotFound from "./NotFound";
+import NotAvailable from "./NotAvailable";
 
 function ExternalProfileDisplay(props) { 
 
@@ -18,7 +19,7 @@ function ExternalProfileDisplay(props) {
 
     const getFollowings = async (username) => {
         // e.preventDefault();
-        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[1]}/followings`, {
+        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/followings`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -43,7 +44,7 @@ function ExternalProfileDisplay(props) {
 
     const getFollowers = async (username) => {
         // e.preventDefault();
-        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[1]}/followers`, {
+        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/followers`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -99,7 +100,7 @@ function ExternalProfileDisplay(props) {
 
     const getUser = async (e) => {
         // e.preventDefault();
-        const res = await fetch(`http://localhost:4000/api/profile/${pathname.split("/")[1]}`, {
+        const res = await fetch(`http://localhost:4000/api/profile/${pathname.split("/")[2]}`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -125,7 +126,7 @@ function ExternalProfileDisplay(props) {
         getUser();
         getFollowings();
         getFollowers();
-    }, [pathname.split("/")[1]]);
+    }, [pathname.split("/")[2]]);
 
     return (
         (userProfile && userHobbies) ? 
@@ -177,11 +178,15 @@ function ExternalProfileDisplay(props) {
                             </div>
                         </div>
                     </div>  
-                    <Blogs BlogList={props.BlogList}/>  
+                    {props.BlogList.length != 0 ?
+                        <Blogs BlogList={props.BlogList}/> 
+                        :
+                        <NotAvailable title={"It's quiet..."} message={"How about posting your first blog instead?"} button={"none"} margin={"130px 100px 0"} />
+                    } 
                 </div>
             </div>
         :
-        <NotFound />
+        <NotFound title={"User not found"} message={"Try searching instead"} button={"Search"} margin={"355px 0 0 0"} />
     );
 
 }

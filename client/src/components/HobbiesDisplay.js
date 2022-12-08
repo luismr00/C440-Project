@@ -4,6 +4,8 @@ import HobbyOptionSelected from "./HobbyOptionSelected";
 import { main_hobbies } from "../data/mainHobbies.js";
 import ManageHobbies from "./ManageHobbies";
 import UserIcon from "../assets/person-circle.svg"
+import NotFound from "./NotFound";
+import NotAvailable from "./NotAvailable";
 
 function HobbiesDisplay(props) { 
 
@@ -308,33 +310,49 @@ function HobbiesDisplay(props) {
             <div className="select-button">
                 <div className="selection-button" onClick={() => props.setHobbySelection("visible")}><p>Hi {props.user.name}, would you like to add a new hobby or modify existing ones?</p></div>
             </div>
-            <div className="hobby-header">
-                <h4>Main Hobbies</h4>
-                <p>Choose as many hobbies as you'd like and then hit save</p>
-            </div>
             <div className="hobby-container">
                 {props.view === 'main' ? 
                     props.selectedHobbies.size != 0 ?
-                        <div className="hobby-lists">
-                            {props.hobbiesList.map((hobby, id) => (
-                                <HobbyOptionSelected key={id} id={id} hobby={hobby} selectHobby={selectHobby} check={props.selectedHobbies.has(hobby) ? true : false}/>
-                            ))}
-                        </div> 
+                        <div>
+                            <div className="hobby-header">
+                                <h4>Main Hobbies</h4>
+                                <p>Choose as many hobbies as you'd like and then hit save</p>
+                            </div>
+                            <div className="hobby-lists">
+                                {props.hobbiesList.map((hobby, id) => (
+                                    <HobbyOptionSelected key={id} id={id} hobby={hobby} selectHobby={selectHobby} check={props.selectedHobbies.has(hobby) ? true : false}/>
+                                ))}
+                            </div> 
+                        </div>
                         :
-                        <div className="hobby-lists">
-                            {props.hobbiesList.map((hobby, id) => (
-                                <HobbyOption key={id} id={id} hobby={hobby} selectHobby={selectHobby}/>
-                            ))}
+                        <div>
+                            <div className="hobby-header">
+                                <h4>Main Hobbies</h4>
+                                <p>Choose as many hobbies as you'd like and then hit save</p>
+                            </div>
+                            <div className="hobby-lists">
+                                {props.hobbiesList.map((hobby, id) => (
+                                    <HobbyOption key={id} id={id} hobby={hobby} selectHobby={selectHobby}/>
+                                ))}
+                            </div>
                         </div>
                     : props.view === "manage" ?
                     props.selectedHobbies.size === 0 ? 
-                        <div className="hobby-lists">You have no hobbies saved</div>
+                        // <div className="hobby-lists">You have no hobbies saved</div>
+                        // <NotFound />
+                        <NotAvailable title={"No Hobbies Saved"} message={"Check one of the options in the button above to add hobbies"} button={"none"} margin={"270px 100px 0"} />
                         :
-                        <div className="hobby-lists">
-                            {/* {console.log(Array.from(props.selectedHobbies))} */}
-                            {Array.from(props.selectedHobbies).map((hobby, id) => (
-                                <ManageHobbies key={id} id={id} hobby={hobby} selectHobby={selectHobby}/>
-                            ))}
+                        <div>
+                            <div className="hobby-header">
+                                <h4>Manage Hobbies</h4>
+                                <p>Remove hobbies as you please and hit save</p>
+                            </div>
+                            <div className="hobby-lists">
+                                {/* {console.log(Array.from(props.selectedHobbies))} */}
+                                {Array.from(props.selectedHobbies).map((hobby, id) => (
+                                    <ManageHobbies key={id} id={id} hobby={hobby} selectHobby={selectHobby}/>
+                                ))}
+                            </div>
                         </div>
                     : 
                     <div></div>
