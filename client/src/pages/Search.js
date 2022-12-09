@@ -18,6 +18,7 @@ function Search() {
     const [mutualHobbyUsers, setMutualHobbyUsers] = useState(null);
     const [loading, setLoading] = useState("Loading");
     // const [view, setView] = useState(null);
+    const [userInfoAll, setUserInfoAll] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [message, setMessage] = useState("");
@@ -185,13 +186,17 @@ function Search() {
         setMessage("");
         let selected = {};
         selected[username] = allUsers[username];
+        setUserInfoAll(selected);
         setUserInfo(selected);
         closeSelection();
       }
 
     } else if (view === 'mutual-hobbies') {
       // setView(view);
-      setUserInfo(mutualHobbyUsers);
+      // console.log("mutual hobbies");
+      // console.log(JSON.stringify(mutualHobbyUsers));
+      getUserLimit(mutualHobbyUsers, 10);
+      setUserInfoAll(mutualHobbyUsers);
       closeSelection();
     }
   }
@@ -200,6 +205,20 @@ function Search() {
     setTimeout(() => {
       setLoading("This is taking longer than expected but hang on tight...");
     }, 30000);
+  }
+
+  const getUserLimit = (users, limit) => {
+    let list = {};
+    let index = 0
+
+    for(let username in users) {
+        if(index != limit) {
+            list[username] = users[username];
+            index++;
+        }
+    }
+
+    setUserInfo(list);
   }
 
   const clickEvents = {
@@ -236,7 +255,7 @@ function Search() {
           {postDisplay()}
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
-            <SearchDisplay user={user} userInfo={userInfo} setSearchSelection={setSearchSelection}/>
+            <SearchDisplay user={user} userInfoAll={userInfoAll} userInfo={userInfo} getUserLimit={getUserLimit} setSearchSelection={setSearchSelection}/>
             <Followings user={user} />
           </div>
         </div>
