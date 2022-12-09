@@ -11,6 +11,8 @@ function Blog() {
 
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
+    const [message, setMessage] = useState("");
+    const [alert, setAlert] = useState("none")
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
     const [switchDisplay, setSwitchDisplay] = useState(0);
@@ -117,15 +119,17 @@ function Blog() {
     hobbySelections = new Set();
     setPostWindow("hidden");
     setSwitchDisplay(null);
+    setAlert("none");
+    setMessage("");
     // console.log(hobbySelections);
   }
 
   const postDisplay = () => {
     switch(switchDisplay) {
         case 0: 
-            return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
+            return <SelectTags setMessage={setMessage} setAlert={setAlert} setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
         case 1: 
-            return <Post user={user} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
+            return <Post user={user} setMessage={setMessage} setAlert={setAlert} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
       }
   }
 
@@ -140,7 +144,7 @@ function Blog() {
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <ProfileDisplay user={user} /> */}
-            <BlogDisplay />
+            <BlogDisplay setMessage={setMessage} setAlert={setAlert} />
             <Followings user={user} />
           </div>
         </div>
@@ -152,6 +156,11 @@ function Blog() {
           </div>
         }
         <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
+        <div class="message" style={{display: alert}}>
+          <div style={{margin: "0px"}}>
+            <p>{message}</p>
+          </div>
+        </div>
       </div>
     );
 }

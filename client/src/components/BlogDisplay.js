@@ -34,40 +34,54 @@ const Blog = (props) => {
 
     const postComment = async (e) => {
         e.preventDefault();
-        const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/comment`, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'credentials': 'include'
-            },
-            body: JSON.stringify({
-                comment: comment,
-                rating: rating
-            }),
-        })
-        const data = await res.json();
-        if(data.success) {
-            alert('Comment posted successfully');
-            console.log("comment successful");
-            let newCommentList = [...commentList];
-            const newComment = {
-                comment: comment,
-                username: data.username,
-                rating: rating
-            }
-            // newCommentList.push(newComment);
-            setComment("");
-            // setCommentList(newCommentList);
-            callComments();
-            if(rating === 1)
-                setLikes(likes + 1);
-            else
-                setDislikes(dislikes + 1);
+
+        if(comment === "") {
+            props.setMessage("Comment is missing");
+            props.setAlert("flex");
         } else {
-            alert(data?.err);
-            console.log(data.err);
+            const res = await fetch(`http://localhost:4000/api/${pathname.split("/")[2]}/comment`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'credentials': 'include'
+                },
+                body: JSON.stringify({
+                    comment: comment,
+                    rating: rating
+                }),
+            })
+            const data = await res.json();
+            if(data.success) {
+                // alert('Comment posted successfully');
+                // console.log("comment successful");
+                props.setMessage("Comment posted successfully");
+                props.setAlert("flex");
+                setTimeout(() => {
+                    props.setAlert("none");
+                }, 3000);
+                let newCommentList = [...commentList];
+                const newComment = {
+                    comment: comment,
+                    username: data.username,
+                    rating: rating
+                }
+                // newCommentList.push(newComment);
+                setComment("");
+                // setCommentList(newCommentList);
+                callComments();
+                if(rating === 1)
+                    setLikes(likes + 1);
+                else
+                    setDislikes(dislikes + 1);
+            } else {
+                // alert(data?.err);
+                // console.log(data.err);
+                props.setMessage(data.err);
+                props.setAlert("flex");
+            }
         }
+        
     }
 
     const callComments = async () => {

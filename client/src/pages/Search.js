@@ -20,6 +20,8 @@ function Search() {
     // const [view, setView] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
+    const [message, setMessage] = useState("");
+    const [alert, setAlert] = useState("none")
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
     const [searchSelection, setSearchSelection] = useState("hidden");
@@ -149,6 +151,8 @@ function Search() {
   const closeSelection = () => {
     setSearchSelection("hidden");
     setSearchPage(0);
+    setAlert("none");
+    setMessage("");
   }
 
   const openPostWindow = () => {
@@ -162,17 +166,27 @@ function Search() {
     hobbySelections = new Set();
     setPostWindow("hidden");
     setSwitchDisplay(null);
+    setAlert("none");
+    setMessage("");
     // console.log(hobbySelections);
   }
 
   const handleUserSelection = (view, username) => {
 
     //must get view as well for either individual search or multiple searches
-    if (view === 'single') {
+    if (!username) {
+      setMessage("Field is required");
+      setAlert("flex");
+    }
+    else if (view === 'single') {
 
       if(!allUsers[username]) {
-        console.log("Cannot find the user. Try again.");
+        // console.log("Cannot find the user. Try again.");
+        setMessage("User not found");
+        setAlert("flex");
       } else {
+        setAlert("none");
+        setMessage("");
         let selected = {};
         selected[username] = allUsers[username];
         setUserInfo(selected);
@@ -200,9 +214,9 @@ function Search() {
   const postDisplay = () => {
     switch(switchDisplay) {
         case 0: 
-            return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
+            return <SelectTags setMessage={setMessage} setAlert={setAlert} setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
         case 1: 
-            return <Post user={user} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
+            return <Post user={user} setMessage={setMessage} setAlert={setAlert} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
       }
   }
 
@@ -244,6 +258,11 @@ function Search() {
           </div>
         }
         <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
+        <div class="message" style={{display: alert}}>
+          <div style={{margin: "0px"}}>
+            <p>{message}</p>
+          </div>
+        </div>
       </div>
     );
 }

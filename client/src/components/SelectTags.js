@@ -34,9 +34,13 @@ function SelectTags(props) {
     const handleTags = () => {
 
         if(props.hobbySelections.size === 0) {
-            console.log("Selection is required before moving forward/disable button");
+            // console.log("Selection is required before moving forward/disable button");
+            props.setMessage("Selection is required");
+            props.setAlert("flex");
         } else {
             console.log("Saving as tags: " + Array.from(props.hobbySelections).join(","));
+            props.setAlert("none");
+            props.setMessage("");
             props.setTags(Array.from(props.hobbySelections).join(","));
             props.setSwitchDisplay(1);
         }

@@ -16,6 +16,8 @@ import BottomSidebar from "../components/BottomSidebar";
 function UserPage() {
   const [user, setUser] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
+  const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState("none")
   const [loading, setLoading] = useState("Loading");
   const history = useHistory();
   const [noBlogList, setNoBlogList] = useState([]);
@@ -219,6 +221,8 @@ function UserPage() {
     hobbySelections = new Set();
     setPostWindow("hidden");
     setSwitchDisplay(null);
+    setAlert("none");
+    setMessage("");
     // console.log(hobbySelections);
   }
 
@@ -236,15 +240,15 @@ function UserPage() {
   const postDisplay = () => {
     switch(switchDisplay) {
         case 0: 
-            return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
+            return <SelectTags setMessage={setMessage} setAlert={setAlert} setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
         case 1: 
-            return <Post user={user} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
+            return <Post user={user} setMessage={setMessage} setAlert={setAlert} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
           }
         }
         
         return (
           <div className="default" id="main-container">
-        { authenticated ?
+        { authenticated || user ?
 
           <div>
             {postDisplay()}
@@ -282,11 +286,11 @@ function UserPage() {
         }
         <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
         {/* <div className="bottom-sidebar"><p>FOOTER</p></div> */}
-        {/* <div class="message" style={{display: "flex"}}>
+        <div class="message" style={{display: alert}}>
           <div style={{margin: "0px"}}>
-            <p>Username or password is invalid. Try again!</p>
+            <p>{message}</p>
           </div>
-        </div> */}
+        </div>
       </div>
     );
 }

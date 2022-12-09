@@ -19,6 +19,8 @@ function Hobbies() {
 
     const [user, setUser] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
+    const [message, setMessage] = useState("");
+    const [alert, setAlert] = useState("none")
     const [loading, setLoading] = useState("Loading");
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
@@ -166,6 +168,8 @@ function Hobbies() {
   const closeSelection = () => {
     setHobbySelection("hidden");
     setSearchPage(0);
+    setAlert("none");
+    setMessage("");
   }
 
   const openPostWindow = () => {
@@ -179,6 +183,8 @@ function Hobbies() {
     hobbySelections = new Set();
     setPostWindow("hidden");
     setSwitchDisplay(null);
+    setAlert("none");
+    setMessage("");
     // console.log(hobbySelections);
   }
 
@@ -192,9 +198,9 @@ function Hobbies() {
     // console.log(switchDisplay);
     switch(switchDisplay) {
         case 0: 
-            return <SelectTags setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
+            return <SelectTags setMessage={setMessage} setAlert={setAlert} setTags={setTags} hobbySelections={hobbySelections} userHobbies={userHobbies} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} tagDisplay={userHobbies.length === 0 ? false : true}/>
         case 1: 
-            return <Post user={user} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
+            return <Post user={user} setMessage={setMessage} setAlert={setAlert} tags={tags} setTags={setTags} setSwitchDisplay={setSwitchDisplay} postWindow = {postWindow} closePostWindow={closePostWindow} fetchpost={fetchpost}/>
       }
   }
 
@@ -203,7 +209,7 @@ function Hobbies() {
         case 0: 
             return <HobbySelection hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} setView={setView} />
         case 1: 
-            return <AddHobby user={user} view={view} setView={setView} hobbiesList={hobbiesList} otherHobbies={otherHobbies} selectedHobbies={selectedHobbies} setTempHobbies={setTempHobbies} hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} userHobbies={userHobbies} setUserHobbies={setUserHobbies} setSelectedHobbies={setSelectedHobbies} fetchHobbies={fetchHobbies} />
+            return <AddHobby user={user} view={view} setView={setView} setMessage={setMessage} setAlert={setAlert} hobbiesList={hobbiesList} otherHobbies={otherHobbies} selectedHobbies={selectedHobbies} setTempHobbies={setTempHobbies} hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} userHobbies={userHobbies} setUserHobbies={setUserHobbies} setSelectedHobbies={setSelectedHobbies} fetchHobbies={fetchHobbies} />
         // case 2: 
         //     return <HobbyCategories hobbySelection={hobbySelection} setHobbySelection={setHobbySelection} setSearchPage={setSearchPage} closeSelection={closeSelection} />
       }
@@ -238,6 +244,11 @@ function Hobbies() {
           </div>
         }
         <BottomSidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
+        <div class="message" style={{display: alert}}>
+          <div style={{margin: "0px"}}>
+            <p>{message}</p>
+          </div>
+        </div>
       </div>
     );
 }

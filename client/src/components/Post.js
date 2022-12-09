@@ -12,7 +12,11 @@ function Post(props) {
 
     if(subject.length === 0 || props.tags.length === 0 || description.length === 0) {
       console.log("Fill in all the fields before submitting again");
+      props.setMessage("All fields required");
+      props.setAlert("flex");
     } else {
+      props.setAlert("none");
+      props.setMessage("");
       // console.log(subject);
       // console.log(tags);
       // console.log(description);
@@ -44,7 +48,12 @@ function Post(props) {
       if(data.success) {
           console.log("create successful");
           // history.push("/blogs");
-          alert("Blog created successfully");
+          // alert("Blog created successfully");
+          props.setMessage("Blog created successfully")
+          props.setAlert("flex");
+          setTimeout(() => {
+            props.setAlert("none");
+          }, 3000);
           setDescription("");
           setSubject("");
           props.setTags("");

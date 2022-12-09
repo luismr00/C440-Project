@@ -6,11 +6,26 @@ function AddHobby(props) {
     const [hobby, setHobby] = useState("");
     // const [showSearch, setShowSearch] = useState(false);
     let showSearch = false; 
+    let list = null;
+    let temp = null;
 
     // combination between main hobbies list and user hobbies list from the DB for searching purposes
-    let list = props.hobbiesList.concat(props.otherHobbies);
+    // avoiding repeats as well
+    // let list = props.hobbiesList.concat(props.otherHobbies);
+    temp = new Set(props.hobbiesList);
+
+    props.otherHobbies.map((other) => {
+        if(!temp.has(other))
+            temp.add(other)
+    });
+
+    list = Array.from(temp);
 
     const validateHobby = (e) => {
+
+        if(hobby === "") {  
+            return null;
+        }
 
         //change hobby state to lowercase
         let hobbyCopy = hobby.toLowerCase();
@@ -34,16 +49,21 @@ function AddHobby(props) {
 
     const postHobby = async (e) => {
 
+        e.preventDefault();
         let hobbyExists = validateHobby();
         let newHobbies = props.userHobbies;
         newHobbies.push(hobby);
 
         console.log(newHobbies);
 
-        if(hobbyExists === true) {
-            console.log("Cannot add existing saved hobby");
+        if(hobbyExists === null) {
+            props.setMessage("Field is required");
+            props.setAlert("flex");
+        } else if(hobbyExists === true) {
+            // console.log("Cannot add existing saved hobby");
+            props.setMessage("Cannot add existing saved hobby");
+            props.setAlert("flex");
         } else {
-            e.preventDefault();
             const res = await fetch("http://localhost:4000/api/hobby", {
                 method: "POST",
                 headers: {
@@ -58,7 +78,7 @@ function AddHobby(props) {
             }) 
             const data = await res.json();
             if(data.success) {
-                console.log("create successful");
+                // console.log("create successful");
                 // alert("Hobby added successfully");
                 setHobby("");
                 props.closeSelection();
@@ -74,8 +94,19 @@ function AddHobby(props) {
                     props.setView("main");
                 }
 
+                props.setMessage("Hobby added successfully");
+                props.setAlert("flex");
+                setTimeout(() => {
+                    props.setAlert("none");
+                }, 3000);
+
             } else {
-                console.log("create failed");
+                // console.log("create failed");
+                props.setMessage("Create failed");
+                props.setAlert("flex");
+                setTimeout(() => {
+                    props.setAlert("none");
+                }, 3000);
             }
         }
     }
@@ -103,24 +134,28 @@ function AddHobby(props) {
                 </form>
 
                 <div className="search-results">
-                {list.filter((value, key) => {
-                    if(hobby === "") {
-                        showSearch = false;
-                        return value;
-                    } else if (value.toLowerCase().substring(0, hobby.length).includes(hobby.toLowerCase())) {
-                        showSearch = true;
-                        return value;
-                    }}).map((value, key) => {
-                        return (
-                            <div 
-                                className="search-hobby" 
-                                key={key} 
-                                onClick={() => setHobby(value)}
-                                style={showSearch === true ? {display: "flex", visibility: "visible"} : {display: "none", visibility: "hidden"}}>
-                                    <p>{value}</p>
-                            </div>
-                    );
-                })}
+                {list ?
+                    list.filter((value, key) => {
+                        if(hobby === "") {
+                            showSearch = false;
+                            return value;
+                        } else if (value.toLowerCase().substring(0, hobby.length).includes(hobby.toLowerCase())) {
+                            showSearch = true;
+                            return value;
+                        }}).map((value, key) => {
+                            return (
+                                <div 
+                                    className="search-hobby" 
+                                    key={key} 
+                                    onClick={() => setHobby(value)}
+                                    style={showSearch === true ? {display: "flex", visibility: "visible"} : {display: "none", visibility: "hidden"}}>
+                                        <p>{value}</p>
+                                </div>
+                        );
+                    }) :
+                    <div></div>
+
+                }
                 </div>
                 <div className="center-button">
                 <button className="continue-button" onClick={(e) => postHobby(e)}>Next</button> 

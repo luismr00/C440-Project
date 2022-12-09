@@ -12,7 +12,7 @@ function Register() {
   const [errMsg, setErrMsg] = useState("hidden");
   const [pwErr, setPwError] = useState("hidden");
   const [message, setMessage] = useState("");
-  const [response, setResponse] = useState("none")
+  const [alert, setAlert] = useState("none")
   const [authenticated, setAuthenticated] = useState(false);
 
   const history = useHistory();
@@ -24,12 +24,12 @@ function Register() {
       // setErrMsg("visible");
       // setPwError("hidden");
       setMessage("Some fields are missing. Try again!");
-      setResponse("flex");
+      setAlert("flex");
     } else if (password !== password2) {
       // setPwError("visible");
       // setErrMsg("hidden");
       setMessage("The passwords do not match. Try again!");
-      setResponse("flex"); 
+      setAlert("flex"); 
     } else {
       const res = await fetch("http://localhost:4000/api/register", {
         method: "POST",
@@ -49,12 +49,12 @@ function Register() {
       if(data.success) {
         console.log("registered successful");
         // setErrMsg("hidden");
-        setResponse("none");
+        setAlert("none");
         history.push("/userpage");
       } else {
         // setErrMsg("visible");
         setMessage("Registration failed. Check your connection.");
-        setResponse("flex");
+        setAlert("flex");
         console.log("registered failed: ", data.err);
       }
     }
@@ -125,7 +125,7 @@ function Register() {
               <a href="/"><p style={{textAlign: "center"}}>Registered already? Sign in.</p></a>
             </div>
           </div>
-          <div class="message" style={{display: response}}>
+          <div class="message" style={{display: alert}}>
             <div>
               <p>{message}</p>
             </div>
