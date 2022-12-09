@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateFriends } from '../reducers/reducer';
 // import { useLocation } from 'react-router-dom';
 
 
@@ -6,6 +8,8 @@ function FollowButton(props) {
 
     // const location = useLocation();
     // const { pathname } = location;
+    const dispatch = useDispatch();
+    const friends = useSelector((state) => state.friends.friends);
     const [followed, setFollowed] = useState(null);
 
     const followUser = async (followedUser) => {
@@ -29,6 +33,7 @@ function FollowButton(props) {
                 alert("Followed successfully");
                 console.log('successfully followed the user');
                 followStatus();
+                getFriends();
             }
             else{
                 alert(data?.err);
@@ -56,6 +61,7 @@ function FollowButton(props) {
             alert("Unfollowed successfully");
             console.log("Unfollowed successfully");
             setFollowed(null);
+            getFriends();
         }
         else{
             alert(data?.err);
@@ -81,6 +87,34 @@ function FollowButton(props) {
         }
         else{
             alert(data?.err);
+        }
+    }
+
+    const getFriends = async (username) => {
+        // e.preventDefault();
+        const res = await fetch(`http://localhost:4000/api/friends`, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+            // , body: JSON.stringify({
+            //     follower: username
+            // }),
+        })
+        const data = await res.json();
+        if(data.success) {
+            // console.log("Updating friends list...");
+            // ONLY update if the new fetched list has a different length
+            if(friends.length != data.friends.length) {
+                console.log("Updating friends list...")
+                dispatch(updateFriends(data.friends));
+            } else {
+                console.log("No friends update");
+            }
+        } else {
+            alert(data?.err);
+            console.log(data.err);
         }
     }
 

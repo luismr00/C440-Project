@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 // import ExternalProfile from './pages/Profile';
 import FollowPage from './pages/FollowPage';
 import Grid from './components/Grid';
+import Test from './components/Test'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           {/* <Route exact path={"/profile/:username"} component={Profile} /> */}
           <Route exact path={"/profile/:username"} component={Profile} />
           <Route exact path={"/:username/follow-page"} component={FollowPage} />
+          <Route exact path={"/test"} component={Test} />
         </Switch>
       </div>
     </Router>

@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom"
 import UserIcon from "../assets/person-circle.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { updateFriends } from '../reducers/reducer';
 
 function Followings(props) { 
 
     // const [followingUsers, setFollowingUsers] = useState([]);
-    const [friends, setFriends] = useState([]);
+    // const [friends, setFriends] = useState([]);
+    const dispatch = useDispatch();
+    const friends = useSelector((state) => state.friends.friends);
     const history = useHistory();
 
     // const getFollowings = async (username) => {
@@ -47,11 +51,9 @@ function Followings(props) {
         })
         const data = await res.json();
         if(data.success) {
-            // alert("Getting information over the console...");
+            console.log("Getting information over the console for friends...");
             console.log(data.friends);
-            setFriends(data.friends);
-            // setUserProfile(data.profileInfo[0]);
-            // setUserHobbies(data.hobbies);
+            dispatch(updateFriends(data.friends));
         } else {
             alert(data?.err);
             console.log(data.err);
