@@ -174,11 +174,7 @@ function Search() {
   const handleUserSelection = (view, username) => {
 
     //must get view as well for either individual search or multiple searches
-    if (!username) {
-      setMessage("Field is required");
-      setAlert("flex");
-    }
-    else if (view === 'single') {
+    if (view === 'single') {
 
       if(!allUsers[username]) {
         // console.log("Cannot find the user. Try again.");

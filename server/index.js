@@ -841,7 +841,7 @@ app.post('/api/:id/comment', (req, res) => {
                 console.log(err)
                 res.status(400).json({ success: false, err: err });
             }
-            if(result[0]['COUNT(date)'] < 3) {
+            // if(result[0]['COUNT(date)'] < 3) {
                 db.query("SELECT user_ID FROM blog WHERE id = ?", [blog_id], (err, result) => {
                     console.log("Query",result,username, blog_id);
                     if(result[0].user_ID != username){
@@ -886,11 +886,11 @@ app.post('/api/:id/comment', (req, res) => {
                         res.status(400).json({ success: false, err: "You cannot comment on your own post" });
                     }
                 });
-            }
-            else{
-                console.log("You have already commented 3 times in 24 hours");
-                res.status(400).json({ success: false, err: "You have already commented 3 times in 24 hours" });
-            }
+            // }
+            // else{
+            //     console.log("You have already commented 3 times in 24 hours");
+            //     res.status(400).json({ success: false, err: "You have already commented 3 times in 24 hours" });
+            // }
         });
         
     } else {
