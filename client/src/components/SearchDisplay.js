@@ -36,9 +36,9 @@ function SearchDisplay(props) {
                     //     <h1>Nothing</h1>
                     // </div>
                     :
-                    Object.keys(props.userInfo).map((user, index) => {
+                    Object.keys(props.userInfo).map((u, index) => {
                         return(
-                            <UserSearchResult user={props.userInfo[user]} username={user} key={index} />
+                            <UserSearchResult user={props.userInfo[u]} username={u} sessionUser={props.user} key={index} />
                         );
                     }) 
                 :

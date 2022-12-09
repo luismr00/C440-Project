@@ -228,52 +228,62 @@ app.get('/logout',(req,res) => {
 });
 
 app.get('/api/users', (req, res) => {
-    db.query("SELECT * FROM user", (err, result) => {
+    db.query("SELECT username, first_name, last_name FROM user", (err, result) => {
         if (err) {
             console.log(err)
             res.status(400).json({ success: false, err: err });
         }
         else {
+            //Formatting the returned users so LookUp.js accepts it
+            let users = {};
+
+            result.map((obj) => {
+                users[obj.username] = {
+                    first_name: obj.first_name,
+                    last_name: obj.last_name
+                };
+            });
+
             console.log("successfully retrieved all users");
-            res.status(201).json({ success: true, users: result });
+            res.status(201).json({ success: true, users: users });
         }
     });
 });
 
-app.get('/api/users/search', (req, res) => {
+// app.get('/api/users/search', (req, res) => {
 
-    const username = session.user.username;
+//     const username = session.user.username;
 
-    db.query("SELECT user.username, user.first_name, user.last_name, hobby.hobby FROM user INNER JOIN hobby ON hobby.user_id = user.username AND user.username != ?", [
-        username
-    ], (err, result) => {
-        if (err) {
-            console.log(err)
-            res.status(400).json({ success: false, err: err });
-        }
-        else {
+//     db.query("SELECT user.username, user.first_name, user.last_name, hobby.hobby FROM user INNER JOIN hobby ON hobby.user_id = user.username AND user.username != ?", [
+//         username
+//     ], (err, result) => {
+//         if (err) {
+//             console.log(err)
+//             res.status(400).json({ success: false, err: err });
+//         }
+//         else {
 
-            //ADJUSTING MYSQL QUERY RESULTS TO AVOID DUPLICATE USERS WITH MULTIPLE HOBBIES
-            let newUserList = {};
+//             //ADJUSTING MYSQL QUERY RESULTS TO AVOID DUPLICATE USERS WITH MULTIPLE HOBBIES
+//             let newUserList = {};
         
-            for(let user of result) {
-                if (!newUserList[user.username]) {
-                    newUserList[user.username] = {
-                        first_name: user.first_name,
-                        last_name: user.last_name,
-                        hobbies: [user.hobby]
-                    };
-                } else { 
-                    newUserList[user.username]["hobbies"].push(user.hobby);
-                }
-            }
+//             for(let user of result) {
+//                 if (!newUserList[user.username]) {
+//                     newUserList[user.username] = {
+//                         first_name: user.first_name,
+//                         last_name: user.last_name,
+//                         hobbies: [user.hobby]
+//                     };
+//                 } else { 
+//                     newUserList[user.username]["hobbies"].push(user.hobby);
+//                 }
+//             }
 
-            console.log(newUserList);
-            console.log("successfully retrieved ALL users");
-            res.status(201).json({ success: true, users: newUserList });
-        }
-    });
-});
+//             console.log(newUserList);
+//             console.log("successfully retrieved ALL users");
+//             res.status(201).json({ success: true, users: newUserList });
+//         }
+//     });
+// });
 
 app.get('/api/users/search/mutualHobbies', (req, res) => {
 

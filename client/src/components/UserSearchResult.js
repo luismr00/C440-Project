@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import UserIcon from "../assets/person-circle.svg";
+import FollowButton from "./FollowButton";
 
 function UserSearchResult(props) { 
 
     const history = useHistory();
+    let userProfile = {
+        username: props.username
+    }
+    // let user = {
+    //     username: null
+    // }
 
     return (
         <div className="user-search" onClick={() => {history.push(`/profile/${props.username}`)}}>
@@ -28,7 +35,8 @@ function UserSearchResult(props) {
                     </div>
                 </div>
                 {/* <div className="follow-button" onClick={() => followUser(userProfile.username)}>follow</div> */}
-                <button className="follow-button">follow</button>
+                {/* <button className="follow-button">follow</button> */}
+                <FollowButton user={props.sessionUser} userProfile={userProfile} />
             </div>
         </div>
     );

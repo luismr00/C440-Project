@@ -47,7 +47,7 @@ function Search() {
     }
 
     const fetchusers = async () => {
-      const res = await fetch("http://localhost:4000/api/users/search", {
+      const res = await fetch("http://localhost:4000/api/users", {
           method: "GET",
           headers: {
               'Accept': 'application/json',

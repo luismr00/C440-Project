@@ -28,7 +28,7 @@ function LookUp(props) {
                 </form>
 
                 <div className="search-results">
-                {console.log("USERS" + props.allUsers)}
+                {console.log(props.allUsers)}
                 {Object.keys(props.allUsers).filter((username, key) => {
                     if(search === "") {
                         showSearch = false;

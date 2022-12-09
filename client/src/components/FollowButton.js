@@ -122,7 +122,10 @@ function FollowButton(props) {
         followStatus();
     }, [props.userProfile]);
 
-    const handleFollow = (action) => {
+    const handleFollow = (event, action) => {
+        event.preventDefault();
+        event.stopPropagation();
+        
         if(action === "follow") {
             followUser(props.userProfile.username)
         } else {
@@ -135,14 +138,14 @@ function FollowButton(props) {
             <button 
                 className="unfollow-button" 
                 style={props.userProfile.username === props.user.username ? {visibility: "hidden"} : {visibility: "visible"}} 
-                onClick={() => handleFollow("unfollow")}>
+                onClick={(event) => handleFollow(event, "unfollow")}>
                     Unfollow
             </button>
         :
             <button 
                 className="follow-button" 
                 style={props.userProfile.username === props.user.username ? {visibility: "hidden"} : {visibility: "visible"}} 
-                onClick={() => handleFollow("follow")}>
+                onClick={(event) => handleFollow(event, "follow")}>
                     Follow
             </button>
     );
