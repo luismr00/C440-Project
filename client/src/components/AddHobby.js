@@ -50,6 +50,7 @@ function AddHobby(props) {
     const postHobby = async (e) => {
 
         e.preventDefault();
+        resetHobbies();
         let hobbyExists = validateHobby();
         let newHobbies = props.userHobbies;
         newHobbies.push(hobby);
@@ -108,6 +109,19 @@ function AddHobby(props) {
                     props.setAlert("none");
                 }, 3000);
             }
+        }
+    }
+
+    const resetHobbies = async (e) => {
+
+        await props.fetchHobbies();
+
+        if(props.view === 'main') {
+            props.setView("");
+            props.setView("main");
+        } else if (props.view === "manage") {
+            props.setView("");
+            props.setView("manage");
         }
     }
 

@@ -144,7 +144,7 @@ function Blog() {
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <ProfileDisplay user={user} /> */}
-            <BlogDisplay setMessage={setMessage} setAlert={setAlert} />
+            <BlogDisplay setMessage={setMessage} setAlert={setAlert} setAuthenticated={setAuthenticated} setUser={setUser} />
             <Followings user={user} />
           </div>
         </div>

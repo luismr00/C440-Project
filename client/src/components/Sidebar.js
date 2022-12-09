@@ -30,7 +30,7 @@ function Sidebar(props) {
         } else {
           console.log("logout failed");
         }
-      }
+    }
 
     return (
         <div className="column" id="sidebar">

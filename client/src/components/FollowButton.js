@@ -139,14 +139,14 @@ function FollowButton(props) {
         followed != null ? 
             <button 
                 className="unfollow-button" 
-                style={props.userProfile.username === props.user.username ? {visibility: "hidden"} : {visibility: "visible"}} 
+                style={props.userProfile.username === props.user.username ? {display: "none"} : {display: "block"}} 
                 onClick={(event) => handleFollow(event, "unfollow")}>
                     Unfollow
             </button>
         :
             <button 
                 className="follow-button" 
-                style={props.userProfile.username === props.user.username ? {visibility: "hidden"} : {visibility: "visible"}} 
+                style={props.userProfile.username === props.user.username ? {display: "none"} : {visibility: "block"}} 
                 onClick={(event) => handleFollow(event, "follow")}>
                     Follow
             </button>

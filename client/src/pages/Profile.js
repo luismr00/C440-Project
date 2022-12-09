@@ -160,7 +160,7 @@ function Profile() {
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <HobbiesDisplay user={user}/> */}
-            <ProfileDisplay user={user} BlogList={BlogList} BlogLimit={BlogLimit} setBlogLimit={setBlogLimit} follower={follower} />
+            <ProfileDisplay user={user} BlogList={BlogList} BlogLimit={BlogLimit} setBlogLimit={setBlogLimit} follower={follower} setAuthenticated={setAuthenticated} setUser={setUser}/>
             <Followings user={user} />
           </div>
         </div>

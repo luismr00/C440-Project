@@ -161,7 +161,7 @@ function FollowPage(props) {
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <HobbiesDisplay user={user}/> */}
-            <FollowPageDisplay user={user} view={location.state ? location.state.view : null}/>
+            <FollowPageDisplay user={user} view={location.state ? location.state.view : null} setAuthenticated={setAuthenticated} setUser={setUser}/>
             <Followings user={user} />
           </div>
         </div>

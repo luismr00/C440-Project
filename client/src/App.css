@@ -1456,6 +1456,10 @@ textarea {
   display: none;
 }
 
+.extra-space {
+  margin-bottom: 75px;
+}
+
 
 /* ADJUSTING CLASSES NEEDED FOR RESPONSIVE SITE */
 
@@ -1668,12 +1672,52 @@ textarea {
 
   .user-icon {
     width: 50px;
+    /* border-radius: 25px; */
   }
 
   .user-icon:hover {
-    background-color: #d4d4d4;
+    /* background-color: #d4d4d4; */
+  }
+
+  .user-options {
+    position: fixed;
+    bottom: 100px;
+    width: 230px;
+    /* margin-left: 10px; */
+    margin-left: 0;
+    left: 15px;
+    height: 80px;
+
+    background-color: red;
+    color: white;
+    border-width: 1px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
   }
   
+  .user-options:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-top-color: red;
+    border-bottom: 0;
+    margin-left: -15px;
+    margin-bottom: -15px;
+  }
+
+  .user-options p {
+    height: 80px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .logo {
     width: 50px;
     height: 50px;
@@ -1704,7 +1748,7 @@ textarea {
     bottom: 20px;
     width: 100px;
     display: flex;
-    border-radius: 0px;
+    border-radius: 20px;
     height: 65px;
     justify-content: center;
     /* padding: 8px 12px; */
@@ -1714,6 +1758,7 @@ textarea {
 
   .user-button:hover {
     background-color: transparent;
+    /* border-radius: 20px; */
   }
 
   .user-button-name {
@@ -1819,6 +1864,50 @@ textarea {
   .user-icon-header {
     display: block;
     width: 50px;
+    cursor: pointer;
+  }
+
+  .user-options {
+    position: fixed;
+    bottom: none;
+    top: 12px;
+    /* transform: translate(-50%, -50%); */
+    transform: translate(-50%, 0%);
+    width: 70%;
+    /* margin-left: 10px; */
+    margin-left: 0;
+    left: 50%;
+    /* margin: 0 20px; */
+    height: 45px;
+    background-color: red;
+    color: white;
+    border-width: 1px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .user-options p {
+    height: 0px;
+    text-align: center;
+    display: block;
+    /* justify-content: center; */
+    /* align-items: center; */
+  }
+  
+  .user-options:after {
+    display: none;
+    /* content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-top-color: red;
+    border-bottom: 0;
+    margin-left: -15px;
+    margin-bottom: -15px; */
   }
 
   .main-header {
@@ -1839,6 +1928,32 @@ textarea {
 
   }
 
+  .extra-space-mobile {
+    margin-bottom: 100px;
+  }
+
+  .save-hobbies {
+    position: fixed;
+    width: 350px;
+    height: 50px;
+    padding: 5px 15px ;
+    bottom: none;
+    top: 35px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    /* background-color:#AAAAAA; */
+    /* border: solid red; */
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+  }
+
+  .save-hobbies p {
+    display: none;
+  }
+
   .App {
     margin: 0;
   }
@@ -1846,6 +1961,60 @@ textarea {
   body {
     margin: 0;
   }
+
+  /* POST HERE */
+
+  .profile-header {
+    border: solid #d4d4d4;
+    border-width: 2px;
+    margin: 20px 50px;
+    border-radius: 15px;
+    /* height: 200px; */
+  }
+  
+  .profile-header-body {
+    padding: 20px;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+  }
+
+  .profile-header-image {
+    text-align: center;
+  }
+  
+  /* .profile-header-image img {
+    width: 150px;
+    height: 150px;
+  } */
+
+  .profile-header-top {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0;
+    width: 100%;
+  }
+
+  .follow-button, .unfollow-button {
+    margin: 15px 0 0;
+  }
+
+  .hobby-list {
+    text-align: center;
+  }
+
+  .profile-header-follows {
+    justify-content: center;
+  }
+  
+  /* .profile-header-text {
+    padding: 0 20px;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  } */
+
 }
 
 .empty-content {

@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
+import { useHistory } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import ThumbsUp from '../assets/thumbs_up.svg';
 import ThumbsDown from '../assets/thumbs_down.svg';
@@ -11,6 +12,8 @@ const MIN_TEXTAREA_HEIGHT = 32;
 const Blog = (props) => {
     const location = useLocation();
     const { pathname } = location;
+    const history = useHistory();
+    const [showLogout, setShowLogout] = useState(false);
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(1);
     const [commentList, setCommentList] = useState([]);
@@ -21,6 +24,25 @@ const Blog = (props) => {
     const textareaRef = useRef(null);
     const [value, setValue] = useState("");
     // const onChange = (event) => setValue(event.target.value);
+
+    const logout = async () => {
+        const res = await fetch("http://localhost:4000/logout", {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await res.json();
+        if(data.success) {
+          console.log("logout successful");
+          props.setAuthenticated(false);
+          props.setUser(null);
+          history.push("/");
+        } else {
+          console.log("logout failed");
+        }
+    }
 
     useLayoutEffect(() => {
         // Reset height - important to shrink on delete
@@ -115,7 +137,7 @@ const Blog = (props) => {
             <div className="main-header">
                 <div className="logo-header"><p>B</p></div>
                 <h1>Comments</h1>
-                <div className="user-icon-header">
+                <div className="user-icon-header" onClick={()=>showLogout ? setShowLogout(false) : setShowLogout(true)}>
                     <img src={UserIcon}></img>
                 </div>
             </div>
@@ -200,6 +222,9 @@ const Blog = (props) => {
                     <button style={{textAlign: "center"}}>Post Comment</button>
                 </form> */}
             {/* </div> */}
+        </div>
+        <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}} onClick={() => logout()}>
+            <div onClick={() => logout()}><p>Log out</p></div>
         </div>
     </div>
 

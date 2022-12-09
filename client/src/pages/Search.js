@@ -255,7 +255,7 @@ function Search() {
           {postDisplay()}
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
-            <SearchDisplay user={user} userInfoAll={userInfoAll} userInfo={userInfo} getUserLimit={getUserLimit} setSearchSelection={setSearchSelection}/>
+            <SearchDisplay user={user} userInfoAll={userInfoAll} userInfo={userInfo} getUserLimit={getUserLimit} setSearchSelection={setSearchSelection} setAuthenticated={setAuthenticated} setUser={setUser}/>
             <Followings user={user} />
           </div>
         </div>

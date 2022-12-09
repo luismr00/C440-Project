@@ -29,7 +29,7 @@ function BottomSidebar(props) {
         } else {
           console.log("logout failed");
         }
-      }
+    }
 
     return (
         <div className="bottom-sidebar">

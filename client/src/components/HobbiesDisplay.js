@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import HobbyOption from "./HobbyOption";
 import HobbyOptionSelected from "./HobbyOptionSelected";
 import { main_hobbies } from "../data/mainHobbies.js";
@@ -12,12 +13,33 @@ function HobbiesDisplay(props) {
     // const [colorBG, setColorBG] = useState("#D4D4D4");
     // const [textColor, setTextColor] = useState("black");
     const [hover, setHover] = useState(false);
+    const history = useHistory();
+    const [showLogout, setShowLogout] = useState(false);
     // const [selected, setSelected] = useState(false);
     // const [savePopup, setSavePopup] = useState("hidden");
     // const [hobbiesList, setHobbyList] = useState([]);
     // const [userHobbiesAmount, setUserHobbiesAmount] = useState(0); //must use another variable to compare the initial size vs the new size of hobbies
     // const [selectedHobbies, setSelectedHobbies] = useState(new Set());
     // const [tempHobbies, setTempHobbies] = useState(new Set());
+
+    const logout = async () => {
+        const res = await fetch("http://localhost:4000/logout", {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await res.json();
+        if(data.success) {
+          console.log("logout successful");
+          props.setAuthenticated(false);
+          props.setUser(null);
+          history.push("/");
+        } else {
+          console.log("logout failed");
+        }
+    }
 
     const selectHobby = (hobby) => {
 
@@ -303,7 +325,7 @@ function HobbiesDisplay(props) {
             <div className="main-header">
                 <div className="logo-header"><p>B</p></div>
                 <h1>Hobbies</h1>
-                <div className="user-icon-header">
+                <div className="user-icon-header" onClick={()=>showLogout ? setShowLogout(false) : setShowLogout(true)}>
                     <img src={UserIcon}></img>
                 </div>
             </div>
@@ -361,6 +383,7 @@ function HobbiesDisplay(props) {
             {/* <br></br>
             <br></br>
             <br></br> */}
+            <div className="extra-space"></div>
             <div className="save-hobbies" style={{visibility: props.savePopup}}>
                 <p>You have unsaved changes</p>
                 <div className="hobby-buttons">
@@ -368,6 +391,9 @@ function HobbiesDisplay(props) {
                 <button className="hobby-save" onClick={(e)=>postHobbies(e)}>Save</button>
                 </div>
             </div>
+        </div>
+        <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}} onClick={() => logout()}>
+            <div><p>Log out</p></div>
         </div>
         </div>
     );

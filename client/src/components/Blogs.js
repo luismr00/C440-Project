@@ -143,6 +143,7 @@ const Blogs = (props) => {
                         <p className='load-blogs-text' onClick={() => sliceBlogs()}>More blogs</p>
                     </div>
                 }
+                <div className="extra-space-mobile"></div>
         </div>
     )
 }

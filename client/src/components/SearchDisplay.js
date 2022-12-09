@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import UserIcon from "../assets/person-circle.svg";
 import UserSearchResult from "./UserSearchResult";
 import NotFound from "../components/NotFound";
@@ -13,13 +14,36 @@ let obj = {
 function SearchDisplay(props) { 
     // console.log("checking userinfo");
     // console.log(props.userInfo);
+
+    const history = useHistory();
+    const [showLogout, setShowLogout] = useState(false);
+
+    const logout = async () => {
+        const res = await fetch("http://localhost:4000/logout", {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await res.json();
+        if(data.success) {
+          console.log("logout successful");
+          props.setAuthenticated(false);
+          props.setUser(null);
+          history.push("/");
+        } else {
+          console.log("logout failed");
+        }
+    }
+
     return (
         <div className="column main-display" id="column-grow">
             <div className="main-content">
                 <div className="main-header">
                     <div className="logo-header"><p>B</p></div>
                     <h1>Search</h1>
-                    <div className="user-icon-header">
+                    <div className="user-icon-header" onClick={()=>showLogout ? setShowLogout(false) : setShowLogout(true)}>
                         <img src={UserIcon}></img>
                     </div>
                 </div>
@@ -55,6 +79,9 @@ function SearchDisplay(props) {
             :
             <div></div>
             }
+            <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}} onClick={() => logout()}>
+                <div><p>Log out</p></div>
+            </div>
         </div>
     );
 

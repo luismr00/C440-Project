@@ -11,12 +11,32 @@ function ProfileDisplay(props) {
     // const [follower, setFollower] = useState(null);
     const location = useLocation();
     const history = useHistory();
+    const [showLogout, setShowLogout] = useState(false);
     const { pathname } = location;
     const [userProfile, setUserProfile] = useState(null);
     const [userHobbies, setUserHobbies] = useState(null);
     const [followingUsers, setFollowingUsers] = useState(0);
     const [userFollowers, setUserFollowers] = useState(0);
     const [blogCount, setBlogCount] = useState(0);
+
+    const logout = async () => {
+        const res = await fetch("http://localhost:4000/logout", {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+        const data = await res.json();
+        if(data.success) {
+          console.log("logout successful");
+          props.setAuthenticated(false);
+          props.setUser(null);
+          history.push("/");
+        } else {
+          console.log("logout failed");
+        }
+    }
 
     const getFollowings = async (username) => {
         // e.preventDefault();
@@ -107,7 +127,7 @@ function ProfileDisplay(props) {
                     <div className="main-header">
                         <div className="logo-header"><p>B</p></div>
                         <h1>{userProfile.first_name} {userProfile.last_name}</h1>
-                        <div className="user-icon-header">
+                        <div className="user-icon-header" onClick={()=>showLogout ? setShowLogout(false) : setShowLogout(true)}>
                             <img src={UserIcon}></img>
                         </div>
                     </div>
@@ -166,6 +186,9 @@ function ProfileDisplay(props) {
                         :
                         <NotAvailable title={"It's quiet..."} message={"How about posting your first blog instead?"} button={"none"} margin={"130px 100px 0"} />
                     } 
+                </div>
+                <div className="user-options" style={showLogout ? {visibility: "visible"} : {visibility: "hidden"}} onClick={() => logout()}>
+                    <div><p>Log out</p></div>
                 </div>
             </div>
         :

@@ -270,7 +270,7 @@ function UserPage() {
             /> 
             <div className="three-way-grid" style={clickEvents}>
               <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
-              <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList} BlogLimit={BlogLimit} setBlogLimit={setBlogLimit}/>
+              <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList} BlogLimit={BlogLimit} setBlogLimit={setBlogLimit} setAuthenticated={setAuthenticated} setUser={setUser} />
               <Followings user={user} />
             </div>
           </div>
