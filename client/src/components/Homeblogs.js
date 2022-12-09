@@ -20,7 +20,7 @@ function Homeblogs(props) {
             </div>
             {props.BlogList.length != 0 ?
                 
-                <Blogs BlogList={props.BlogList}/>
+                <Blogs BlogList={props.BlogList} BlogLimit={props.BlogLimit} setBlogLimit={props.setBlogLimit}/>
                 :
                 // <NotFound />
                 <NotAvailable title={"No blogs available"} message={"Select a different selection from the button above or follow users to view more blogs"} button={"Search"} margin={"200px 100px 0"} />

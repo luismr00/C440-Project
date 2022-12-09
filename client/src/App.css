@@ -1864,3 +1864,16 @@ textarea {
   margin-top: 280px;
   padding-left: 20px;
 }
+
+.load-blogs {
+  text-align: center;
+  /* height: 40px; */
+  margin-bottom: 20px;
+  color: red;
+}
+
+.load-blogs-text:hover {
+  /* text-decoration: underline; */
+  cursor: pointer;
+  font-weight: 700;
+}

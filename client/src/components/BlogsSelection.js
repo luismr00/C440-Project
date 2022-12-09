@@ -8,18 +8,37 @@ function BlogSelection(props) {
     const changeBlogList = () => {
         console.log("changing blogList to: " + blogSelection);
 
-        if(blogSelection === "blogsALL") 
+        if(blogSelection === "blogsALL") {
+
             props.setBlogList(props.BlogListALL);
-        else if(blogSelection === "blogsNC")
+            props.setBlogLimit(props.BlogListALL.slice(0,10));
+
+        } else if(blogSelection === "blogsNC") {
+
             props.setBlogList(props.BlogListNC); 
-        else if(blogSelection === "blogsMPR")
+            props.setBlogLimit(props.BlogListNC.slice(0,10));
+
+        } else if(blogSelection === "blogsMPR") {
+
             props.setBlogList(props.BlogListMPR);
-        else if(blogSelection === "blogsMNR")
+            props.setBlogLimit(props.BlogListMPR.slice(0,10));
+
+        } else if(blogSelection === "blogsMNR") {
+
             props.setBlogList(props.BlogListMNR);
-        else if(blogSelection === "blogsOPR")
+            props.setBlogLimit(props.BlogListMNR.slice(0,10));
+
+        } else if(blogSelection === "blogsOPR") {
+
             props.setBlogList(props.BlogListOPR);
-        else if(blogSelection === "hobbyBlogs")
+            props.setBlogLimit(props.BlogListOPR.slice(0,10));
+
+        } else if(blogSelection === "hobbyBlogs") {
+
             props.setBlogList(props.BlogListHobbies);
+            props.setBlogLimit(props.BlogListHobbies.slice(0,10));
+
+        }
             
         //CLOSE BLOGSELECTION WINDOW
         props.setBlogSelection("hidden");

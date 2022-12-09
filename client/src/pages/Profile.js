@@ -22,6 +22,7 @@ function Profile() {
     const [loading, setLoading] = useState("Loading");
     const [postWindow, setPostWindow] = useState("hidden");
     const [BlogList,setBlogList] = useState([]);
+    const [BlogLimit,setBlogLimit] = useState([]);
     const [switchDisplay, setSwitchDisplay] = useState(0);
     const [userHobbies, setUserHobbies] = useState([]);
     const [tags, setTags] = useState('');
@@ -42,6 +43,7 @@ function Profile() {
           console.log("fetching all posts from profile component")
           console.log(data.blogs);
           setBlogList(data.blogs);
+          setBlogLimit(data.blogs.slice(0,10));
       }
     }
 
@@ -158,7 +160,7 @@ function Profile() {
           <div className="three-way-grid" style={clickEvents}>
             <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
             {/* <HobbiesDisplay user={user}/> */}
-            <ProfileDisplay user={user} BlogList={BlogList} follower={follower} />
+            <ProfileDisplay user={user} BlogList={BlogList} BlogLimit={BlogLimit} setBlogLimit={setBlogLimit} follower={follower} />
             <Followings user={user} />
           </div>
         </div>

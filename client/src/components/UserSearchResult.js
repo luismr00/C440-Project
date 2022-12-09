@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import UserIcon from "../assets/person-circle.svg";
 import FollowButton from "./FollowButton";
 
 function UserSearchResult(props) { 
 
+    const location = useLocation();
+    const { pathname } = location;
+
+    const page = pathname.split("/")[2];
+
     const history = useHistory();
     let userProfile = {
         username: props.username
     }
-    // let user = {
-    //     username: null
-    // }
+    let user = {
+        username: null
+    }
 
     return (
         <div className="user-search" onClick={() => {history.push(`/profile/${props.username}`)}}>
@@ -36,7 +42,14 @@ function UserSearchResult(props) {
                 </div>
                 {/* <div className="follow-button" onClick={() => followUser(userProfile.username)}>follow</div> */}
                 {/* <button className="follow-button">follow</button> */}
-                <FollowButton user={props.sessionUser} userProfile={userProfile} />
+                {/* {console.log("userProfile and user information before sending to follow button")}
+                {console.log(props.userProfile)}
+                {console.log(props.sessionUser)} */}
+                {page != "follow-page" ?
+                    <FollowButton user={props.sessionUser} userProfile={userProfile} />
+                    :
+                    <div></div>
+                }
             </div>
         </div>
     );

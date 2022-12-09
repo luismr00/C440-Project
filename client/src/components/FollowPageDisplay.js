@@ -148,7 +148,7 @@ function ProfileDisplay(props) {
                         users.map((user, index) => {
                         {console.log(user)}
                             return(
-                                <UserSearchResult user={user} username={user.username} index={index} />
+                                <UserSearchResult user={user} username={user.username} userProfile={userProfile} index={index} />
                                 // <p>result</p>
                             );
                         }) : 

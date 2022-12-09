@@ -150,10 +150,10 @@ function ProfileDisplay(props) {
                                 </div>
                                 <div className="profile-header-follows">
                                     <p>{blogCount} Blogs</p>
-                                    <div className="follow-count-select" onClick={() => {history.push(`/${userProfile.username}/follow-page`, {view: "followers"})}}>
+                                    <div className="follow-count-select" onClick={() => {history.push(`/${userProfile.username}/follow-page`, {view: "followers", userProfile: userProfile, user: props.user })}}>
                                         <p>{userFollowers} Followers</p>
                                     </div>
-                                    <div className="follow-count-select" onClick={() => {history.push(`/${userProfile.username}/follow-page`, {view: "followings"})}}>
+                                    <div className="follow-count-select" onClick={() => {history.push(`/${userProfile.username}/follow-page`, {view: "followings", userProfile: userProfile, user: props.user })}}>
                                         <p>{followingUsers} Following</p>
                                     </div>
                                     {/* <p>0 Mutual Followers</p> */}
@@ -162,7 +162,7 @@ function ProfileDisplay(props) {
                         </div>
                     </div>  
                     {props.BlogList.length != 0 ?
-                        <Blogs BlogList={props.BlogList}/> 
+                        <Blogs BlogList={props.BlogList} BlogLimit={props.BlogLimit} setBlogLimit={props.setBlogLimit}/> 
                         :
                         <NotAvailable title={"It's quiet..."} message={"How about posting your first blog instead?"} button={"none"} margin={"130px 100px 0"} />
                     } 

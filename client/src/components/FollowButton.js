@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateFriends } from '../reducers/reducer';
-// import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
 function FollowButton(props) {
 
-    // const location = useLocation();
-    // const { pathname } = location;
+    const location = useLocation();
+    const { pathname } = location;
     const dispatch = useDispatch();
     const friends = useSelector((state) => state.friends.friends);
     const [followed, setFollowed] = useState(null);
+
+    const page = pathname.split("/")[2];
 
     const followUser = async (followedUser) => {
         console.log(props.follower + ' will now follow ' + followedUser);

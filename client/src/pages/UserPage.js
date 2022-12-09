@@ -34,6 +34,7 @@ function UserPage() {
   const [blogSelection, setBlogSelection] = useState("hidden");
   const [postSuccess, setPostSuccess] = useState(false);
   const [BlogList,setBlogList] = useState([]);
+  const [BlogLimit,setBlogLimit] = useState([]);
   const [BlogListALL,setBlogListALL] = useState([]);
   const [BlogListNC, setBlogListNC] = useState([]);
   const [BlogListMPR,setBlogListMPR] = useState([]);
@@ -77,6 +78,7 @@ function UserPage() {
         console.log("fetching post from mainpage component")
         console.log(data.blogs);
         setBlogList(data.blogs);
+        setBlogLimit(data.blogs.slice(0,10));
         setBlogListALL(data.blogs);
     }
   }
@@ -258,6 +260,7 @@ function UserPage() {
               blogSelection={blogSelection} 
               setBlogSelection={setBlogSelection}
               setBlogList={setBlogList}
+              setBlogLimit={setBlogLimit}
               BlogListALL={BlogListALL}
               BlogListNC={BlogListNC}
               BlogListMPR={BlogListMPR}
@@ -267,7 +270,7 @@ function UserPage() {
             /> 
             <div className="three-way-grid" style={clickEvents}>
               <Sidebar user={user} setAuthenticated={setAuthenticated} setUser={setUser} openPostWindow={openPostWindow} />
-              <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList}/>
+              <Homeblogs user = {user} setBlogSelection={setBlogSelection} BlogList={BlogList} BlogLimit={BlogLimit} setBlogLimit={setBlogLimit}/>
               <Followings user={user} />
             </div>
           </div>
