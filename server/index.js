@@ -15,7 +15,7 @@ const path = require('path');
 let hobbies_list = require('./data/hobbies_list.js')
 // let main_hobbies = module.main_hobbies; 
 
-db.connect(function(err) {
+db.getConnection(function(err) {
     if (err) throw err;
     console.log("Connected!");
     db.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`, function (err, result) {

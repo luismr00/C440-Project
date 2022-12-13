@@ -1,4 +1,4 @@
-use `COMP440`; 
+use `heroku_98deb8cb9687e65`; 
 
 SET FOREIGN_KEY_CHECKS = 0;
 
